@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
+import CompanyController from './app/controllers/CompanyController';
+
 const routes = new Router();
 
-routes.get('/', (req, res) => {
-  return res.json({ message: 'Hello World' });
-});
+routes.post('/company', CompanyController.store);
 
 export default routes;
