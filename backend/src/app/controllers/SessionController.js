@@ -16,6 +16,7 @@ class SessionController {
     }
 
     const { email, password } = req.body;
+
     const company = await Company.findOne({ where: { email } });
 
     if (company) {
@@ -50,7 +51,7 @@ class SessionController {
     const { id, name } = admin;
 
     return res.json({
-      user: { id, name, email },
+      user: { id, name, email, admin: true },
       token: jwt.sign({ id, admin: true }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
