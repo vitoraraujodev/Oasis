@@ -9,7 +9,7 @@ export default async (req, res, next) => {
   if (!authHeader) {
     return res
       .status(401)
-      .json({ errer: 'Token de autenticação não informado.' });
+      .json({ error: 'Token de autenticação não informado.' });
   }
 
   const [, token] = authHeader.split(' ');

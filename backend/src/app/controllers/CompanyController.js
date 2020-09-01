@@ -37,7 +37,7 @@ class CompanyController {
     });
 
     if (companyExists) {
-      return res.status(400).json({ errer: 'Esse e-mail já está em uso' });
+      return res.status(400).json({ error: 'Esse e-mail já está em uso' });
     }
 
     const { id, name, email, typology, status } = await Company.create(

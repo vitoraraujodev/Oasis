@@ -4,6 +4,7 @@ import authMiddleware from './app/middlewares/auth';
 
 import CompanyController from './app/controllers/CompanyController';
 import SessionController from './app/controllers/SessionController';
+import AddressController from './app/controllers/AddressController';
 
 const routes = new Router();
 
@@ -13,5 +14,9 @@ routes.get('/company', authMiddleware, CompanyController.index);
 routes.post('/company', CompanyController.store);
 routes.put('/company', authMiddleware, CompanyController.update);
 routes.delete('/company', authMiddleware, CompanyController.delete);
+
+routes.get('/address', authMiddleware, AddressController.index);
+routes.post('/address', authMiddleware, AddressController.store);
+routes.put('/address', authMiddleware, AddressController.update);
 
 export default routes;
