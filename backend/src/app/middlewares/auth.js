@@ -16,11 +16,15 @@ export default async (req, res, next) => {
 
   try {
     const decoded = await promisify(jwt.verify)(token, authConfig.secret);
+
+    // Gets from token if user is admin or company
     req.admin = decoded.admin;
 
     if (decoded.admin) {
+      // Uses the company id from header
       req.companyId = id;
     } else {
+      // Uses the company id from token
       req.companyId = decoded.id;
     }
 

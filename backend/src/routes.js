@@ -6,6 +6,7 @@ import CompanyController from './app/controllers/CompanyController';
 import SessionController from './app/controllers/SessionController';
 import AddressController from './app/controllers/AddressController';
 import RepresentativeController from './app/controllers/RepresentativeController';
+import OperatingInfoController from './app/controllers/OperatingInfoController';
 
 const routes = new Router();
 
@@ -22,5 +23,8 @@ routes.put('/address', authMiddleware, AddressController.update);
 
 routes.post('/representative', authMiddleware, RepresentativeController.store);
 routes.put('/representative', authMiddleware, RepresentativeController.update);
+
+routes.post('/operating-info', authMiddleware, OperatingInfoController.store);
+routes.put('/operating-info', authMiddleware, OperatingInfoController.update);
 
 export default routes;

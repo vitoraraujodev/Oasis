@@ -4,10 +4,12 @@ import Company from '../app/models/Company';
 import Administrator from '../app/models/Administrator';
 import Address from '../app/models/Address';
 import Representative from '../app/models/Representative';
+import OperatingInfo from '../app/models/OperatingInfo';
 
 import databaseConfig from '../config/database';
 
-const models = [Company, Administrator, Address, Representative]; // Todos os models a serem carregados
+// Todos os models a serem carregados
+const models = [Company, Administrator, Address, Representative, OperatingInfo];
 
 class Database {
   constructor() {

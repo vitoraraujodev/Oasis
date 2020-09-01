@@ -105,6 +105,10 @@ class AddressController {
       where: { company_id: req.companyId },
     });
 
+    if (!address) {
+      return res.status(400).json({ error: 'Endereço não registrado.' });
+    }
+
     const {
       id,
       cep,

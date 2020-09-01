@@ -17,6 +17,7 @@ class SessionController {
 
     const { email, password } = req.body;
 
+    // Checks if e-mail is from company
     const company = await Company.findOne({ where: { email } });
 
     if (company) {
@@ -28,6 +29,7 @@ class SessionController {
 
       const { id, name, typology, status } = company;
 
+      // Sets admin as false in token
       return res.json({
         user: { id, typology, name, email, status },
         token: jwt.sign({ id, admin: false }, authConfig.secret, {
@@ -36,6 +38,7 @@ class SessionController {
       });
     }
 
+    // If it's not, checks if e-mail is from administrator
     const admin = await Administrator.findOne({ where: { email } });
 
     if (!admin) {
@@ -50,6 +53,7 @@ class SessionController {
 
     const { id, name } = admin;
 
+    // Sets admin as true in token
     return res.json({
       user: { id, name, email, admin: true },
       token: jwt.sign({ id, admin: true }, authConfig.secret, {

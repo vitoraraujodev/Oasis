@@ -28,9 +28,9 @@ class AddressController {
     });
 
     if (representativeExists) {
-      return res
-        .status(400)
-        .json({ error: 'Essa empresa já possui um endereço registrado.' });
+      return res.status(400).json({
+        error: 'Essa empresa já possui um representante legal registrado.',
+      });
     }
 
     const { id, name, email, cpf, phone_number } = await Representative.create({
@@ -68,6 +68,12 @@ class AddressController {
     const representative = await Representative.findOne({
       where: { company_id: req.companyId },
     });
+
+    if (!representative) {
+      return res
+        .status(400)
+        .json({ error: 'Representante legal não registrado.' });
+    }
 
     const { id, name, email, cpf, phone_number } = await representative.update(
       req.body
