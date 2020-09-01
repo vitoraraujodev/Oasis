@@ -1,14 +1,12 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcryptjs';
 
-class Company extends Model {
+class Administrator extends Model {
   static init(sequelize) {
     super.init(
       {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
-        typology: Sequelize.STRING,
-        status: Sequelize.INTEGER,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
       },
@@ -18,9 +16,9 @@ class Company extends Model {
     );
 
     // Before saving, encrypts password and saves as password_hash
-    this.addHook('beforeSave', async (company) => {
-      if (company.password) {
-        company.password_hash = await bcrypt.hash(company.password, 8);
+    this.addHook('beforeSave', async (admin) => {
+      if (admin.password) {
+        admin.password_hash = await bcrypt.hash(admin.password, 8);
       }
     });
     return this;
@@ -31,4 +29,4 @@ class Company extends Model {
   }
 }
 
-export default Company;
+export default Administrator;
