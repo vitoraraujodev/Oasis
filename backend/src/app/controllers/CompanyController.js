@@ -22,10 +22,12 @@ class CompanyController {
       typology: Yup.string().required(),
       email: Yup.string().email().required(),
       password: Yup.string().min(6).required(),
-      confirm_password: Yup.string().oneOf(
-        [Yup.ref('password'), null],
-        'Confirme sua senha corretamente .'
-      ),
+      confirmPassword: Yup.string()
+        .required()
+        .oneOf(
+          [Yup.ref('password'), null],
+          'Confirme sua senha corretamente .'
+        ),
     });
 
     if (!(await schema.isValid(req.body))) {
