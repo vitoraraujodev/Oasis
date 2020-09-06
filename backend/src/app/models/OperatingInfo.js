@@ -22,6 +22,11 @@ class OperatingInfo extends Model {
       foreignKey: 'company_id',
       as: 'company',
     });
+
+    this.hasMany(models.Shift, {
+      foreignKey: 'operating_info_id',
+      as: 'shifts',
+    });
   }
 }
 

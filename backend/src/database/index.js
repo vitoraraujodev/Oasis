@@ -6,6 +6,7 @@ import Address from '../app/models/Address';
 import Representative from '../app/models/Representative';
 import OperatingInfo from '../app/models/OperatingInfo';
 import History from '../app/models/History';
+import Shift from '../app/models/Shift';
 
 import databaseConfig from '../config/database';
 
@@ -17,6 +18,7 @@ const models = [
   Representative,
   OperatingInfo,
   History,
+  Shift,
 ];
 
 class Database {

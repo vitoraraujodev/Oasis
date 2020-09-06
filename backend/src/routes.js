@@ -26,7 +26,6 @@ routes.post('/representative', authMiddleware, RepresentativeController.store);
 routes.put('/representative', authMiddleware, RepresentativeController.update);
 
 routes.post('/operating-info', authMiddleware, OperatingInfoController.store);
-routes.put('/operating-info', authMiddleware, OperatingInfoController.update);
 
 routes.post('/history', authMiddleware, HistoryController.store);
 routes.put('/history/:id', authMiddleware, HistoryController.update);
