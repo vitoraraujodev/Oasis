@@ -13,6 +13,7 @@ import GeneralInfoController from './app/controllers/GeneralInfoController';
 
 import ContactInfoController from './app/controllers/ContactInfoController';
 import ContactManagerController from './app/controllers/ContactManagerController';
+import TechnicalManagerController from './app/controllers/TechnicalManagerController';
 
 const routes = new Router();
 
@@ -33,5 +34,10 @@ routes.get('/general-info', authMiddleware, GeneralInfoController.index);
 
 routes.post('/contact-info', authMiddleware, ContactInfoController.store);
 routes.post('/contact-manager', authMiddleware, ContactManagerController.store);
+routes.post(
+  '/technical-manager',
+  authMiddleware,
+  TechnicalManagerController.store
+);
 
 export default routes;
