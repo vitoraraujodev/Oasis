@@ -26,14 +26,34 @@ class AddressController {
         .json({ error: 'Essa empresa não está registrada' });
     }
 
-    const addressExists = await Address.findOne({
+    const address = await Address.findOne({
       where: { company_id: req.companyId },
     });
 
-    if (addressExists) {
-      return res
-        .status(400)
-        .json({ error: 'Essa empresa já possui um endereço registrado.' });
+    if (address) {
+      const {
+        id,
+        cep,
+        city,
+        neighborhood,
+        municipality,
+        street,
+        number,
+        complement,
+      } = await address.update({
+        ...req.body,
+      });
+
+      return res.json({
+        id,
+        cep,
+        city,
+        neighborhood,
+        municipality,
+        street,
+        number,
+        complement,
+      });
     }
 
     const {
@@ -49,58 +69,6 @@ class AddressController {
       ...req.body,
       company_id: req.companyId,
     });
-
-    return res.json({
-      id,
-      cep,
-      city,
-      neighborhood,
-      municipality,
-      street,
-      number,
-      complement,
-    });
-  }
-
-  async update(req, res) {
-    const schema = Yup.object().shape({
-      cep: Yup.string(),
-      city: Yup.string(),
-      neighborhood: Yup.string(),
-      municipality: Yup.string(),
-      street: Yup.string(),
-      number: Yup.number(),
-      complement: Yup.string(),
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Falha na validação dos dados.' });
-    }
-
-    const company = await Company.findByPk(req.companyId);
-
-    if (!company) {
-      return res.status(400).json({ error: 'Empresa não existe.' });
-    }
-
-    const address = await Address.findOne({
-      where: { company_id: req.companyId },
-    });
-
-    if (!address) {
-      return res.status(400).json({ error: 'Endereço não registrado.' });
-    }
-
-    const {
-      id,
-      cep,
-      city,
-      neighborhood,
-      municipality,
-      street,
-      number,
-      complement,
-    } = await address.update(req.body);
 
     return res.json({
       id,

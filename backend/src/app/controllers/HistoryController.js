@@ -33,6 +33,22 @@ class HistoryController {
       }
     }
 
+    const history = await History.findByPk(req.body.id);
+
+    if (history) {
+      const { id, instrument, number, process } = await history.update({
+        ...req.body,
+      });
+
+      return res.json({
+        id,
+        instrument,
+        number,
+        process,
+        date,
+      });
+    }
+
     const { id, instrument, number, process } = await History.create({
       ...req.body,
       company_id: req.companyId,
@@ -85,6 +101,26 @@ class HistoryController {
       process,
       date,
     });
+  }
+
+  async delete(req, res) {
+    const company = await Company.findByPk(req.companyId);
+
+    if (!company) {
+      return res.status(400).json('Empresa não encontrada.');
+    }
+
+    const history = await History.findByPk(req.params.id);
+
+    if (history.company_id !== req.companyId) {
+      return res
+        .status(401)
+        .json('Você não tem autorização para deletar esse histórico.');
+    }
+
+    await history.destroy();
+
+    return res.json({ okay: true });
   }
 }
 

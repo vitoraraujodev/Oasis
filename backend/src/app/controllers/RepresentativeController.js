@@ -23,13 +23,25 @@ class AddressController {
         .json({ error: 'Essa empresa não está registrada' });
     }
 
-    const representativeExists = await Representative.findOne({
+    const representative = await Representative.findOne({
       where: { company_id: req.companyId },
     });
 
-    if (representativeExists) {
-      return res.status(400).json({
-        error: 'Essa empresa já possui um representante legal registrado.',
+    if (representative) {
+      const {
+        id,
+        name,
+        email,
+        cpf,
+        phone_number,
+      } = await representative.update(req.body);
+
+      return res.json({
+        id,
+        name,
+        email,
+        cpf,
+        phone_number,
       });
     }
 

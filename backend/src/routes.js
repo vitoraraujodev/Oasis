@@ -21,15 +21,13 @@ routes.put('/company', authMiddleware, CompanyController.update);
 routes.delete('/company', authMiddleware, CompanyController.delete);
 
 routes.post('/address', authMiddleware, AddressController.store);
-routes.put('/address', authMiddleware, AddressController.update);
 
 routes.post('/representative', authMiddleware, RepresentativeController.store);
-routes.put('/representative', authMiddleware, RepresentativeController.update);
 
 routes.post('/operating-info', authMiddleware, OperatingInfoController.store);
 
 routes.post('/history', authMiddleware, HistoryController.store);
-routes.put('/history/:id', authMiddleware, HistoryController.update);
+routes.delete('/history/:id', authMiddleware, HistoryController.delete);
 
 routes.get('/general-info', authMiddleware, GeneralInfoController.index);
 
