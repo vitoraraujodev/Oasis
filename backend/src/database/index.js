@@ -8,6 +8,7 @@ import OperatingInfo from '../app/models/OperatingInfo';
 import History from '../app/models/History';
 import Shift from '../app/models/Shift';
 import ContactInfo from '../app/models/ContactInfo';
+import ContactManager from '../app/models/ContactManager';
 
 import databaseConfig from '../config/database';
 
@@ -21,6 +22,7 @@ const models = [
   History,
   Shift,
   ContactInfo,
+  ContactManager,
 ];
 
 class Database {
