@@ -3,24 +3,6 @@ import Company from '../models/Company';
 import Address from '../models/Address';
 
 class AddressController {
-  async index(req, res) {
-    const address = await Address.findOne({
-      where: { company_id: req.companyId },
-      attributes: [
-        'id',
-        'cep',
-        'city',
-        'neighborhood',
-        'municipality',
-        'street',
-        'number',
-        'complement',
-      ],
-    });
-
-    return res.json(address);
-  }
-
   async store(req, res) {
     const schema = Yup.object().shape({
       cep: Yup.string().required(),
