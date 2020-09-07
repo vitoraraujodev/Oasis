@@ -5,14 +5,23 @@ import OperatingInfo from '../models/OperatingInfo';
 import Shift from '../models/Shift';
 
 class OperatingInfoController {
-  async store(req, res) { // eslint-disable-line
+  async store(req, res) {
     const schema = Yup.object().shape({
       date: Yup.date().required(),
-      rural: Yup.boolean(),
+      rural: Yup.boolean().required(),
       registration: Yup.boolean().when('rural', (rural, field) =>
         rural === true ? field.required() : field
       ),
       observation: Yup.string(),
+      shifts: Yup.array().of(
+        Yup.object().shape({
+          id: Yup.number(),
+          kind: Yup.string().required(),
+          start_at: Yup.number().required(),
+          end_at: Yup.number().required(),
+          week: Yup.string().required(),
+        })
+      ),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -27,9 +36,8 @@ class OperatingInfoController {
         .json({ error: 'Essa empresa não está registrada.' });
     }
 
-    const { body } = req;
+    const { date } = req.body;
 
-    const { date } = body;
     // If date is in future, return
     if (date) {
       if (isAfter(parseISO(date), new Date())) {
@@ -41,11 +49,11 @@ class OperatingInfoController {
 
     // Checks if year is after 1989, if so, rural is not needed
     if (year > 1989) {
-      body.rural = false;
+      req.body.rural = false;
     }
 
     // If rural is false, registration must be false
-    if (body.rural === false) body.registration = false;
+    if (req.body.rural === false) req.body.registration = false;
 
     const { shifts } = req.body;
     // Checks if there are errors in shifts before creating everything
@@ -65,57 +73,124 @@ class OperatingInfoController {
       }
     }
 
-    async function loadOperatingInfo(id) {
-      const operatingInfo = await OperatingInfo.findByPk(id, {
-        attributes: [
-          'id',
-          'date',
-          'rural',
-          'registration',
-          'observation',
-          'company_id',
-        ],
-        include: [
-          {
-            model: Shift,
-            as: 'shifts',
-            order: [
-              ['week', 'DESC'],
-              ['start_at', 'ASC'],
-            ],
-            attributes: [
-              'id',
-              'kind',
-              'start_at',
-              'end_at',
-              'week',
-              'operating_info_id',
-            ],
-          },
-        ],
-      });
-
-      return operatingInfo;
-    }
-
-    const operatingInfoExists = await OperatingInfo.findOne({
+    const operatingInfo = await OperatingInfo.findOne({
       where: { company_id: req.companyId },
     });
 
-    if (!operatingInfoExists) {
+    const operatingInfoShits = await Shift.findAll({
+      where: { operating_info_id: operatingInfo.id },
+    });
+
+    if (!operatingInfo) {
+      // Creates new Operating Info
       await OperatingInfo.create({
-        ...body,
+        ...req.body,
         company_id: req.companyId,
       })
-        .then(async (operatingInfo) => {
-          const newShifts = shifts.map((shift) => ({
-            ...shift,
-            operating_info_id: operatingInfo.id,
-          }));
-          await Shift.bulkCreate(newShifts);
-          return operatingInfo;
+        .then(async (result) => {
+          // Creates all Operating Info's Shifts
+          if (shifts.length > 0) {
+            const newShifts = shifts.map((shift) => ({
+              ...shift,
+              operating_info_id: result.id,
+            }));
+            await Shift.bulkCreate(newShifts);
+          }
+          return result;
         })
-        .then((operatingInfo) => loadOperatingInfo(operatingInfo.id))
+        .then(async (result) =>
+          // Find Operating Info with all it's Shifts
+          OperatingInfo.findByPk(result.id, {
+            attributes: [
+              'id',
+              'date',
+              'rural',
+              'registration',
+              'observation',
+              'company_id',
+            ],
+            include: [
+              {
+                model: Shift,
+                as: 'shifts',
+                order: [
+                  ['week', 'DESC'],
+                  ['start_at', 'ASC'],
+                ],
+                attributes: [
+                  'id',
+                  'kind',
+                  'start_at',
+                  'end_at',
+                  'week',
+                  'operating_info_id',
+                ],
+              },
+            ],
+          })
+        )
+        .then((result) => res.json(result));
+    } else {
+      // If Operating Info already exists, updates it
+      await operatingInfo
+        .update({
+          ...req.body,
+        })
+        .then(async (result) => {
+          // Creates/update all Operating Info's Shifts
+          if (shifts.length > 0) {
+            const newShifts = shifts.map((shift) => ({
+              ...shift,
+              operating_info_id: result.id,
+            }));
+            await Shift.bulkCreate(newShifts, {
+              updateOnDuplicate: ['kind', 'start_at', 'end_at', 'week'],
+            });
+          }
+          return result;
+        })
+        .then(async (result) => {
+          // Delete Operating Info's Shifts
+          const deleteShifts = operatingInfoShits.filter(
+            (opShift) => !shifts.find((shift) => shift.id === opShift.id)
+          );
+          if (deleteShifts.length > 0)
+            await Shift.destroy({
+              where: { id: deleteShifts.map((shift) => shift.id) },
+            });
+          return result;
+        })
+        .then(async (result) =>
+          // Find Operating Info with all it's Shifts
+          OperatingInfo.findByPk(result.id, {
+            attributes: [
+              'id',
+              'date',
+              'rural',
+              'registration',
+              'observation',
+              'company_id',
+            ],
+            include: [
+              {
+                model: Shift,
+                as: 'shifts',
+                order: [
+                  ['week', 'DESC'],
+                  ['start_at', 'ASC'],
+                ],
+                attributes: [
+                  'id',
+                  'kind',
+                  'start_at',
+                  'end_at',
+                  'week',
+                  'operating_info_id',
+                ],
+              },
+            ],
+          })
+        )
         .then((result) => res.json(result));
     }
   }
