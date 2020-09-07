@@ -1,14 +1,13 @@
 import * as Yup from 'yup';
 import Company from '../models/Company';
-import Representative from '../models/Representative';
+import ContactInfo from '../models/ContactInfo';
 
-class AddressController {
+class ContactInfoController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string().required(),
-      cpf: Yup.string().required(),
-      email: Yup.string().email().required(),
       phone_number: Yup.string().required(),
+      start_at: Yup.number().required(),
+      end_at: Yup.number().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -23,41 +22,35 @@ class AddressController {
         .json({ error: 'Essa empresa não está registrada' });
     }
 
-    const representative = await Representative.findOne({
+    const contactInfo = await ContactInfo.findOne({
       where: { company_id: req.companyId },
     });
 
-    if (representative) {
-      const {
-        id,
-        name,
-        email,
-        cpf,
-        phone_number,
-      } = await representative.update(req.body);
+    if (contactInfo) {
+      const { id, phone_number, start_at, end_at } = await contactInfo.update(
+        req.body
+      );
 
       return res.json({
         id,
-        name,
-        email,
-        cpf,
         phone_number,
+        start_at,
+        end_at,
       });
     }
 
-    const { id, name, email, cpf, phone_number } = await Representative.create({
+    const { id, phone_number, start_at, end_at } = await ContactInfo.create({
       ...req.body,
       company_id: req.companyId,
     });
 
     return res.json({
       id,
-      name,
-      email,
-      cpf,
       phone_number,
+      start_at,
+      end_at,
     });
   }
 }
 
-export default new AddressController();
+export default new ContactInfoController();

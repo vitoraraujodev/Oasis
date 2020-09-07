@@ -11,6 +11,8 @@ import OperatingInfoController from './app/controllers/OperatingInfoController';
 import HistoryController from './app/controllers/HistoryController';
 import GeneralInfoController from './app/controllers/GeneralInfoController';
 
+import ContactInfoController from './app/controllers/ContactInfoController';
+
 const routes = new Router();
 
 routes.post('/sessions', SessionController.store);
@@ -30,5 +32,7 @@ routes.post('/history', authMiddleware, HistoryController.store);
 routes.delete('/history/:id', authMiddleware, HistoryController.delete);
 
 routes.get('/general-info', authMiddleware, GeneralInfoController.index);
+
+routes.post('/contact-info', authMiddleware, ContactInfoController.store);
 
 export default routes;
