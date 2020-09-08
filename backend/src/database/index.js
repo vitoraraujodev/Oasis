@@ -12,6 +12,8 @@ import ContactManager from '../app/models/ContactManager';
 import TechnicalManager from '../app/models/TechnicalManager';
 import Employee from '../app/models/Employee';
 import SpecificInfo from '../app/models/SpecificInfo';
+import GeneralArea from '../app/models/GeneralArea';
+import File from '../app/models/File';
 
 import databaseConfig from '../config/database';
 
@@ -29,6 +31,8 @@ const models = [
   TechnicalManager,
   Employee,
   SpecificInfo,
+  GeneralArea,
+  File,
 ];
 
 class Database {

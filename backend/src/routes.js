@@ -1,4 +1,6 @@
 import { Router } from 'express';
+import multer from 'multer';
+import multerConfig from './config/multer';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -18,8 +20,11 @@ import FollowUpController from './app/controllers/FollowUpController';
 
 import EmployeeController from './app/controllers/EmployeeController';
 import SpecificInfoController from './app/controllers/SpecificInfoController';
+import GeneralAreaController from './app/controllers/GeneralAreaController';
+import FileController from './app/controllers/FileController';
 
 const routes = new Router();
+const upload = multer(multerConfig);
 
 routes.post('/sessions', SessionController.store);
 
@@ -38,6 +43,7 @@ routes.get('/general-info', authMiddleware, GeneralInfoController.index);
 
 routes.post('/contact-info', authMiddleware, ContactInfoController.store);
 routes.post('/contact-manager', authMiddleware, ContactManagerController.store);
+
 routes.post(
   '/technical-manager',
   authMiddleware,
@@ -46,8 +52,16 @@ routes.post(
 
 routes.get('/follow-up', authMiddleware, FollowUpController.index);
 
-routes.post('/employees', authMiddleware, EmployeeController.store);
-routes.delete('/employees/:id', authMiddleware, EmployeeController.delete);
+routes.post('/employee', authMiddleware, EmployeeController.store);
+routes.delete('/employee/:id', authMiddleware, EmployeeController.delete);
 routes.post('/specific-info', authMiddleware, SpecificInfoController.store);
+routes.post('/general-area', authMiddleware, GeneralAreaController.store);
+routes.post(
+  '/files',
+  authMiddleware,
+  upload.single('file'),
+  FileController.store
+);
+routes.delete('/file/:id', authMiddleware, FileController.delete);
 
 export default routes;
