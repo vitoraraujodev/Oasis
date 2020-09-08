@@ -6,6 +6,7 @@ import authMiddleware from './app/middlewares/auth';
 
 import CompanyController from './app/controllers/CompanyController';
 import SessionController from './app/controllers/SessionController';
+import FileController from './app/controllers/FileController';
 
 import AddressController from './app/controllers/AddressController';
 import RepresentativeController from './app/controllers/RepresentativeController';
@@ -21,12 +22,20 @@ import FollowUpController from './app/controllers/FollowUpController';
 import EmployeeController from './app/controllers/EmployeeController';
 import SpecificInfoController from './app/controllers/SpecificInfoController';
 import GeneralAreaController from './app/controllers/GeneralAreaController';
-import FileController from './app/controllers/FileController';
+import SpecificAreaController from './app/controllers/SpecificAreaController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
 
 routes.post('/sessions', SessionController.store);
+
+routes.post(
+  '/files',
+  authMiddleware,
+  upload.single('file'),
+  FileController.store
+);
+routes.delete('/file/:id', authMiddleware, FileController.delete);
 
 routes.get('/company', authMiddleware, CompanyController.index);
 routes.post('/company', CompanyController.store);
@@ -56,12 +65,11 @@ routes.post('/employee', authMiddleware, EmployeeController.store);
 routes.delete('/employee/:id', authMiddleware, EmployeeController.delete);
 routes.post('/specific-info', authMiddleware, SpecificInfoController.store);
 routes.post('/general-area', authMiddleware, GeneralAreaController.store);
-routes.post(
-  '/files',
+routes.post('/specific-area', authMiddleware, SpecificAreaController.store);
+routes.delete(
+  '/specific-area/:id',
   authMiddleware,
-  upload.single('file'),
-  FileController.store
+  SpecificAreaController.delete
 );
-routes.delete('/file/:id', authMiddleware, FileController.delete);
 
 export default routes;

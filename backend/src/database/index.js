@@ -14,6 +14,7 @@ import Employee from '../app/models/Employee';
 import SpecificInfo from '../app/models/SpecificInfo';
 import GeneralArea from '../app/models/GeneralArea';
 import File from '../app/models/File';
+import SpecificArea from '../app/models/SpecificArea';
 
 import databaseConfig from '../config/database';
 
@@ -33,6 +34,7 @@ const models = [
   SpecificInfo,
   GeneralArea,
   File,
+  SpecificArea,
 ];
 
 class Database {
