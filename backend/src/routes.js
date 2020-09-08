@@ -14,6 +14,7 @@ import GeneralInfoController from './app/controllers/GeneralInfoController';
 import ContactInfoController from './app/controllers/ContactInfoController';
 import ContactManagerController from './app/controllers/ContactManagerController';
 import TechnicalManagerController from './app/controllers/TechnicalManagerController';
+import FollowUpController from './app/controllers/FollowUpController';
 
 const routes = new Router();
 
@@ -39,5 +40,7 @@ routes.post(
   authMiddleware,
   TechnicalManagerController.store
 );
+
+routes.get('/follow-up', authMiddleware, FollowUpController.index);
 
 export default routes;

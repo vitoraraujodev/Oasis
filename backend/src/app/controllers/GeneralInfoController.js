@@ -4,7 +4,7 @@ import History from '../models/History';
 import OperatingInfo from '../models/OperatingInfo';
 import Shift from '../models/Shift';
 
-class AddressController {
+class GeneralInfoController {
   async index(req, res) {
     const address = await Address.findOne({
       where: { company_id: req.companyId },
@@ -64,4 +64,4 @@ class AddressController {
   }
 }
 
-export default new AddressController();
+export default new GeneralInfoController();
