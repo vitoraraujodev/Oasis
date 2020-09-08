@@ -17,6 +17,7 @@ import TechnicalManagerController from './app/controllers/TechnicalManagerContro
 import FollowUpController from './app/controllers/FollowUpController';
 
 import EmployeeController from './app/controllers/EmployeeController';
+import SpecificInfoController from './app/controllers/SpecificInfoController';
 
 const routes = new Router();
 
@@ -47,5 +48,6 @@ routes.get('/follow-up', authMiddleware, FollowUpController.index);
 
 routes.post('/employees', authMiddleware, EmployeeController.store);
 routes.delete('/employees/:id', authMiddleware, EmployeeController.delete);
+routes.post('/specific-info', authMiddleware, SpecificInfoController.store);
 
 export default routes;
