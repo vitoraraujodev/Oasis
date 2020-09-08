@@ -63,46 +63,6 @@ class HistoryController {
     });
   }
 
-  async update(req, res) {
-    const schema = Yup.object().shape({
-      instrument: Yup.string().required(),
-      number: Yup.string().required(),
-      process: Yup.string().required(),
-      date: Yup.date().required(),
-    });
-
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Falha na validação dos dados.' });
-    }
-
-    const company = await Company.findByPk(req.companyId);
-
-    if (!company) {
-      return res.status(400).json({ error: 'Empresa não existe.' });
-    }
-
-    const { date } = req.body;
-
-    // If date is in future, return
-    if (date) {
-      if (isAfter(parseISO(date), new Date())) {
-        return res.status(400).json({ error: 'Data inválida.' });
-      }
-    }
-
-    const history = await History.findByPk(req.params.id);
-
-    const { id, instrument, number, process } = await history.update(req.body);
-
-    return res.json({
-      id,
-      instrument,
-      number,
-      process,
-      date,
-    });
-  }
-
   async delete(req, res) {
     const company = await Company.findByPk(req.companyId);
 
@@ -111,6 +71,9 @@ class HistoryController {
     }
 
     const history = await History.findByPk(req.params.id);
+
+    if (!history)
+      return res.status(400).json('Esse Histórico não está registrado.');
 
     if (history.company_id !== req.companyId) {
       return res
