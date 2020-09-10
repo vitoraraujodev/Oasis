@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
 import Company from '../../models/Company';
 import SpecificArea from '../../models/SpecificInfo/SpecificArea';
+import Characteristic from '../../models/SpecificInfo/Characteristic';
+import AreaCharacteristic from '../../models/SpecificInfo/AreaCharacteristic';
 
 class SpecificAreaController {
   async store(req, res) {
@@ -27,24 +29,43 @@ class SpecificAreaController {
       const { id, kind, area } = await specificArea.update({
         ...req.body,
       });
+    } else {
+      await SpecificArea.create({
+        ...req.body,
+        company_id: req.companyId,
+      })
+        .then(async (result) => {
+          const { characteristics } = req.body;
 
-      return res.json({
-        id,
-        kind,
-        area,
-      });
+          if (characteristics && characteristics.length > 0) {
+            const newCharacteristics = characteristics.map(
+              (characteristic) => ({
+                characteristic_id: characteristic,
+                area_id: result.id,
+              })
+            );
+
+            await AreaCharacteristic.bulkCreate(newCharacteristics);
+          }
+          return result;
+        })
+        .then(async (result) =>
+          SpecificArea.findByPk(result.id, {
+            attributes: ['id', 'area', 'kind'],
+            include: [
+              {
+                model: Characteristic,
+                as: 'characteristics',
+                attributes: ['id', 'title'],
+                through: {
+                  model: AreaCharacteristic,
+                },
+              },
+            ],
+          })
+        )
+        .then((result) => res.json(result));
     }
-
-    const { id, kind, area } = await SpecificArea.create({
-      ...req.body,
-      company_id: req.companyId,
-    });
-
-    return res.json({
-      id,
-      kind,
-      area,
-    });
   }
 
   async delete(req, res) {

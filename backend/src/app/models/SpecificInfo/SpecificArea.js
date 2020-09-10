@@ -20,6 +20,12 @@ class SpecificArea extends Model {
       foreignKey: 'company_id',
       as: 'company',
     });
+    this.belongsToMany(models.Characteristic, {
+      through: 'AreaCharacteristic',
+      as: 'characteristics',
+      foreignKey: 'area_id',
+      otherKey: 'characteristic_id',
+    });
   }
 }
 

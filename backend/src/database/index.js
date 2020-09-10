@@ -18,6 +18,8 @@ import Specific from '../app/models/SpecificInfo/Specific';
 import GeneralArea from '../app/models/SpecificInfo/GeneralArea';
 import File from '../app/models/SpecificInfo/File';
 import SpecificArea from '../app/models/SpecificInfo/SpecificArea';
+import Characteristic from '../app/models/SpecificInfo/Characteristic';
+import AreaCharacteristic from '../app/models/SpecificInfo/AreaCharacteristic';
 
 import databaseConfig from '../config/database';
 
@@ -38,6 +40,8 @@ const models = [
   GeneralArea,
   File,
   SpecificArea,
+  Characteristic,
+  AreaCharacteristic,
 ];
 
 class Database {
