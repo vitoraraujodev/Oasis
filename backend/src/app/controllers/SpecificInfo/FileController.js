@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { resolve } from 'path';
 
-import File from '../models/File';
+import File from '../../models/SpecificInfo/File';
 
 class FileController {
   async store(req, res) {

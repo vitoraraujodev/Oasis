@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
-import Company from '../models/Company';
-import Address from '../models/Address';
+import Company from '../../models/Company';
+import Address from '../../models/GeneralInfo/Address';
 
 class AddressController {
   async store(req, res) {

@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { parseISO, isAfter } from 'date-fns';
-import Company from '../models/Company';
-import History from '../models/History';
+import Company from '../../models/Company';
+import History from '../../models/GeneralInfo/History';
 
 class HistoryController {
   async store(req, res) {

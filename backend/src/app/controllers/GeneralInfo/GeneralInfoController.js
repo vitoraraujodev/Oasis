@@ -1,8 +1,8 @@
-import Address from '../models/Address';
-import Representative from '../models/Representative';
-import History from '../models/History';
-import OperatingInfo from '../models/OperatingInfo';
-import Shift from '../models/Shift';
+import Address from '../../models/GeneralInfo/Address';
+import Representative from '../../models/GeneralInfo/Representative';
+import History from '../../models/GeneralInfo/History';
+import OperatingInfo from '../../models/GeneralInfo/OperatingInfo';
+import Shift from '../../models/GeneralInfo/Shift';
 
 class GeneralInfoController {
   async index(req, res) {

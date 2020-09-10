@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 import { parseISO, isAfter, getYear } from 'date-fns';
-import Company from '../models/Company';
-import OperatingInfo from '../models/OperatingInfo';
-import Shift from '../models/Shift';
+import Company from '../../models/Company';
+import OperatingInfo from '../../models/GeneralInfo/OperatingInfo';
+import Shift from '../../models/GeneralInfo/Shift';
 
 class OperatingInfoController {
   async store(req, res) {

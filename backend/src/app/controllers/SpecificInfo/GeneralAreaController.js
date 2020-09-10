@@ -1,9 +1,9 @@
 import * as Yup from 'yup';
 import fs from 'fs';
 import { resolve } from 'path';
-import Company from '../models/Company';
-import GeneralArea from '../models/GeneralArea';
-import File from '../models/File';
+import Company from '../../models/Company';
+import GeneralArea from '../../models/SpecificInfo/GeneralArea';
+import File from '../../models/SpecificInfo/File';
 
 class GeneralAreaController {
   async store(req, res) {

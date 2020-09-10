@@ -1,13 +1,12 @@
 import * as Yup from 'yup';
-import Company from '../models/Company';
-import ContactInfo from '../models/ContactInfo';
+import Company from '../../models/Company';
+import Specific from '../../models/SpecificInfo/Specific';
 
-class ContactInfoController {
+class SpecificController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      phone_number: Yup.string().required(),
-      start_at: Yup.number().required(),
-      end_at: Yup.number().required(),
+      document_type: Yup.string().required(),
+      cnpj: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -22,35 +21,31 @@ class ContactInfoController {
         .json({ error: 'Essa empresa não está registrada' });
     }
 
-    const contactInfo = await ContactInfo.findOne({
+    const specific = await Specific.findOne({
       where: { company_id: req.companyId },
     });
 
-    if (contactInfo) {
-      const { id, phone_number, start_at, end_at } = await contactInfo.update(
-        req.body
-      );
+    if (specific) {
+      const { id, document_type, cnpj } = await specific.update(req.body);
 
       return res.json({
         id,
-        phone_number,
-        start_at,
-        end_at,
+        document_type,
+        cnpj,
       });
     }
 
-    const { id, phone_number, start_at, end_at } = await ContactInfo.create({
+    const { id, document_type, cnpj } = await Specific.create({
       ...req.body,
       company_id: req.companyId,
     });
 
     return res.json({
       id,
-      phone_number,
-      start_at,
-      end_at,
+      document_type,
+      cnpj,
     });
   }
 }
 
-export default new ContactInfoController();
+export default new SpecificController();

@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
-import Company from '../models/Company';
-import SpecificArea from '../models/SpecificArea';
+import Company from '../../models/Company';
+import SpecificArea from '../../models/SpecificInfo/SpecificArea';
 
 class SpecificAreaController {
   async store(req, res) {

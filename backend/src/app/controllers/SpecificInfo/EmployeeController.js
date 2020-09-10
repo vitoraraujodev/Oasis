@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
-import Company from '../models/Company';
-import Employee from '../models/Employee';
+import Company from '../../models/Company';
+import Employee from '../../models/SpecificInfo/Employee';
 
 class EmployeeController {
   async store(req, res) {

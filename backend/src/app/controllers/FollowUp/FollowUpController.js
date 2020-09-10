@@ -1,6 +1,6 @@
-import ContactInfo from '../models/ContactInfo';
-import ContactManager from '../models/ContactManager';
-import TechnicalManager from '../models/TechnicalManager';
+import ContactInfo from '../../models/FollowUp/ContactInfo';
+import ContactManager from '../../models/FollowUp/ContactManager';
+import TechnicalManager from '../../models/FollowUp/TechnicalManager';
 
 class FollowUpController {
   async index(req, res) {
