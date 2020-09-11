@@ -23,6 +23,7 @@ import SpecificController from './app/controllers/SpecificInfo/SpecificControlle
 import GeneralAreaController from './app/controllers/SpecificInfo/GeneralAreaController';
 import SpecificAreaController from './app/controllers/SpecificInfo/SpecificAreaController';
 import FileController from './app/controllers/SpecificInfo/FileController';
+import SpecificInfoController from './app/controllers/SpecificInfo/SpecificInfoController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -30,7 +31,7 @@ const upload = multer(multerConfig);
 routes.post('/sessions', SessionController.store);
 
 routes.post(
-  '/files',
+  '/file',
   authMiddleware,
   upload.single('file'),
   FileController.store
@@ -70,5 +71,7 @@ routes.delete(
   authMiddleware,
   SpecificAreaController.delete
 );
+
+routes.get('/specific-info', authMiddleware, SpecificInfoController.index);
 
 export default routes;
