@@ -21,6 +21,9 @@ import SpecificArea from '../app/models/SpecificInfo/SpecificArea';
 import Characteristic from '../app/models/SpecificInfo/Characteristic';
 import AreaCharacteristic from '../app/models/SpecificInfo/AreaCharacteristic';
 
+import Supply from '../app/models/ProductiveProcess/Supply';
+import SupplyStorage from '../app/models/ProductiveProcess/SupplyStorage';
+
 import databaseConfig from '../config/database';
 
 // Todos os models a serem carregados
@@ -42,6 +45,8 @@ const models = [
   SpecificArea,
   Characteristic,
   AreaCharacteristic,
+  Supply,
+  SupplyStorage,
 ];
 
 class Database {

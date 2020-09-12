@@ -77,10 +77,6 @@ class OperatingInfoController {
       where: { company_id: req.companyId },
     });
 
-    const operatingInfoShits = await Shift.findAll({
-      where: { operating_info_id: operatingInfo.id },
-    });
-
     if (!operatingInfo) {
       // Creates new Operating Info
       await OperatingInfo.create({
@@ -132,6 +128,10 @@ class OperatingInfoController {
         .then((result) => res.json(result));
     } else {
       // If Operating Info already exists, updates it
+      const operatingInfoShits = await Shift.findAll({
+        where: { operating_info_id: operatingInfo.id },
+      });
+
       await operatingInfo
         .update({
           ...req.body,
