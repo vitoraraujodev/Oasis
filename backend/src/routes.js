@@ -26,6 +26,7 @@ import FileController from './app/controllers/SpecificInfo/FileController';
 import SpecificInfoController from './app/controllers/SpecificInfo/SpecificInfoController';
 
 import SupplyController from './app/controllers/ProductiveProcess/SupplyController';
+import ProductController from './app/controllers/ProductiveProcess/ProductController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -78,5 +79,7 @@ routes.get('/specific-info', authMiddleware, SpecificInfoController.index);
 
 routes.post('/supply', authMiddleware, SupplyController.store);
 routes.delete('/supply/:id', authMiddleware, SupplyController.delete);
+routes.post('/product', authMiddleware, ProductController.store);
+routes.delete('/product/:id', authMiddleware, ProductController.delete);
 
 export default routes;

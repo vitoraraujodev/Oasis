@@ -23,6 +23,8 @@ import AreaCharacteristic from '../app/models/SpecificInfo/AreaCharacteristic';
 
 import Supply from '../app/models/ProductiveProcess/Supply';
 import SupplyStorage from '../app/models/ProductiveProcess/SupplyStorage';
+import Product from '../app/models/ProductiveProcess/Product';
+import ProductStorage from '../app/models/ProductiveProcess/ProductStorage';
 
 import databaseConfig from '../config/database';
 
@@ -47,6 +49,8 @@ const models = [
   AreaCharacteristic,
   Supply,
   SupplyStorage,
+  Product,
+  ProductStorage,
 ];
 
 class Database {
