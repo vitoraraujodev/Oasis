@@ -25,6 +25,7 @@ import Supply from '../app/models/ProductiveProcess/Supply';
 import SupplyStorage from '../app/models/ProductiveProcess/SupplyStorage';
 import Product from '../app/models/ProductiveProcess/Product';
 import ProductStorage from '../app/models/ProductiveProcess/ProductStorage';
+import Equipment from '../app/models/ProductiveProcess/Equipment';
 
 import databaseConfig from '../config/database';
 
@@ -51,6 +52,7 @@ const models = [
   SupplyStorage,
   Product,
   ProductStorage,
+  Equipment,
 ];
 
 class Database {
