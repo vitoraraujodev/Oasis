@@ -29,6 +29,8 @@ import Equipment from '../app/models/ProductiveProcess/Equipment';
 
 import ResidueInfo from '../app/models/EnvironAspect/ResidueInfo';
 import Residue from '../app/models/EnvironAspect/Residue';
+import WaterSupply from '../app/models/EnvironAspect/WaterSupply';
+import WaterUse from '../app/models/EnvironAspect/WaterUse';
 
 import databaseConfig from '../config/database';
 
@@ -58,6 +60,8 @@ const models = [
   Equipment,
   ResidueInfo,
   Residue,
+  WaterSupply,
+  WaterUse,
 ];
 
 class Database {

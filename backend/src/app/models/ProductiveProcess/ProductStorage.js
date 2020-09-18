@@ -18,7 +18,7 @@ class ProductStorage extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Company, {
+    this.belongsTo(models.Product, {
       foreignKey: 'product_id',
       as: 'product',
     });
