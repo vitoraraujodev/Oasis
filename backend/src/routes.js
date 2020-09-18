@@ -30,6 +30,9 @@ import ProductController from './app/controllers/ProductiveProcess/ProductContro
 import EquipmentController from './app/controllers/ProductiveProcess/EquipmentController';
 import ProductiveProcessController from './app/controllers/ProductiveProcess/ProductiveProcess';
 
+import ResidueInfoController from './app/controllers/EnvironAspect/ResidueInfoController';
+import ResidueController from './app/controllers/EnvironAspect/ResidueController';
+
 const routes = new Router();
 const upload = multer(multerConfig);
 
@@ -91,5 +94,9 @@ routes.get(
   authMiddleware,
   ProductiveProcessController.index
 );
+
+routes.post('/residue-info', authMiddleware, ResidueInfoController.store);
+routes.post('/residue', authMiddleware, ResidueController.store);
+routes.delete('/residue/:id', authMiddleware, ResidueController.delete);
 
 export default routes;

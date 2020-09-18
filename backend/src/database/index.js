@@ -27,6 +27,9 @@ import Product from '../app/models/ProductiveProcess/Product';
 import ProductStorage from '../app/models/ProductiveProcess/ProductStorage';
 import Equipment from '../app/models/ProductiveProcess/Equipment';
 
+import ResidueInfo from '../app/models/EnvironAspect/ResidueInfo';
+import Residue from '../app/models/EnvironAspect/Residue';
+
 import databaseConfig from '../config/database';
 
 // Todos os models a serem carregados
@@ -53,6 +56,8 @@ const models = [
   Product,
   ProductStorage,
   Equipment,
+  ResidueInfo,
+  Residue,
 ];
 
 class Database {
