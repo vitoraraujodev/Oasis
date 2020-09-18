@@ -33,6 +33,9 @@ import ProductiveProcessController from './app/controllers/ProductiveProcess/Pro
 import ResidueInfoController from './app/controllers/EnvironAspect/ResidueInfoController';
 import ResidueController from './app/controllers/EnvironAspect/ResidueController';
 import WaterSupplyController from './app/controllers/EnvironAspect/WaterSupplyController';
+import OilyController from './app/controllers/EnvironAspect/OilyController';
+import SanitaryController from './app/controllers/EnvironAspect/SanitaryController';
+import IndustrialController from './app/controllers/EnvironAspect/IndustrialController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -105,5 +108,8 @@ routes.delete(
   authMiddleware,
   WaterSupplyController.delete
 );
+routes.post('/sanitary', authMiddleware, SanitaryController.store);
+routes.post('/industrial', authMiddleware, IndustrialController.store);
+routes.post('/oily', authMiddleware, OilyController.store);
 
 export default routes;

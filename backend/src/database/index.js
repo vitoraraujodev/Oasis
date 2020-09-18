@@ -31,6 +31,9 @@ import ResidueInfo from '../app/models/EnvironAspect/ResidueInfo';
 import Residue from '../app/models/EnvironAspect/Residue';
 import WaterSupply from '../app/models/EnvironAspect/WaterSupply';
 import WaterUse from '../app/models/EnvironAspect/WaterUse';
+import Sanitary from '../app/models/EnvironAspect/Sanitary';
+import Oily from '../app/models/EnvironAspect/Oily';
+import Industrial from '../app/models/EnvironAspect/Industrial';
 
 import databaseConfig from '../config/database';
 
@@ -62,6 +65,9 @@ const models = [
   Residue,
   WaterSupply,
   WaterUse,
+  Sanitary,
+  Oily,
+  Industrial,
 ];
 
 class Database {
