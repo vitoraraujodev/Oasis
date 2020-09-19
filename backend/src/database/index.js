@@ -36,6 +36,8 @@ import Oily from '../app/models/EnvironAspect/Oily';
 import Industrial from '../app/models/EnvironAspect/Industrial';
 import Effluent from '../app/models/EnvironAspect/Effluent';
 
+import EmissionInfo from '../app/models/CompAspect/EmissionInfo';
+
 import databaseConfig from '../config/database';
 
 // Todos os models a serem carregados
@@ -70,6 +72,7 @@ const models = [
   Oily,
   Industrial,
   Effluent,
+  EmissionInfo,
 ];
 
 class Database {
