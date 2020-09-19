@@ -37,6 +37,7 @@ import Industrial from '../app/models/EnvironAspect/Industrial';
 import Effluent from '../app/models/EnvironAspect/Effluent';
 
 import EmissionInfo from '../app/models/CompAspect/EmissionInfo';
+import Emission from '../app/models/CompAspect/Emission';
 
 import databaseConfig from '../config/database';
 
@@ -73,6 +74,7 @@ const models = [
   Industrial,
   Effluent,
   EmissionInfo,
+  Emission,
 ];
 
 class Database {

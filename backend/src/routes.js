@@ -40,6 +40,7 @@ import EffluentController from './app/controllers/EnvironAspect/EffluentControll
 import EnvironAspectController from './app/controllers/EnvironAspect/EnvironAspectController';
 
 import EmissionInfoController from './app/controllers/CompAspect/EmissionInfoController';
+import EmissionController from './app/controllers/CompAspect/EmissionController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -121,5 +122,7 @@ routes.delete('/effluent/:id', authMiddleware, EffluentController.delete);
 routes.get('/environ-aspect', authMiddleware, EnvironAspectController.index);
 
 routes.post('/emission-info', authMiddleware, EmissionInfoController.store);
+routes.post('/emission', authMiddleware, EmissionController.store);
+routes.delete('/emission/:id', authMiddleware, EmissionController.delete);
 
 export default routes;
