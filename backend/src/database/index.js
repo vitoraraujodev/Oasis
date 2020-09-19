@@ -34,6 +34,7 @@ import WaterUse from '../app/models/EnvironAspect/WaterUse';
 import Sanitary from '../app/models/EnvironAspect/Sanitary';
 import Oily from '../app/models/EnvironAspect/Oily';
 import Industrial from '../app/models/EnvironAspect/Industrial';
+import Effluent from '../app/models/EnvironAspect/Effluent';
 
 import databaseConfig from '../config/database';
 
@@ -68,6 +69,7 @@ const models = [
   Sanitary,
   Oily,
   Industrial,
+  Effluent,
 ];
 
 class Database {

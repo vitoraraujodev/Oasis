@@ -10,6 +10,7 @@ class SpecificInfoController {
   async index(req, res) {
     const employees = await Employee.findAll({
       where: { company_id: req.companyId },
+      order: [['kind', 'DESC']],
       attributes: ['id', 'kind', 'amount'],
     });
 

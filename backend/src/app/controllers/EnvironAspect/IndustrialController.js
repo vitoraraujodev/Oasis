@@ -6,7 +6,7 @@ class IndustrialController {
   async store(req, res) {
     const schema = Yup.object().shape({
       water_body: Yup.string().required(),
-      license: Yup.string().required(),
+      license: Yup.string(),
     });
 
     if (!(await schema.isValid(req.body))) {

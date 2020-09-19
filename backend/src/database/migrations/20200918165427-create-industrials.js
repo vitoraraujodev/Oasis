@@ -13,7 +13,7 @@ module.exports = {
       },
       license: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       company_id: {
         type: Sequelize.INTEGER,

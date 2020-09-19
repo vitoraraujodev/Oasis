@@ -36,6 +36,8 @@ import WaterSupplyController from './app/controllers/EnvironAspect/WaterSupplyCo
 import OilyController from './app/controllers/EnvironAspect/OilyController';
 import SanitaryController from './app/controllers/EnvironAspect/SanitaryController';
 import IndustrialController from './app/controllers/EnvironAspect/IndustrialController';
+import EffluentController from './app/controllers/EnvironAspect/EffluentController';
+import EnvironAspectController from './app/controllers/EnvironAspect/EnvironAspectController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -111,5 +113,9 @@ routes.delete(
 routes.post('/sanitary', authMiddleware, SanitaryController.store);
 routes.post('/industrial', authMiddleware, IndustrialController.store);
 routes.post('/oily', authMiddleware, OilyController.store);
+routes.post('/effluent', authMiddleware, EffluentController.store);
+routes.delete('/effluent/:id', authMiddleware, EffluentController.delete);
+
+routes.get('/environ-aspect', authMiddleware, EnvironAspectController.index);
 
 export default routes;

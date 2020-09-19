@@ -6,7 +6,7 @@ import Employee from '../../models/SpecificInfo/Employee';
 class SanitaryController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      water_body: Yup.string().required(),
+      water_body: Yup.string(),
       kitchen: Yup.boolean().required(),
       declaration: Yup.string().required(),
     });

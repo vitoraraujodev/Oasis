@@ -1,28 +1,35 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('sanitaries', {
+    return queryInterface.createTable('effluents', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      water_body: {
+      kind: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      source: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      treatment: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      quantity: {
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
-      kitchen: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-        defaultValue: false,
-      },
-      declaration: {
-        type: Sequelize.BOOLEAN,
-        allowNull: false,
-      },
-      theoric_flow: {
+      flow: {
         type: Sequelize.FLOAT,
         allowNull: false,
+      },
+      capacity: {
+        type: Sequelize.FLOAT,
+        allowNull: true,
       },
       company_id: {
         type: Sequelize.INTEGER,
@@ -43,6 +50,6 @@ module.exports = {
   },
 
   down: (queryInterface) => {
-    return queryInterface.dropTable('sanitaries');
+    return queryInterface.dropTable('effluents');
   },
 };
