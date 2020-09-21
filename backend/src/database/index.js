@@ -40,6 +40,8 @@ import EmissionInfo from '../app/models/CompAspect/EmissionInfo';
 import Emission from '../app/models/CompAspect/Emission';
 import Risk from '../app/models/CompAspect/Risk';
 import RiskStorage from '../app/models/CompAspect/RiskStorage';
+import NoiseInfo from '../app/models/CompAspect/NoiseInfo';
+import Noise from '../app/models/CompAspect/Noise';
 
 import databaseConfig from '../config/database';
 
@@ -79,6 +81,8 @@ const models = [
   Emission,
   Risk,
   RiskStorage,
+  NoiseInfo,
+  Noise,
 ];
 
 class Database {
