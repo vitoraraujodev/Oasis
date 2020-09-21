@@ -11,13 +11,13 @@ class EnvironAspectController {
   async index(req, res) {
     const waterSupply = await WaterSupply.findAll({
       where: { company_id: req.companyId },
-      order: [['source', 'DESC']],
+      order: [['source', 'ASC']],
       attributes: ['id', 'source', 'license'],
       include: [
         {
           model: WaterUse,
           as: 'uses',
-          order: [['usage', 'DESC']],
+          order: [['usage', 'ASC']],
           attributes: ['id', 'usage', 'flow'],
         },
       ],
@@ -97,7 +97,7 @@ class EnvironAspectController {
 
     const residues = await Residue.findAll({
       where: { company_id: req.companyId },
-      order: [['identification', 'DESC']],
+      order: [['identification', 'ASC']],
       attributes: [
         'identification',
         'physical_state',

@@ -8,7 +8,7 @@ class ProductiveProcessController {
   async index(req, res) {
     const equipments = await Equipment.findAll({
       where: { company_id: req.companyId },
-      order: [['identification', 'DESC']],
+      order: [['identification', 'ASC']],
       attributes: [
         'id',
         'kind',
@@ -26,7 +26,7 @@ class ProductiveProcessController {
     });
 
     const products = await Product.findAll({
-      order: [['identification', 'DESC']],
+      order: [['identification', 'ASC']],
       attributes: [
         'id',
         'identification',
@@ -41,14 +41,14 @@ class ProductiveProcessController {
         {
           model: ProductStorage,
           as: 'storages',
-          order: [['identification', 'DESC']],
+          order: [['identification', 'ASC']],
           attributes: ['id', 'identification', 'amount', 'capacity', 'unit'],
         },
       ],
     });
 
     const supplies = await Supply.findAll({
-      order: [['identification', 'DESC']],
+      order: [['identification', 'ASC']],
       attributes: [
         'id',
         'identification',
@@ -62,7 +62,7 @@ class ProductiveProcessController {
         {
           model: SupplyStorage,
           as: 'storages',
-          order: [['identification', 'DESC']],
+          order: [['identification', 'ASC']],
           attributes: ['id', 'identification', 'amount', 'capacity', 'unit'],
         },
       ],

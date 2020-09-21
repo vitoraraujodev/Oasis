@@ -44,6 +44,7 @@ import EmissionController from './app/controllers/CompAspect/EmissionController'
 import RiskController from './app/controllers/CompAspect/RiskController';
 import NoiseInfoController from './app/controllers/CompAspect/NoiseInfoController';
 import NoiseController from './app/controllers/CompAspect/NoiseController';
+import CompAspectController from './app/controllers/CompAspect/CompAspectController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -132,5 +133,7 @@ routes.delete('/risk/:id', authMiddleware, RiskController.delete);
 routes.post('/noise-info', authMiddleware, NoiseInfoController.store);
 routes.post('/noise', authMiddleware, NoiseController.store);
 routes.delete('/noise/:id', authMiddleware, NoiseController.delete);
+
+routes.get('/comp-aspect', authMiddleware, CompAspectController.index);
 
 export default routes;

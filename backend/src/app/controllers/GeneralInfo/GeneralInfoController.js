@@ -27,7 +27,7 @@ class GeneralInfoController {
 
     const history = await History.findAll({
       where: { company_id: req.companyId },
-      order: [['date', 'DESC']],
+      order: [['date', 'ASC']],
       attributes: ['id', 'instrument', 'number', 'process', 'date'],
     });
 
@@ -46,7 +46,7 @@ class GeneralInfoController {
           model: Shift,
           as: 'shifts',
           order: [
-            ['week', 'DESC'],
+            ['week', 'ASC'],
             ['start_at', 'ASC'],
           ],
           attributes: [
