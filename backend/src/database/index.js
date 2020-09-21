@@ -38,6 +38,8 @@ import Effluent from '../app/models/EnvironAspect/Effluent';
 
 import EmissionInfo from '../app/models/CompAspect/EmissionInfo';
 import Emission from '../app/models/CompAspect/Emission';
+import Risk from '../app/models/CompAspect/Risk';
+import RiskStorage from '../app/models/CompAspect/RiskStorage';
 
 import databaseConfig from '../config/database';
 
@@ -75,6 +77,8 @@ const models = [
   Effluent,
   EmissionInfo,
   Emission,
+  Risk,
+  RiskStorage,
 ];
 
 class Database {
