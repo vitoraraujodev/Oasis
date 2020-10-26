@@ -14,9 +14,6 @@ class EquipmentController {
       capacity_unit: Yup.string().required(),
       fuel: Yup.string().required(),
       consumption: Yup.number().required(),
-      parameter: Yup.string().required(),
-      value: Yup.number().required(),
-      value_unit: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -52,9 +49,6 @@ class EquipmentController {
         capacity_unit,
         fuel,
         consumption,
-        parameter,
-        value,
-        value_unit,
       } = await equipment.update({
         ...req.body,
       });
@@ -69,9 +63,6 @@ class EquipmentController {
         capacity_unit,
         fuel,
         consumption,
-        parameter,
-        value,
-        value_unit,
       });
     }
 
@@ -84,9 +75,6 @@ class EquipmentController {
       capacity_unit,
       fuel,
       consumption,
-      parameter,
-      value,
-      value_unit,
     } = await Equipment.create({
       ...req.body,
       company_id: req.companyId,
@@ -102,9 +90,6 @@ class EquipmentController {
       capacity_unit,
       fuel,
       consumption,
-      parameter,
-      value,
-      value_unit,
     });
   }
 

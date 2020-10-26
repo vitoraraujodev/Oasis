@@ -39,18 +39,6 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false,
       },
-      parameter: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      value: {
-        type: Sequelize.FLOAT,
-        allowNull: false,
-      },
-      value_unit: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       company_id: {
         type: Sequelize.INTEGER,
         references: { model: 'companies', key: 'id' },

@@ -32,8 +32,6 @@ import Residue from '../app/models/EnvironAspect/Residue';
 import WaterSupply from '../app/models/EnvironAspect/WaterSupply';
 import WaterUse from '../app/models/EnvironAspect/WaterUse';
 import Sanitary from '../app/models/EnvironAspect/Sanitary';
-import Oily from '../app/models/EnvironAspect/Oily';
-import Industrial from '../app/models/EnvironAspect/Industrial';
 import Effluent from '../app/models/EnvironAspect/Effluent';
 
 import EmissionInfo from '../app/models/CompAspect/EmissionInfo';
@@ -74,8 +72,6 @@ const models = [
   WaterSupply,
   WaterUse,
   Sanitary,
-  Oily,
-  Industrial,
   Effluent,
   EmissionInfo,
   Emission,

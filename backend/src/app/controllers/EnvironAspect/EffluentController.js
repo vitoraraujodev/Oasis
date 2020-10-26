@@ -10,7 +10,8 @@ class EffluentController {
       flow: Yup.string().required(),
       treatment: Yup.string().required(),
       quantity: Yup.string(),
-      capacity: Yup.string(),
+      license: Yup.string(),
+      water_body: Yup.string(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -25,17 +26,24 @@ class EffluentController {
       });
     }
 
+    const { kind, water_body } = req.body;
+
+    if (kind === 'sanitary' && !water_body) {
+      return res.status(400).json({
+        error: 'Informe o corpo receptor deste efluente.',
+      });
+    }
+
     const effluent = await Effluent.findByPk(req.body.id);
 
     if (effluent) {
       const {
         id,
-        kind,
         source,
         flow,
         treatment,
         quantity,
-        capacity,
+        license,
       } = await effluent.update({
         ...req.body,
       });
@@ -47,18 +55,18 @@ class EffluentController {
         flow,
         treatment,
         quantity,
-        capacity,
+        water_body,
+        license,
       });
     }
 
     const {
       id,
-      kind,
       source,
       flow,
       treatment,
       quantity,
-      capacity,
+      license,
     } = await Effluent.create({
       ...req.body,
       company_id: req.companyId,
@@ -71,7 +79,8 @@ class EffluentController {
       flow,
       treatment,
       quantity,
-      capacity,
+      water_body,
+      license,
     });
   }
 

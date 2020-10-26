@@ -9,7 +9,8 @@ class Effluent extends Model {
         flow: Sequelize.FLOAT,
         treatment: Sequelize.STRING,
         quantity: Sequelize.INTEGER,
-        capacity: Sequelize.FLOAT,
+        water_body: Sequelize.STRING,
+        license: Sequelize.STRING,
       },
       {
         sequelize,

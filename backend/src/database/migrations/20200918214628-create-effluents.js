@@ -15,6 +15,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      flow: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
       treatment: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -23,12 +27,12 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
-      flow: {
-        type: Sequelize.FLOAT,
-        allowNull: false,
+      water_body: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
-      capacity: {
-        type: Sequelize.FLOAT,
+      license: {
+        type: Sequelize.STRING,
         allowNull: true,
       },
       company_id: {

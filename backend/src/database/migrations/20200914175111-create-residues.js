@@ -39,7 +39,11 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      reservior: {
+      storage_form: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      storage_location: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -48,18 +52,6 @@ module.exports = {
         allowNull: false,
       },
       capacity_unit: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      removal_frequency: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      transport: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      packaging: {
         type: Sequelize.STRING,
         allowNull: false,
       },

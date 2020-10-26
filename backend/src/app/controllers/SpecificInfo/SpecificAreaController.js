@@ -24,15 +24,20 @@ class SpecificAreaController {
     }
 
     const specificArea = await SpecificArea.findByPk(req.body.id);
-    const defaultCharacteristics = await Characteristic.findAll();
+
     const { characteristics } = req.body;
 
-    const invalid = characteristics.filter(
-      (characteristic) =>
-        !defaultCharacteristics.find(
-          (defaultCharacteristic) => defaultCharacteristic.id === characteristic
+    const defaultCharacteristics = await Characteristic.findAll();
+
+    const invalid = characteristics
+      ? characteristics.filter(
+          (characteristic) =>
+            !defaultCharacteristics.find(
+              (defaultCharacteristic) =>
+                defaultCharacteristic.id === characteristic
+            )
         )
-    );
+      : [];
 
     if (invalid.length >= 1) {
       return res

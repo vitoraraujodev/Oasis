@@ -12,9 +12,6 @@ class Equipment extends Model {
         capacity_unit: Sequelize.STRING,
         fuel: Sequelize.STRING,
         consumption: Sequelize.FLOAT,
-        parameter: Sequelize.STRING,
-        value: Sequelize.FLOAT,
-        value_unit: Sequelize.STRING,
       },
       {
         sequelize,

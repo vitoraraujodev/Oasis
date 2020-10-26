@@ -4,7 +4,6 @@ class Sanitary extends Model {
   static init(sequelize) {
     super.init(
       {
-        water_body: Sequelize.STRING,
         kitchen: Sequelize.BOOLEAN,
         declaration: Sequelize.BOOLEAN,
         theoric_flow: Sequelize.FLOAT,

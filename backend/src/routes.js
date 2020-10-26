@@ -33,9 +33,7 @@ import ProductiveProcessController from './app/controllers/ProductiveProcess/Pro
 import ResidueInfoController from './app/controllers/EnvironAspect/ResidueInfoController';
 import ResidueController from './app/controllers/EnvironAspect/ResidueController';
 import WaterSupplyController from './app/controllers/EnvironAspect/WaterSupplyController';
-import OilyController from './app/controllers/EnvironAspect/OilyController';
 import SanitaryController from './app/controllers/EnvironAspect/SanitaryController';
-import IndustrialController from './app/controllers/EnvironAspect/IndustrialController';
 import EffluentController from './app/controllers/EnvironAspect/EffluentController';
 import EnvironAspectController from './app/controllers/EnvironAspect/EnvironAspectController';
 
@@ -45,6 +43,8 @@ import RiskController from './app/controllers/CompAspect/RiskController';
 import NoiseInfoController from './app/controllers/CompAspect/NoiseInfoController';
 import NoiseController from './app/controllers/CompAspect/NoiseController';
 import CompAspectController from './app/controllers/CompAspect/CompAspectController';
+
+import DocumentController from './app/controllers/Document/DocumentController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -118,8 +118,6 @@ routes.delete(
   WaterSupplyController.delete
 );
 routes.post('/sanitary', authMiddleware, SanitaryController.store);
-routes.post('/industrial', authMiddleware, IndustrialController.store);
-routes.post('/oily', authMiddleware, OilyController.store);
 routes.post('/effluent', authMiddleware, EffluentController.store);
 routes.delete('/effluent/:id', authMiddleware, EffluentController.delete);
 
@@ -135,5 +133,7 @@ routes.post('/noise', authMiddleware, NoiseController.store);
 routes.delete('/noise/:id', authMiddleware, NoiseController.delete);
 
 routes.get('/comp-aspect', authMiddleware, CompAspectController.index);
+
+routes.get('/document/:id', DocumentController.index);
 
 export default routes;

@@ -7,10 +7,6 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      water_body: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
       kitchen: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
@@ -19,6 +15,7 @@ module.exports = {
       declaration: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
+        defaultValue: false,
       },
       theoric_flow: {
         type: Sequelize.FLOAT,

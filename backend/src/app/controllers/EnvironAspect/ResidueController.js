@@ -13,12 +13,10 @@ class ResidueController {
       classification: Yup.string(),
       quantity: Yup.number().required(),
       quantity_unit: Yup.string().required(),
-      reservior: Yup.string().required(),
+      storage_form: Yup.string().required(),
+      storage_location: Yup.string().required(),
       capacity: Yup.number().required(),
       capacity_unit: Yup.string().required(),
-      removal_frequency: Yup.number().required(),
-      transport: Yup.string().required(),
-      packaging: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -46,12 +44,10 @@ class ResidueController {
         classification,
         quantity,
         quantity_unit,
-        reservior,
+        storage_form,
+        storage_location,
         capacity,
         capacity_unit,
-        removal_frequency,
-        transport,
-        packaging,
       } = await residue.update({
         ...req.body,
       });
@@ -66,12 +62,10 @@ class ResidueController {
         classification,
         quantity,
         quantity_unit,
-        reservior,
+        storage_form,
+        storage_location,
         capacity,
         capacity_unit,
-        removal_frequency,
-        transport,
-        packaging,
       });
     }
 
@@ -85,12 +79,10 @@ class ResidueController {
       classification,
       quantity,
       quantity_unit,
-      reservior,
+      storage_form,
+      storage_location,
       capacity,
       capacity_unit,
-      removal_frequency,
-      transport,
-      packaging,
     } = await Residue.create({
       ...req.body,
       company_id: req.companyId,
@@ -106,12 +98,10 @@ class ResidueController {
       classification,
       quantity,
       quantity_unit,
-      reservior,
+      storage_form,
+      storage_location,
       capacity,
       capacity_unit,
-      removal_frequency,
-      transport,
-      packaging,
     });
   }
 

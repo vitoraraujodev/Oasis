@@ -6,7 +6,6 @@ import Employee from '../../models/SpecificInfo/Employee';
 class SanitaryController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      water_body: Yup.string(),
       kitchen: Yup.boolean().required(),
       declaration: Yup.string().required(),
     });
@@ -48,21 +47,20 @@ class SanitaryController {
       (kitchen ? employeesNumber * 95 : employeesNumber * 70) / 1000;
 
     if (sanitary) {
-      const { id, water_body, declaration } = await sanitary.update({
+      const { id, declaration } = await sanitary.update({
         ...req.body,
         theoric_flow,
       });
 
       return res.json({
         id,
-        water_body,
         kitchen,
         theoric_flow,
         declaration,
       });
     }
 
-    const { id, water_body, declaration } = await Sanitary.create({
+    const { id, declaration } = await Sanitary.create({
       ...req.body,
       theoric_flow,
       company_id: req.companyId,
@@ -70,7 +68,6 @@ class SanitaryController {
 
     return res.json({
       id,
-      water_body,
       kitchen,
       theoric_flow,
       declaration,

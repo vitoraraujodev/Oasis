@@ -1,7 +1,5 @@
 import WaterSupply from '../../models/EnvironAspect/WaterSupply';
 import WaterUse from '../../models/EnvironAspect/WaterUse';
-import Industrial from '../../models/EnvironAspect/Industrial';
-import Oily from '../../models/EnvironAspect/Oily';
 import Sanitary from '../../models/EnvironAspect/Sanitary';
 import Effluent from '../../models/EnvironAspect/Effluent';
 import Residue from '../../models/EnvironAspect/Residue';
@@ -85,16 +83,6 @@ class EnvironAspectController {
       ],
     });
 
-    const industrial = await Industrial.findOne({
-      where: { company_id: req.companyId },
-      attributes: ['id', 'water_body', 'license'],
-    });
-
-    const oily = await Oily.findOne({
-      where: { company_id: req.companyId },
-      attributes: ['id', 'water_body'],
-    });
-
     const residues = await Residue.findAll({
       where: { company_id: req.companyId },
       order: [['identification', 'ASC']],
@@ -127,8 +115,6 @@ class EnvironAspectController {
       industrialEffluents,
       oilyEffluents,
       sanitary,
-      industrial,
-      oily,
       residues,
       residueInfo,
     });
