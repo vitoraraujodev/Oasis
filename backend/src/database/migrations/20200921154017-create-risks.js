@@ -11,6 +11,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      physical_state: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       company_id: {
         type: Sequelize.INTEGER,
         references: { model: 'companies', key: 'id' },

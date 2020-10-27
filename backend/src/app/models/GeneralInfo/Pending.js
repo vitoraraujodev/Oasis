@@ -1,11 +1,12 @@
 import Sequelize, { Model } from 'sequelize';
 
-class Risk extends Model {
+class Pending extends Model {
   static init(sequelize) {
     super.init(
       {
-        substance: Sequelize.STRING,
-        physical_state: Sequelize.STRING,
+        instrument: Sequelize.STRING,
+        process: Sequelize.STRING,
+        objective: Sequelize.STRING,
       },
       {
         sequelize,
@@ -20,12 +21,7 @@ class Risk extends Model {
       foreignKey: 'company_id',
       as: 'company',
     });
-
-    this.hasMany(models.RiskStorage, {
-      foreignKey: 'risk_id',
-      as: 'storages',
-    });
   }
 }
 
-export default Risk;
+export default Pending;

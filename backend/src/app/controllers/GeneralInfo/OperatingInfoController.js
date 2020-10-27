@@ -16,7 +16,6 @@ class OperatingInfoController {
       shifts: Yup.array().of(
         Yup.object().shape({
           id: Yup.number(),
-          kind: Yup.string().required(),
           start_at: Yup.number().required(),
           end_at: Yup.number().required(),
           week: Yup.string().required(),
@@ -115,7 +114,6 @@ class OperatingInfoController {
                 ],
                 attributes: [
                   'id',
-                  'kind',
                   'start_at',
                   'end_at',
                   'week',
@@ -144,7 +142,7 @@ class OperatingInfoController {
               operating_info_id: result.id,
             }));
             await Shift.bulkCreate(newShifts, {
-              updateOnDuplicate: ['kind', 'start_at', 'end_at', 'week'],
+              updateOnDuplicate: ['start_at', 'end_at', 'week'],
             });
           }
           return result;
@@ -181,7 +179,6 @@ class OperatingInfoController {
                 ],
                 attributes: [
                   'id',
-                  'kind',
                   'start_at',
                   'end_at',
                   'week',

@@ -1,6 +1,7 @@
 import Address from '../../models/GeneralInfo/Address';
 import Representative from '../../models/GeneralInfo/Representative';
 import History from '../../models/GeneralInfo/History';
+import Pending from '../../models/GeneralInfo/Pending';
 import OperatingInfo from '../../models/GeneralInfo/OperatingInfo';
 import Shift from '../../models/GeneralInfo/Shift';
 
@@ -20,8 +21,9 @@ class GeneralInfoController {
       ],
     });
 
-    const representative = await Representative.findOne({
+    const representative = await Representative.findAll({
       where: { company_id: req.companyId },
+      order: [['name', 'ASC']],
       attributes: ['id', 'name', 'cpf', 'email', 'phone_number'],
     });
 
@@ -36,6 +38,12 @@ class GeneralInfoController {
         'expiration_date',
         'objective',
       ],
+    });
+
+    const pending = await Pending.findAll({
+      where: { company_id: req.companyId },
+      order: [['instrument', 'ASC']],
+      attributes: ['id', 'instrument', 'process', 'objective'],
     });
 
     const operatingInfo = await OperatingInfo.findOne({
@@ -56,19 +64,18 @@ class GeneralInfoController {
             ['week', 'ASC'],
             ['start_at', 'ASC'],
           ],
-          attributes: [
-            'id',
-            'kind',
-            'start_at',
-            'end_at',
-            'week',
-            'operating_info_id',
-          ],
+          attributes: ['id', 'start_at', 'end_at', 'week'],
         },
       ],
     });
 
-    return res.json({ address, representative, history, operatingInfo });
+    return res.json({
+      address,
+      representative,
+      history,
+      pending,
+      operatingInfo,
+    });
   }
 }
 

@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 import Company from '../../models/Company';
 import Representative from '../../models/GeneralInfo/Representative';
 
-class AddressController {
+class RepresentativeController {
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -23,9 +23,7 @@ class AddressController {
         .json({ error: 'Essa empresa não está registrada' });
     }
 
-    const representative = await Representative.findOne({
-      where: { company_id: req.companyId },
-    });
+    const representative = await Representative.findByPk(req.body.id);
 
     if (representative) {
       const {
@@ -58,6 +56,29 @@ class AddressController {
       phone_number,
     });
   }
+
+  async delete(req, res) {
+    const company = await Company.findByPk(req.companyId);
+
+    if (!company) {
+      return res.status(400).json('Empresa não encontrada.');
+    }
+
+    const representative = await Representative.findByPk(req.params.id);
+
+    if (!representative)
+      return res.status(400).json('Esse representante não está registrado.');
+
+    if (representative.company_id !== req.companyId) {
+      return res
+        .status(401)
+        .json('Você não tem autorização para deletar esse representante.');
+    }
+
+    await representative.destroy();
+
+    return res.json({ okay: true });
+  }
 }
 
-export default new AddressController();
+export default new RepresentativeController();

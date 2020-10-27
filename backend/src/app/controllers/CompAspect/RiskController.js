@@ -7,6 +7,7 @@ class RiskController {
   async store(req, res) {
     const schema = Yup.object().shape({
       substance: Yup.string().required(),
+      physical_state: Yup.string().required(),
       storages: Yup.array().of(
         Yup.object().shape({
           id: Yup.number(),
@@ -56,7 +57,7 @@ class RiskController {
           // Find Risk with all it's Storages
           Risk.findByPk(result.id, {
             order: [['substance', 'DESC']],
-            attributes: ['id', 'substance'],
+            attributes: ['id', 'substance', 'physical_state'],
             include: [
               {
                 model: RiskStorage,

@@ -11,6 +11,7 @@ import AddressController from './app/controllers/GeneralInfo/AddressController';
 import RepresentativeController from './app/controllers/GeneralInfo/RepresentativeController';
 import OperatingInfoController from './app/controllers/GeneralInfo/OperatingInfoController';
 import HistoryController from './app/controllers/GeneralInfo/HistoryController';
+import PendingController from './app/controllers/GeneralInfo/PendingController';
 import GeneralInfoController from './app/controllers/GeneralInfo/GeneralInfoController';
 
 import ContactInfoController from './app/controllers/FollowUp/ContactInfoController';
@@ -66,9 +67,16 @@ routes.delete('/company', authMiddleware, CompanyController.delete);
 
 routes.post('/address', authMiddleware, AddressController.store);
 routes.post('/representative', authMiddleware, RepresentativeController.store);
+routes.delete(
+  '/representative/:id',
+  authMiddleware,
+  RepresentativeController.delete
+);
 routes.post('/operating-info', authMiddleware, OperatingInfoController.store);
 routes.post('/history', authMiddleware, HistoryController.store);
 routes.delete('/history/:id', authMiddleware, HistoryController.delete);
+routes.post('/pending', authMiddleware, PendingController.store);
+routes.delete('/pending/:id', authMiddleware, PendingController.delete);
 
 routes.get('/general-info', authMiddleware, GeneralInfoController.index);
 

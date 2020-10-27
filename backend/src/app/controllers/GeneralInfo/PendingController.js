@@ -1,14 +1,12 @@
 import * as Yup from 'yup';
 import Company from '../../models/Company';
-import History from '../../models/GeneralInfo/History';
+import Pending from '../../models/GeneralInfo/Pending';
 
-class HistoryController {
+class PendingController {
   async store(req, res) {
     const schema = Yup.object().shape({
       instrument: Yup.string().required(),
-      number: Yup.string().required(),
       process: Yup.string().required(),
-      expiration_date: Yup.date().required(),
       objective: Yup.string().required(),
     });
 
@@ -24,38 +22,22 @@ class HistoryController {
       });
     }
 
-    const history = await History.findByPk(req.body.id);
+    const pending = await Pending.findByPk(req.body.id);
 
-    if (history) {
-      const {
-        id,
-        instrument,
-        number,
-        process,
-        expiration_date,
-        objective,
-      } = await history.update({
+    if (pending) {
+      const { id, instrument, process, objective } = await Pending.update({
         ...req.body,
       });
 
       return res.json({
         id,
         instrument,
-        number,
         process,
-        expiration_date,
         objective,
       });
     }
 
-    const {
-      id,
-      instrument,
-      number,
-      process,
-      objective,
-      expiration_date,
-    } = await History.create({
+    const { id, instrument, process, objective } = await Pending.create({
       ...req.body,
       company_id: req.companyId,
     });
@@ -63,9 +45,7 @@ class HistoryController {
     return res.json({
       id,
       instrument,
-      number,
       process,
-      expiration_date,
       objective,
     });
   }
@@ -77,21 +57,23 @@ class HistoryController {
       return res.status(400).json('Empresa não encontrada.');
     }
 
-    const history = await History.findByPk(req.params.id);
+    const pending = await Pending.findByPk(req.params.id);
 
-    if (!history)
-      return res.status(400).json('Esse Histórico não está registrado.');
+    if (!pending)
+      return res
+        .status(400)
+        .json('Esse processo pendente não está registrado.');
 
-    if (history.company_id !== req.companyId) {
+    if (pending.company_id !== req.companyId) {
       return res
         .status(401)
-        .json('Você não tem autorização para deletar esse histórico.');
+        .json('Você não tem autorização para deletar esse processo pendente.');
     }
 
-    await history.destroy();
+    await pending.destroy();
 
     return res.json({ okay: true });
   }
 }
 
-export default new HistoryController();
+export default new PendingController();

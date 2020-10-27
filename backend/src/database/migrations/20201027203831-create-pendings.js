@@ -1,42 +1,22 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('equipment', {
+    return queryInterface.createTable('pendings', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      kind: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      identification: {
+      instrument: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      amount: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      date: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      capacity: {
-        type: Sequelize.FLOAT,
-        allowNull: true,
-      },
-      capacity_unit: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      fuel: {
+      process: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      consumption: {
-        type: Sequelize.FLOAT,
+      objective: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       company_id: {
@@ -58,6 +38,6 @@ module.exports = {
   },
 
   down: (queryInterface) => {
-    return queryInterface.dropTable('equipment');
+    return queryInterface.dropTable('pendings');
   },
 };

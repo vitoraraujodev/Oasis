@@ -7,6 +7,7 @@ import Address from '../app/models/GeneralInfo/Address';
 import Representative from '../app/models/GeneralInfo/Representative';
 import OperatingInfo from '../app/models/GeneralInfo/OperatingInfo';
 import History from '../app/models/GeneralInfo/History';
+import Pending from '../app/models/GeneralInfo/Pending';
 import Shift from '../app/models/GeneralInfo/Shift';
 
 import ContactInfo from '../app/models/FollowUp/ContactInfo';
@@ -51,6 +52,7 @@ const models = [
   Representative,
   OperatingInfo,
   History,
+  Pending,
   Shift,
   ContactInfo,
   ContactManager,

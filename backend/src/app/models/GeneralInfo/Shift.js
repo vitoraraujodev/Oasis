@@ -4,7 +4,6 @@ class Shift extends Model {
   static init(sequelize) {
     super.init(
       {
-        kind: Sequelize.STRING,
         start_at: Sequelize.INTEGER,
         end_at: Sequelize.INTEGER,
         week: Sequelize.STRING,

@@ -29,7 +29,7 @@ class CompAspectController {
 
     const risks = await Risk.findAll({
       order: [['substance', 'ASC']],
-      attributes: ['id', 'substance'],
+      attributes: ['id', 'substance', 'physical_state'],
       include: [
         {
           model: RiskStorage,
@@ -43,7 +43,7 @@ class CompAspectController {
     const noises = await Noise.findAll({
       where: { company_id: req.companyId },
       order: [['source', 'ASC']],
-      attributes: ['source', 'protection'],
+      attributes: ['id', 'source', 'protection'],
     });
 
     const noiseInfo = await NoiseInfo.findOne({
