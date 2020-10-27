@@ -19,8 +19,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      date: {
+      expiration_date: {
         type: Sequelize.DATE,
+        allowNull: false,
+      },
+      objective: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       company_id: {

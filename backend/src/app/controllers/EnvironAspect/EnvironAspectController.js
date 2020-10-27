@@ -34,7 +34,9 @@ class EnvironAspectController {
         'flow',
         'treatment',
         'quantity',
-        'capacity',
+        'water_body',
+        'license',
+        'water_body',
       ],
     });
 
@@ -51,7 +53,8 @@ class EnvironAspectController {
         'flow',
         'treatment',
         'quantity',
-        'capacity',
+        'license',
+        'water_body',
       ],
     });
 
@@ -68,19 +71,14 @@ class EnvironAspectController {
         'flow',
         'treatment',
         'quantity',
-        'capacity',
+        'license',
+        'water_body',
       ],
     });
 
     const sanitary = await Sanitary.findOne({
       where: { company_id: req.companyId },
-      attributes: [
-        'id',
-        'water_body',
-        'kitchen',
-        'theoric_flow',
-        'declaration',
-      ],
+      attributes: ['id', 'kitchen', 'theoric_flow', 'declaration'],
     });
 
     const residues = await Residue.findAll({
@@ -95,12 +93,10 @@ class EnvironAspectController {
         'classification',
         'quantity',
         'quantity_unit',
-        'reservior',
         'capacity',
         'capacity_unit',
-        'removal_frequency',
-        'transport',
-        'packaging',
+        'storage_form',
+        'storage_location',
       ],
     });
 

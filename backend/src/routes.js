@@ -28,7 +28,7 @@ import SpecificInfoController from './app/controllers/SpecificInfo/SpecificInfoC
 import SupplyController from './app/controllers/ProductiveProcess/SupplyController';
 import ProductController from './app/controllers/ProductiveProcess/ProductController';
 import EquipmentController from './app/controllers/ProductiveProcess/EquipmentController';
-import ProductiveProcessController from './app/controllers/ProductiveProcess/ProductiveProcess';
+import ProductiveProcessController from './app/controllers/ProductiveProcess/ProductiveProcessController';
 
 import ResidueInfoController from './app/controllers/EnvironAspect/ResidueInfoController';
 import ResidueController from './app/controllers/EnvironAspect/ResidueController';

@@ -9,7 +9,8 @@ class HistoryController {
       instrument: Yup.string().required(),
       number: Yup.string().required(),
       process: Yup.string().required(),
-      date: Yup.date().required(),
+      expiration_date: Yup.date().required(),
+      objective: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -24,11 +25,11 @@ class HistoryController {
       });
     }
 
-    const { date } = req.body;
+    const { expiration_date } = req.body;
 
     // If date is in future, return
-    if (date) {
-      if (isAfter(parseISO(date), new Date())) {
+    if (expiration_date) {
+      if (isAfter(parseISO(expiration_date), new Date())) {
         return res.status(400).json({ error: 'Data inválida.' });
       }
     }
@@ -36,7 +37,13 @@ class HistoryController {
     const history = await History.findByPk(req.body.id);
 
     if (history) {
-      const { id, instrument, number, process } = await history.update({
+      const {
+        id,
+        instrument,
+        number,
+        process,
+        objective,
+      } = await history.update({
         ...req.body,
       });
 
@@ -45,21 +52,25 @@ class HistoryController {
         instrument,
         number,
         process,
-        date,
+        expiration_date,
+        objective,
       });
     }
 
-    const { id, instrument, number, process } = await History.create({
-      ...req.body,
-      company_id: req.companyId,
-    });
+    const { id, instrument, number, process, objective } = await History.create(
+      {
+        ...req.body,
+        company_id: req.companyId,
+      }
+    );
 
     return res.json({
       id,
       instrument,
       number,
       process,
-      date,
+      expiration_date,
+      objective,
     });
   }
 

@@ -7,7 +7,8 @@ class History extends Model {
         instrument: Sequelize.STRING,
         number: Sequelize.STRING,
         process: Sequelize.STRING,
-        date: Sequelize.DATE,
+        expiration_date: Sequelize.DATE,
+        objective: Sequelize.STRING,
       },
       {
         sequelize,

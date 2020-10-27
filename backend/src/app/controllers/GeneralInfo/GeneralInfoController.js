@@ -27,8 +27,15 @@ class GeneralInfoController {
 
     const history = await History.findAll({
       where: { company_id: req.companyId },
-      order: [['date', 'ASC']],
-      attributes: ['id', 'instrument', 'number', 'process', 'date'],
+      order: [['expiration_date', 'ASC']],
+      attributes: [
+        'id',
+        'instrument',
+        'number',
+        'process',
+        'expiration_date',
+        'objective',
+      ],
     });
 
     const operatingInfo = await OperatingInfo.findOne({
