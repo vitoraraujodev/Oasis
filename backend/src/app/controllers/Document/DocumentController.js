@@ -8,27 +8,54 @@ import { resolve } from 'path';
 class DocumentController {
   async index(req, res) {
     const coverFile = fs.readFileSync(
-      resolve(__dirname, '..', '..', 'views', 'cover', 'cover.ejs'),
+      resolve(
+        __dirname,
+        '..',
+        '..',
+        'views',
+        'document',
+        'CadastroAmbiental.ejs'
+      ),
       'utf-8'
     );
 
     const cover = ejs.render(coverFile);
 
-    pdf.create(cover).toBuffer((err, buffer) => {
-      if (err) {
-        return res.status(500).json({
-          error:
-            'Houve um erro na geração do documento. Por favor, tente novamente mais tarde.',
-        });
-      }
+    pdf
+      .create(cover, {
+        orientation: 'portrait',
+        format: 'A4',
+        border: {
+          top: '40px',
+          bottom: '40px',
+          right: '32px',
+          left: '32px',
+        },
 
-      res.setHeader(
-        'Content-Disposition',
-        'attachment; filename=Cadastro-Ambiental.pdf'
-      );
+        header: {
+          height: '48px',
+          contents: {
+            first: '<div style="background: #bbb; height: 48px;"></div>',
+            default:
+              '<div class="header"><b class="header-label">CADASTRO AMBIENTAL</b></div>',
+          },
+        },
+      })
+      .toBuffer((err, buffer) => {
+        if (err) {
+          return res.status(500).json({
+            error:
+              'Houve um erro na geração do documento. Por favor, tente novamente mais tarde.',
+          });
+        }
 
-      res.send(Buffer.from(buffer, 'base64'));
-    });
+        res.setHeader(
+          'Content-Disposition',
+          'attachment; filename=Cadastro-Ambiental.pdf'
+        );
+
+        res.send(Buffer.from(buffer, 'base64'));
+      });
   }
 }
 
