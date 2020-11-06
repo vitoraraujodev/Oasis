@@ -33,9 +33,9 @@ class DocumentController {
         },
 
         header: {
-          height: '48px',
+          height: '56px',
           contents: {
-            first: '<div style="background: #bbb; height: 48px;"></div>',
+            first: '<div style="background: #bbb; height: 56px;"></div>',
             default:
               '<div class="header"><b class="header-label">CADASTRO AMBIENTAL</b></div>',
           },
