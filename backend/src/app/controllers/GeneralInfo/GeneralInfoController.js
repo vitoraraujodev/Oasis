@@ -21,7 +21,7 @@ class GeneralInfoController {
       ],
     });
 
-    const representative = await Representative.findAll({
+    const representatives = await Representative.findAll({
       where: { company_id: req.companyId },
       order: [['name', 'ASC']],
       attributes: ['id', 'name', 'cpf', 'email', 'phone_number'],
@@ -71,7 +71,7 @@ class GeneralInfoController {
 
     return res.json({
       address,
-      representative,
+      representatives,
       history,
       pending,
       operatingInfo,
