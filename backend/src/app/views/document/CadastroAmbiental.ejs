@@ -62,7 +62,7 @@
       flex-wrap: nowrap;
       text-align: center;
       display: flex;
-      height: 52px;
+      height: 44px;
       display: table;
     }
     .header-label {
@@ -89,10 +89,9 @@
       font-size: 18px;
       color: #444;
       text-decoration: underline;
-      margin-top: 48px;
+      margin: 32px 0;
     }
     .summary-topic {
-      margin-top: 16px;
       font-size: 14px;
       color: #444;
     }
@@ -113,8 +112,8 @@
       font-weight: bold;
       font-size: 14px;
       color: #252525;
-      margin: 16px 0;
-      margin-top: 32px;
+      margin-bottom: 16px;
+      margin-top: 24px;
     }
     .document-text {
       font-size: 12px;
@@ -152,7 +151,7 @@
       text-align: left;
       font-size: 10px;
       color: #252525;
-      word-wrap: break-word;
+      word-break: break-all;
     }
     th {
       background: #ddd;
@@ -187,15 +186,15 @@
 
     <div class="cover-content">
       <h2 class="cover-label">Cadastro Ambiental</h1>
-      <h1 class="cover-company">Empresa ABC</h2>
+      <h1 class="cover-company"><%= company.name %></h2>
       <h2 class="cover-label">(n° 01/2020)</h1>
 
     </div>
 
     <div class="cover-footer">
-      <p style="color: #444">24 de outubro</p>
+      <p style="color: #444"><%= actualDate.formattedDate %></p>
       <p>Elaborado por: Vitor Araujo</p>
-      <p>Ano base: 2020</p>
+      <p>Ano base: <%= actualDate.date.getFullYear() %></p>
     </div>
   </div>
 
@@ -222,8 +221,8 @@
   <div class="document">
     <p class="document-topic">1. Informações Gerais</p>
     <p class="document-text">
-      O Cadastro Ambiental n° <b><%= company.id %></b>
-      foi elaborado em <b><%= actualDate.day %>/<%= actualDate.month %>/<%= actualDate.year %></b>
+      O Cadastro Ambiental n° <b><%= company.id %></b> foi elaborado em
+      <b><%= ("0" + (actualDate.date.getDate())).slice(-2) %>/<%= ("0" + (actualDate.date.getMonth() + 1)).slice(-2) %>/<%= actualDate.date.getFullYear() %></b>
       conforme as informações prestadas pelo representante da empresa
       <b><%= company.name %></b> inscrita no CNPJ <b><%= specific.cnpj %></b>
       do ramo de <b><%= company.typology %></b>. Este documento tem como
@@ -238,7 +237,19 @@
 
     <p>
       <span class="document-subtopic">Observação: </span>
-      <span class="document-subtext">A empresa se encontra, ou já esteve inserida em zona rural.</span>
+      <span class="document-subtext">
+        <% if (operatingInfo.rural) { %>
+          A empresa se encontra, ou já esteve inserida em zona rural,
+          <% if (operatingInfo.registration) { %>
+            e possui cadastro no CAR.
+          <% } else { %>
+            porém não possui cadastro no CAR.
+          <% } %>
+        <% } else { %>
+          A empresa não se encontra, e nunca esteve inserida, em zona rural.
+        <% } %>
+      </span>
+
     </p>
 
     <div class="table-container">
@@ -307,6 +318,50 @@
           <td><%= contactManager.cpf %></td>
           <td><%= contactManager.phone_number %></td>
         </tr>
+      </table>
+    </div>
+
+    <div class="table-container">
+      <strong class="table-label">Tabela 4. Informações de contato</strong>
+      <table>
+        <caption>
+          Informações de contato
+        </caption>
+        <tr>
+          <th>Telefone corporativo</th>
+          <td><%= contactInfo.phone_number %></td>
+        </tr>
+        <tr>
+          <th>Horário de atendimento</th>
+          <td><%= ("0" + (contactInfo.start_at)).slice(-2) %>h ás <%= ("0" + (contactInfo.end_at)).slice(-2) %>h</td>
+        </tr>
+      </table>
+    </div>
+
+    <p class="document-topic">2. Informações de Funcionamento</p>
+    <p class="document-text">
+      A empresa requerente teve início de suas atividades em
+      <b><%= ("0" + (operatingInfo.date.getDate())).slice(-2) %>/<%= ("0" + (operatingInfo.date.getMonth() + 1)).slice(-2) %>/<%= operatingInfo.date.getFullYear() %></b>
+      e desenvolve, atualmente, o regime de trabalho descrito na Tabela 5:
+    </p>
+    <div class="table-container">
+      <strong class="table-label">Tabela 5. Regime de trabalho</strong>
+      <table>
+        <caption>
+          Turnos
+        </caption>
+
+        <tr>
+          <th>Dias da semana</th>
+          <th>Horário</th>
+        </tr>
+
+        <% operatingInfo.shifts.forEach(function(shift) { %>
+          <tr>
+            <td><%= shift.week %></td>
+            <td><%= ("0" + (shift.start_at)).slice(-2) %>h %> ás <%= ("0" + (shift.end_at)).slice(-2) %>h %></td>
+          </tr>
+        <% }); %>
       </table>
     </div>
   </div>

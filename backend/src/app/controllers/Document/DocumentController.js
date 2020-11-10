@@ -2,6 +2,8 @@ import pdf from 'html-pdf';
 import ejs from 'ejs';
 import fs from 'fs';
 import { resolve } from 'path';
+import { format } from 'date-fns';
+import { pt } from 'date-fns/locale';
 
 import Company from '../../models/Company';
 
@@ -12,6 +14,7 @@ import Representative from '../../models/GeneralInfo/Representative';
 
 import TechnicalManager from '../../models/FollowUp/TechnicalManager';
 import ContactManager from '../../models/FollowUp/ContactManager';
+import ContactInfo from '../../models/FollowUp/ContactInfo';
 
 import Specific from '../../models/SpecificInfo/Specific';
 
@@ -88,6 +91,13 @@ class DocumentController {
       });
     }
 
+    if (operatingInfo.shifts.length === 0) {
+      return res.status(400).json({
+        error:
+          'Preencha os turnos das informações de funcionamento da sua empresa e tente novamente.',
+      });
+    }
+
     const representatives = await Representative.findAll({
       where: { company_id: req.params.id },
       order: [['name', 'ASC']],
@@ -133,6 +143,18 @@ class DocumentController {
       });
     }
 
+    const contactInfo = await ContactInfo.findOne({
+      where: { company_id: req.params.id },
+      attributes: ['id', 'phone_number', 'start_at', 'end_at'],
+    });
+
+    if (!contactInfo) {
+      return res.status(400).json({
+        error:
+          'Preencha as informações de contato da sua empresa e tente novamente.',
+      });
+    }
+
     const coverFile = fs.readFileSync(
       resolve(
         __dirname,
@@ -145,11 +167,29 @@ class DocumentController {
       'utf-8'
     );
 
-    const date = new Date();
     const actualDate = {
-      day: date.getDate(),
-      month: date.getMonth(),
-      year: date.getFullYear(),
+      date: new Date(),
+      formattedDate: format(new Date(), "dd 'de' MMMM", { locale: pt }),
+    };
+
+    const formattedShifts = operatingInfo.shifts.map((shift) => {
+      const seg = shift.week[0] === '1' ? 'seg, ' : '';
+      const ter = shift.week[1] === '1' ? 'ter, ' : '';
+      const qua = shift.week[2] === '1' ? 'qua, ' : '';
+      const qui = shift.week[3] === '1' ? 'qui, ' : '';
+      const sex = shift.week[4] === '1' ? 'sex, ' : '';
+      const sab = shift.week[5] === '1' ? 'sab, ' : '';
+      const dom = shift.week[6] === '1' ? 'dom, ' : '';
+      const week = (seg + ter + qua + qui + sex + sab + dom).slice(0, -2);
+      return { start_at: shift.start_at, end_at: shift.end_at, week };
+    });
+
+    const formattedOperatingInfo = {
+      date: operatingInfo.date,
+      observation: operatingInfo.observation,
+      rural: operatingInfo.rural,
+      registration: operatingInfo.registration,
+      shifts: formattedShifts,
     };
 
     const cover = ejs.render(coverFile, {
@@ -157,10 +197,11 @@ class DocumentController {
       actualDate,
       specific,
       address,
-      operatingInfo,
+      operatingInfo: formattedOperatingInfo,
       representatives,
       technicalManager,
       contactManager,
+      contactInfo,
     });
 
     pdf
