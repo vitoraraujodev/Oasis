@@ -21,6 +21,7 @@ class SpecificInfoController {
 
     const generalArea = await GeneralArea.findOne({
       where: { company_id: req.companyId },
+      attributes: ['id', 'area'],
       include: [
         {
           model: File,

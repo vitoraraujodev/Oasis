@@ -112,7 +112,7 @@
       font-weight: bold;
       font-size: 14px;
       color: #252525;
-      margin-bottom: 16px;
+      margin-bottom: 8px;
       margin-top: 24px;
     }
     .document-text {
@@ -120,7 +120,7 @@
       letter-spacing: 1;
       color: #444;
       text-indent: 2em;
-      margin-top: 16px;
+      margin-top: 24px;
     }
     .document-subtopic {
       font-weight: bold;
@@ -154,6 +154,7 @@
       word-break: break-all;
     }
     th {
+      padding: 8px;
       background: #ddd;
     }
     caption {
@@ -170,11 +171,20 @@
       text-align: center;
       width: 100%;
       margin-top: 24px;
+      page-break-inside: avoid;
     }
     .table-label {
       font-weight: bold;
       font-size: 10px;
       color: #252525;
+    }
+
+    .panoramic-img {
+      display: table-cell;
+      vertical-align: middle;
+      height: 100%;
+      max-height: 240px;
+      max-width: 520px;
     }
   </style>
 </head>
@@ -198,6 +208,7 @@
     </div>
   </div>
 
+
   <div class="summary-page">
     <div class="summary">
       <p class="summary-text">Sumário</p>
@@ -217,6 +228,7 @@
       <p class="summary-topic">7. Anexos</p>
     </div>
   </div>
+
 
   <div class="document">
     <p class="document-topic">1. Informações Gerais</p>
@@ -249,7 +261,6 @@
           A empresa não se encontra, e nunca esteve inserida, em zona rural.
         <% } %>
       </span>
-
     </p>
 
     <div class="table-container">
@@ -338,6 +349,7 @@
       </table>
     </div>
 
+
     <p class="document-topic">2. Informações de Funcionamento</p>
     <p class="document-text">
       A empresa requerente teve início de suas atividades em
@@ -350,18 +362,96 @@
         <caption>
           Turnos
         </caption>
-
         <tr>
           <th>Dias da semana</th>
           <th>Horário</th>
         </tr>
-
         <% operatingInfo.shifts.forEach(function(shift) { %>
           <tr>
-            <td><%= shift.week %></td>
+            <td style="text-align: center;"><%= shift.week %></td>
             <td><%= ("0" + (shift.start_at)).slice(-2) %>h %> ás <%= ("0" + (shift.end_at)).slice(-2) %>h %></td>
           </tr>
         <% }); %>
+      </table>
+    </div>
+    <% if (operatingInfo.observation) { %>
+      <p>
+        <span class="document-subtopic">Observação: </span>
+        <span class="document-subtext">
+          As atividades secundarias auxiliares e seus respectivos regimes de
+          trabalho são descritas da seguinte forma:
+          <b><%= operatingInfo.observation %></b>
+        </span>
+      </p>
+    <% } %>
+
+
+    <p class="document-topic">3. Informações Específicas</p>
+    <p class="document-text">
+      As atividades contempladas no objeto do presente requirimento são realizadas
+      com o auxílio de <b><%= totalEmployees %></b> funcionários, os quais estão
+      distribuidos conforme apresentado na Tabela 6:
+    </p>
+    <div class="table-container">
+      <strong class="table-label">Tabela 6. Distribuição dos funcionários</strong>
+      <table>
+        <caption>
+          Funcionários
+        </caption>
+        <tr>
+          <th>Tipo</th>
+          <th>Quantidade</th>
+        </tr>
+        <% employees.forEach(function(employee) { %>
+          <tr>
+            <td><%= employee.kind %></td>
+            <td style="text-align: center;"><%= employee.amount %></td>
+          </tr>
+        <% }); %>
+      </table>
+    </div>
+
+    <p class="document-text">
+      Cumpre registrar que, o empreendimento dispõe de área total o equivalente a
+      <b><%= generalArea.area %></b> m², cuja delimitação poligonal do entorno
+      está mostrada na Figura 1, e as relações de valores em m² das respectivas áreas específicas
+      constam na Tabela 7:
+    </p>
+
+    <div class="table-container">
+      <table>
+        <caption>
+          Área do empreendimento
+        </caption>
+        <tr>
+          <td style="padding: 0px; padding-top: -1px;">
+            <img src='<%- generalArea.image.url %>' class="panoramic-img" alt="" />
+          </td>
+        </tr>
+      </table>
+      <strong class="table-label">Figura 1. Visão Panorâmica da área total do empreendimento</strong>
+    </div>
+
+    <div class="table-container">
+      <strong class="table-label">Tabela 7. Relação das áreas específicas do empreendimento</strong>
+      <table>
+        <caption>
+          Áreas específicas
+        </caption>
+        <tr>
+          <th>Tipo</th>
+          <th>Área(m²)</th>
+        </tr>
+        <% specificAreas.forEach(function(specificArea) { %>
+          <tr>
+            <td><%= specificArea.kind %></td>
+            <td style="text-align: center;"><%= specificArea.area %></td>
+          </tr>
+        <% }); %>
+        <tr>
+          <th>Total</th>
+          <th style="text-align: center;"><%= totalArea %></th>
+        </tr>
       </table>
     </div>
   </div>

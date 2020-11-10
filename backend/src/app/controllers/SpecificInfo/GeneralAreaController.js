@@ -26,6 +26,12 @@ class GeneralAreaController {
 
     const { image_id } = req.body;
 
+    if (!image_id) {
+      return res.status(400).json({
+        error: 'Por favor, envie uma imagem panorâmica da sua empresa.',
+      });
+    }
+
     const generalArea = await GeneralArea.findOne({
       where: { company_id: req.companyId },
       include: [
@@ -47,6 +53,7 @@ class GeneralAreaController {
         fs.unlink(
           resolve(
             __dirname,
+            '..',
             '..',
             '..',
             '..',

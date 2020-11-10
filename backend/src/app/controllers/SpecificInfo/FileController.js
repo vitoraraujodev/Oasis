@@ -32,7 +32,7 @@ class FileController {
     }
 
     fs.unlink(
-      resolve(__dirname, '..', '..', '..', 'tmp', 'uploads', file.path),
+      resolve(__dirname, '..', '..', '..', '..', 'tmp', 'uploads', file.path),
       (err) => {
         if (err) throw err;
       }

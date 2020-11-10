@@ -17,6 +17,10 @@ import ContactManager from '../../models/FollowUp/ContactManager';
 import ContactInfo from '../../models/FollowUp/ContactInfo';
 
 import Specific from '../../models/SpecificInfo/Specific';
+import Employee from '../../models/SpecificInfo/Employee';
+import GeneralArea from '../../models/SpecificInfo/GeneralArea';
+import File from '../../models/SpecificInfo/File';
+import SpecificArea from '../../models/SpecificInfo/SpecificArea';
 
 class DocumentController {
   async index(req, res) {
@@ -27,6 +31,11 @@ class DocumentController {
         .status(400)
         .json({ error: 'Essa empresa não está registrada.' });
     }
+
+    const actualDate = {
+      date: new Date(),
+      formattedDate: format(new Date(), "dd 'de' MMMM", { locale: pt }),
+    };
 
     const specific = await Specific.findOne({
       where: { company_id: req.params.id },
@@ -98,6 +107,26 @@ class DocumentController {
       });
     }
 
+    const formattedShifts = operatingInfo.shifts.map((shift) => {
+      const seg = shift.week[0] === '1' ? 'seg, ' : '';
+      const ter = shift.week[1] === '1' ? 'ter, ' : '';
+      const qua = shift.week[2] === '1' ? 'qua, ' : '';
+      const qui = shift.week[3] === '1' ? 'qui, ' : '';
+      const sex = shift.week[4] === '1' ? 'sex, ' : '';
+      const sab = shift.week[5] === '1' ? 'sab, ' : '';
+      const dom = shift.week[6] === '1' ? 'dom, ' : '';
+      const week = (seg + ter + qua + qui + sex + sab + dom).slice(0, -2);
+      return { start_at: shift.start_at, end_at: shift.end_at, week };
+    });
+
+    const formattedOperatingInfo = {
+      date: operatingInfo.date,
+      observation: operatingInfo.observation,
+      rural: operatingInfo.rural,
+      registration: operatingInfo.registration,
+      shifts: formattedShifts,
+    };
+
     const representatives = await Representative.findAll({
       where: { company_id: req.params.id },
       order: [['name', 'ASC']],
@@ -155,7 +184,58 @@ class DocumentController {
       });
     }
 
-    const coverFile = fs.readFileSync(
+    const employees = await Employee.findAll({
+      where: { company_id: req.params.id },
+      order: [['kind', 'ASC']],
+      attributes: ['id', 'kind', 'amount'],
+    });
+
+    if (employees.length === 0) {
+      return res.status(400).json({
+        error: 'Preencha os funcionários da sua empresa e tente novamente.',
+      });
+    }
+
+    const totalEmployees = employees
+      .map((employee) => employee.amount)
+      .reduce((total, amount) => total + amount);
+
+    const generalArea = await GeneralArea.findOne({
+      where: { company_id: req.params.id },
+      attributes: ['id', 'area'],
+      include: [
+        {
+          model: File,
+          as: 'image',
+          attributes: ['id', 'path'],
+        },
+      ],
+    });
+
+    if (!generalArea || !generalArea.image) {
+      return res.status(400).json({
+        error:
+          'Preencha as informações da área da sua empresa e tente novamente.',
+      });
+    }
+
+    const specificAreas = await SpecificArea.findAll({
+      where: { company_id: req.params.id },
+      attributes: ['id', 'kind', 'area'],
+    });
+
+    if (specificAreas.length === 0) {
+      return res.status(400).json({
+        error:
+          'Preencha as áreas específicas da sua empresa e tente novamente.',
+      });
+    }
+
+    const totalArea = specificAreas
+      .map((area) => area.area)
+      .reduce((total, amount) => total + amount);
+
+    const documentFile = fs.readFileSync(
       resolve(
         __dirname,
         '..',
@@ -167,32 +247,7 @@ class DocumentController {
       'utf-8'
     );
 
-    const actualDate = {
-      date: new Date(),
-      formattedDate: format(new Date(), "dd 'de' MMMM", { locale: pt }),
-    };
-
-    const formattedShifts = operatingInfo.shifts.map((shift) => {
-      const seg = shift.week[0] === '1' ? 'seg, ' : '';
-      const ter = shift.week[1] === '1' ? 'ter, ' : '';
-      const qua = shift.week[2] === '1' ? 'qua, ' : '';
-      const qui = shift.week[3] === '1' ? 'qui, ' : '';
-      const sex = shift.week[4] === '1' ? 'sex, ' : '';
-      const sab = shift.week[5] === '1' ? 'sab, ' : '';
-      const dom = shift.week[6] === '1' ? 'dom, ' : '';
-      const week = (seg + ter + qua + qui + sex + sab + dom).slice(0, -2);
-      return { start_at: shift.start_at, end_at: shift.end_at, week };
-    });
-
-    const formattedOperatingInfo = {
-      date: operatingInfo.date,
-      observation: operatingInfo.observation,
-      rural: operatingInfo.rural,
-      registration: operatingInfo.registration,
-      shifts: formattedShifts,
-    };
-
-    const cover = ejs.render(coverFile, {
+    const document = ejs.render(documentFile, {
       company,
       actualDate,
       specific,
@@ -202,10 +257,15 @@ class DocumentController {
       technicalManager,
       contactManager,
       contactInfo,
+      employees,
+      totalEmployees,
+      generalArea,
+      specificAreas,
+      totalArea,
     });
 
     pdf
-      .create(cover, {
+      .create(document, {
         orientation: 'portrait',
         format: 'A4',
         border: {
