@@ -10,8 +10,8 @@ class EquipmentController {
       identification: Yup.string().required(),
       amount: Yup.number().required(),
       date: Yup.date().required(),
-      capacity: Yup.number().required(),
-      capacity_unit: Yup.string().required(),
+      capacity: Yup.number(),
+      capacity_unit: Yup.string(),
       fuel: Yup.string().required(),
       consumption: Yup.number().required(),
     });
@@ -49,6 +49,7 @@ class EquipmentController {
         capacity_unit,
         fuel,
         consumption,
+        consumption_unit,
       } = await equipment.update({
         ...req.body,
       });
@@ -63,6 +64,7 @@ class EquipmentController {
         capacity_unit,
         fuel,
         consumption,
+        consumption_unit,
       });
     }
 
@@ -75,6 +77,7 @@ class EquipmentController {
       capacity_unit,
       fuel,
       consumption,
+      consumption_unit,
     } = await Equipment.create({
       ...req.body,
       company_id: req.companyId,
@@ -90,6 +93,7 @@ class EquipmentController {
       capacity_unit,
       fuel,
       consumption,
+      consumption_unit,
     });
   }
 

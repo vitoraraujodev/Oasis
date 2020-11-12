@@ -9,7 +9,7 @@ module.exports = {
       },
       kind: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       identification: {
         type: Sequelize.STRING,
@@ -37,6 +37,10 @@ module.exports = {
       },
       consumption: {
         type: Sequelize.FLOAT,
+        allowNull: false,
+      },
+      consumption_unit: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       company_id: {

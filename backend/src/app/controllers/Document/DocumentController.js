@@ -24,6 +24,7 @@ import SpecificArea from '../../models/SpecificInfo/SpecificArea';
 
 import Supply from '../../models/ProductiveProcess/Supply';
 import SupplyStorage from '../../models/ProductiveProcess/SupplyStorage';
+import Equipment from '../../models/ProductiveProcess/Equipment';
 
 class DocumentController {
   async index(req, res) {
@@ -111,13 +112,13 @@ class DocumentController {
     }
 
     const formattedShifts = operatingInfo.shifts.map((shift) => {
-      const seg = shift.week[0] === '1' ? 'seg, ' : '';
-      const ter = shift.week[1] === '1' ? 'ter, ' : '';
-      const qua = shift.week[2] === '1' ? 'qua, ' : '';
-      const qui = shift.week[3] === '1' ? 'qui, ' : '';
-      const sex = shift.week[4] === '1' ? 'sex, ' : '';
-      const sab = shift.week[5] === '1' ? 'sab, ' : '';
-      const dom = shift.week[6] === '1' ? 'dom, ' : '';
+      const dom = shift.week[0] === '1' ? 'dom, ' : '';
+      const seg = shift.week[1] === '1' ? 'seg, ' : '';
+      const ter = shift.week[2] === '1' ? 'ter, ' : '';
+      const qua = shift.week[3] === '1' ? 'qua, ' : '';
+      const qui = shift.week[4] === '1' ? 'qui, ' : '';
+      const sex = shift.week[5] === '1' ? 'sex, ' : '';
+      const sab = shift.week[6] === '1' ? 'sab, ' : '';
       const week = (seg + ter + qua + qui + sex + sab + dom).slice(0, -2);
       return { start_at: shift.start_at, end_at: shift.end_at, week };
     });
@@ -276,6 +277,29 @@ class DocumentController {
       });
     }
 
+    const equipments = await Equipment.findAll({
+      where: { company_id: req.params.id },
+      order: [['identification', 'ASC']],
+      attributes: [
+        'id',
+        'kind',
+        'identification',
+        'amount',
+        'date',
+        'capacity',
+        'capacity_unit',
+        'fuel',
+        'consumption',
+        'consumption_unit',
+      ],
+    });
+
+    if (equipments.length === 0) {
+      return res.status(400).json({
+        error: 'Preencha os equipamentos da sua empresa e tente novamente.',
+      });
+    }
+
     const documentFile = fs.readFileSync(
       resolve(
         __dirname,
@@ -304,6 +328,15 @@ class DocumentController {
       specificAreas,
       totalArea,
       supplies,
+      productiveEquipments: equipments.filter(
+        (equipment) => equipment.kind === 'productive'
+      ),
+      auxiliaryEquipments: equipments.filter(
+        (equipment) => equipment.kind === 'auxiliary'
+      ),
+      controlEquipments: equipments.filter(
+        (equipment) => equipment.kind === 'control'
+      ),
     });
 
     pdf

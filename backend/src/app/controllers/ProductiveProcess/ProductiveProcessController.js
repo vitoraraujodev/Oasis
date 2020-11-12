@@ -19,6 +19,7 @@ class ProductiveProcessController {
         'capacity_unit',
         'fuel',
         'consumption',
+        'consumption_unit',
       ],
     });
 

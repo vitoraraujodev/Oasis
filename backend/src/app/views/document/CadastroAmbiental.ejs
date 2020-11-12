@@ -155,7 +155,7 @@
     th, td {
       padding: 8px;
       text-align: left;
-      font-size: 10px;
+      font-size: 9px;
       color: #252525;
     }
     th {
@@ -168,7 +168,7 @@
     caption {
       border: 1px solid black;
       border-bottom: 0;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
       background: #bbb;
       color: #252525;
@@ -189,7 +189,7 @@
     .caption {
       border: 1px solid black;
       border-bottom: 0;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
       background: #bbb;
       color: #252525;
@@ -371,7 +371,7 @@
     <p class="document-topic">2. Informações de Funcionamento</p>
     <p class="document-text">
       A empresa requerente teve início de suas atividades em
-      <b><%= ("0" + (operatingInfo.date.getDate())).slice(-2) %>/<%= ("0" + (operatingInfo.date.getMonth() + 1)).slice(-2) %>/<%= operatingInfo.date.getFullYear() %></b>
+      <b><%= ("0" + (operatingInfo.date.getDate()  + 1)).slice(-2) %>/<%= ("0" + (operatingInfo.date.getMonth() + 1)).slice(-2) %>/<%= operatingInfo.date.getFullYear() %></b>
       e desenvolve, atualmente, o regime de trabalho descrito na Tabela 5:
     </p>
     <div class="table-container">
@@ -477,45 +477,172 @@
     <p class="document-topic">4. Processo Produtivo</p>
     <p class="document-text">
       As relações dos principais Insumos, e dos Equipamentos de Processo, Auxiliares
-      e de Controle de Emissão, com as respectivas especificidades, empregados
-      nas operações da requerente, estão descritos nas Tabelas 8, 9, 10 e 11.
+      e de Controle de Emissão, com as respectivas especificidades, estão
+      descritos nas Tabelas abaixo respectivamente.
     </p>
     <div class="table-container">
       <strong class="table-label">Tabela 8. Principais Insumos usados na Produção</strong>
-      <div class="aside-tables">
-        <table style="float: left;">
+      <table>
+        <tr>
+          <th class="caption" colspan="3">Relação de Insumos</th>
+          <th class="caption" colspan="2">Recebimento</th>
+          <th class="caption" colspan="3">Armazenamento</th>
+        </tr>
+        <tr>
+          <th>Identi<br>ficaçao</th>
+          <th>Forma <br> física</th>
+          <th>Quant. <br> média/ano</th>
+          <th>Transporte</th>
+          <th>Acond.</th>
+          <th>Local</th>
+          <th>Forma</th>
+          <th>Capaci<br>dade</th>
+        </tr>
+        <% supplies.forEach(function(supply) { %>
+          <% supply.storages.forEach(function(storage) { %>
+            <tr>
+              <td><%= supply.identification %></td>
+              <td style="text-align: center;"><%= supply.physical_state %></td>
+              <td style="text-align: center;"><%= supply.quantity %> <%= supply.unit %></td>
+              <td><%= supply.transport %></td>
+              <td><%= supply.packaging %></td>
+              <td><%= storage.location %></td>
+              <td><%= storage.amount %> <%= storage.identification %></td>
+              <td style="text-align: center;"><%= storage.capacity %> <%= storage.unit %></td>
+            </tr>
+          <% }); %>
+        <% }); %>
+      </table>
+    </div>
+
+    <% if (productiveEquipments.length > 0) { %>
+      <div class="table-container">
+        <strong class="table-label">Tabela 9. Principais Equipamentos de Processo na Produção</strong>
+        <table>
           <tr>
-            <th class="caption" colspan="3">Relação de Insumos</th>
-            <th class="caption" colspan="2">Recebimento</th>
-            <th class="caption" colspan="3">Armazenamento</th>
+            <th class="caption" colspan="4">Relação de Equipamentos</th>
+            <th class="caption" colspan="2">Combustível</th>
           </tr>
           <tr>
-            <th>Ident.</th>
-            <th>Forma <br> física</th>
-            <th>Quant. <br> média/ano</th>
-            <th>Transporte</th>
-            <th>Acond.</th>
-            <th>Local</th>
-            <th>Forma</th>
-            <th>Capacidade</th>
+            <th>Identificaçao</th>
+            <th>Quanti<br>dade</th>
+            <th>Data de <br> instalação</th>
+            <th>Capaci <br> dade</th>
+            <th>Combustível</th>
+            <th>Consumo <br> anual</th>
           </tr>
-          <% supplies.forEach(function(supply) { %>
-            <% supply.storages.forEach(function(storage) { %>
+          <% productiveEquipments.forEach(function(equipment) { %>
               <tr>
-                <td><%= supply.identification %></td>
-                <td  style="text-align: center;"><%= supply.physical_state %></td>
-                <td  style="text-align: center;"><%= supply.quantity %><%= supply.unit %></td>
-                <td><%= supply.transport %></td>
-                <td><%= supply.packaging %></td>
-                <td><%= storage.location %></td>
-                <td><%= storage.amount %> <%= storage.identification %></td>
-                <td style="text-align: center;"><%= storage.capacity %><%= storage.unit %></td>
+                <td><%= equipment.identification %></td>
+                <td style="text-align: center;"><%= equipment.amount %></td>
+                <td style="text-align: center;">
+                  <%= ("0" + (equipment.date.getDate() + 1)).slice(-2) %>/<%= ("0" + (equipment.date.getMonth() + 1)).slice(-2) %>/<%= equipment.date.getFullYear() %>
+                </td>
+                <% if (equipment.capacity) { %>
+                  <td style="text-align: center;"><%= equipment.capacity %> <%= equipment.capacity_unit %></td>
+                <% } else { %>
+                  -
+                <% } %>
+                <td><%= equipment.fuel %></td>
+                <td style="text-align: center;"><%= equipment.consumption %> <%= equipment.consumption_unit %></td>
               </tr>
-            <% }); %>
           <% }); %>
         </table>
       </div>
-    </div>
+    <% } else { %>
+      <p>
+        <span class="document-subtopic">Observação: </span>
+        <span class="document-subtext">
+          A empresa não apresenta nenhum Equipamento de Processo em sua produção.
+        </span>
+      </p>
+    <% } %>
+
+    <% if (auxiliaryEquipments.length > 0) { %>
+      <div class="table-container">
+        <strong class="table-label">Tabela 10. Principais Equipamentos Auxiliares na Produção</strong>
+        <table>
+          <tr>
+            <th class="caption" colspan="4">Relação de Equipamentos</th>
+            <th class="caption" colspan="2">Combustível</th>
+          </tr>
+          <tr>
+            <th>Identificaçao</th>
+            <th>Quanti<br>dade</th>
+            <th>Data de <br> instalação</th>
+            <th>Capaci <br> dade</th>
+            <th>Combustível</th>
+            <th>Consumo <br> anual</th>
+          </tr>
+          <% auxiliaryEquipments.forEach(function(equipment) { %>
+              <tr>
+                <td><%= equipment.identification %></td>
+                <td style="text-align: center;"><%= equipment.amount %></td>
+                <td style="text-align: center;">
+                  <%= ("0" + (equipment.date.getDate() + 1)).slice(-2) %>/<%= ("0" + (equipment.date.getMonth() + 1)).slice(-2) %>/<%= equipment.date.getFullYear() %>
+                </td>
+                <% if (equipment.capacity) { %>
+                  <td style="text-align: center;"><%= equipment.capacity %> <%= equipment.capacity_unit %></td>
+                <% } else { %>
+                  <td style="text-align: center;"> - </td>
+                <% } %>
+                <td><%= equipment.fuel %></td>
+                <td style="text-align: center;"><%= equipment.consumption %> <%= equipment.consumption_unit %></td>
+              </tr>
+          <% }); %>
+        </table>
+      </div>
+    <% } else { %>
+      <p>
+        <span class="document-subtopic">Observação: </span>
+        <span class="document-subtext">
+          A empresa não apresenta nenhum Equipamento Auxiliar em sua produção.
+        </span>
+      </p>
+    <% } %>
+
+    <% if (controlEquipments.length > 0) { %>
+      <div class="table-container">
+        <strong class="table-label">Tabela 10. Principais Equipamentos de Controle de Emissão</strong>
+        <table>
+          <tr>
+            <th class="caption" colspan="4">Relação de Equipamentos</th>
+            <th class="caption" colspan="2">Combustível</th>
+          </tr>
+          <tr>
+            <th>Identificaçao</th>
+            <th>Quanti<br>dade</th>
+            <th>Data de <br> instalação</th>
+            <th>Capaci <br> dade</th>
+            <th>Combustível</th>
+            <th>Consumo <br> anual</th>
+          </tr>
+          <% controlEquipments.forEach(function(equipment) { %>
+              <tr>
+                <td><%= equipment.identification %></td>
+                <td style="text-align: center;"><%= equipment.amount %></td>
+                <td style="text-align: center;">
+                  <%= ("0" + (equipment.date.getDate() + 1)).slice(-2) %>/<%= ("0" + (equipment.date.getMonth() + 1)).slice(-2) %>/<%= equipment.date.getFullYear() %>
+                </td>
+                <% if (equipment.capacity) { %>
+                  <td style="text-align: center;"><%= equipment.capacity %> <%= equipment.capacity_unit %></td>
+                <% } else { %>
+                  <td style="text-align: center;"> - </td>
+                <% } %>
+                <td><%= equipment.fuel %></td>
+                <td style="text-align: center;"><%= equipment.consumption %> <%= equipment.consumption_unit %></td>
+              </tr>
+          <% }); %>
+        </table>
+      </div>
+    <% } else { %>
+      <p>
+        <span class="document-subtopic">Observação: </span>
+        <span class="document-subtext">
+          A empresa não apresenta nenhum Equipamento de Controle em sua produção.
+        </span>
+      </p>
+    <% } %>
 
   </div>
 </body>
