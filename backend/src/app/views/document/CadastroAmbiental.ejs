@@ -146,16 +146,24 @@
       border: 1px solid black;
       border-collapse: collapse;
     }
+    table + table,
+    table + table th,
+    table + table td,
+    table + table caption {
+      border-left: 0;
+    }
     th, td {
       padding: 8px;
       text-align: left;
       font-size: 10px;
       color: #252525;
-      word-break: break-all;
     }
     th {
       padding: 8px;
       background: #ddd;
+    }
+    td {
+      word-break: break-all;
     }
     caption {
       border: 1px solid black;
@@ -177,6 +185,16 @@
       font-weight: bold;
       font-size: 10px;
       color: #252525;
+    }
+    .caption {
+      border: 1px solid black;
+      border-bottom: 0;
+      font-size: 12px;
+      font-weight: bold;
+      background: #bbb;
+      color: #252525;
+      text-align: center;
+      padding: 4px 0;
     }
 
     .panoramic-img {
@@ -454,6 +472,51 @@
         </tr>
       </table>
     </div>
+
+
+    <p class="document-topic">4. Processo Produtivo</p>
+    <p class="document-text">
+      As relações dos principais Insumos, e dos Equipamentos de Processo, Auxiliares
+      e de Controle de Emissão, com as respectivas especificidades, empregados
+      nas operações da requerente, estão descritos nas Tabelas 8, 9, 10 e 11.
+    </p>
+    <div class="table-container">
+      <strong class="table-label">Tabela 8. Principais Insumos usados na Produção</strong>
+      <div class="aside-tables">
+        <table style="float: left;">
+          <tr>
+            <th class="caption" colspan="3">Relação de Insumos</th>
+            <th class="caption" colspan="2">Recebimento</th>
+            <th class="caption" colspan="3">Armazenamento</th>
+          </tr>
+          <tr>
+            <th>Ident.</th>
+            <th>Forma <br> física</th>
+            <th>Quant. <br> média/ano</th>
+            <th>Transporte</th>
+            <th>Acond.</th>
+            <th>Local</th>
+            <th>Forma</th>
+            <th>Capacidade</th>
+          </tr>
+          <% supplies.forEach(function(supply) { %>
+            <% supply.storages.forEach(function(storage) { %>
+              <tr>
+                <td><%= supply.identification %></td>
+                <td  style="text-align: center;"><%= supply.physical_state %></td>
+                <td  style="text-align: center;"><%= supply.quantity %><%= supply.unit %></td>
+                <td><%= supply.transport %></td>
+                <td><%= supply.packaging %></td>
+                <td><%= storage.location %></td>
+                <td><%= storage.amount %> <%= storage.identification %></td>
+                <td style="text-align: center;"><%= storage.capacity %><%= storage.unit %></td>
+              </tr>
+            <% }); %>
+          <% }); %>
+        </table>
+      </div>
+    </div>
+
   </div>
 </body>
 </html>

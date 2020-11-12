@@ -4,6 +4,7 @@ class ProductStorage extends Model {
   static init(sequelize) {
     super.init(
       {
+        location: Sequelize.STRING,
         identification: Sequelize.STRING,
         amount: Sequelize.INTEGER,
         capacity: Sequelize.FLOAT,

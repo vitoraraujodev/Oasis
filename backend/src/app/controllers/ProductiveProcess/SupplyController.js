@@ -15,6 +15,7 @@ class SupplyController {
       storages: Yup.array().of(
         Yup.object().shape({
           id: Yup.number(),
+          location: Yup.string().required(),
           identification: Yup.string().required(),
           amount: Yup.number().min(1).required(),
           capacity: Yup.number().required(),
@@ -60,7 +61,7 @@ class SupplyController {
         .then(async (result) =>
           // Find Supply with all it's Storages
           Supply.findByPk(result.id, {
-            order: [['identification', 'DESC']],
+            order: [['identification', 'ASC']],
             attributes: [
               'id',
               'identification',
@@ -74,9 +75,13 @@ class SupplyController {
               {
                 model: SupplyStorage,
                 as: 'storages',
-                order: [['identification', 'DESC']],
+                order: [
+                  ['location', 'ASC'],
+                  ['identification', 'ASC'],
+                ],
                 attributes: [
                   'id',
+                  'location',
                   'identification',
                   'amount',
                   'capacity',
@@ -105,6 +110,7 @@ class SupplyController {
             }));
             await SupplyStorage.bulkCreate(newStorages, {
               updateOnDuplicate: [
+                'location',
                 'identification',
                 'amount',
                 'capacity',
@@ -129,7 +135,7 @@ class SupplyController {
         .then(async (result) =>
           // Find Supply with all it's Storages
           Supply.findByPk(result.id, {
-            order: [['identification', 'DESC']],
+            order: [['identification', 'ASC']],
             attributes: [
               'id',
               'identification',
@@ -143,9 +149,10 @@ class SupplyController {
               {
                 model: SupplyStorage,
                 as: 'storages',
-                order: [['identification', 'DESC']],
+                order: [['identification', 'ASC']],
                 attributes: [
                   'id',
+                  'location',
                   'identification',
                   'amount',
                   'capacity',

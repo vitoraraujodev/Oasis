@@ -23,6 +23,7 @@ class ProductiveProcessController {
     });
 
     const products = await Product.findAll({
+      where: { company_id: req.companyId },
       order: [['identification', 'ASC']],
       attributes: [
         'id',
@@ -38,13 +39,24 @@ class ProductiveProcessController {
         {
           model: ProductStorage,
           as: 'storages',
-          order: [['identification', 'ASC']],
-          attributes: ['id', 'identification', 'amount', 'capacity', 'unit'],
+          order: [
+            ['location', 'ASC'],
+            ['identification', 'ASC'],
+          ],
+          attributes: [
+            'id',
+            'location',
+            'identification',
+            'amount',
+            'capacity',
+            'unit',
+          ],
         },
       ],
     });
 
     const supplies = await Supply.findAll({
+      where: { company_id: req.companyId },
       order: [['identification', 'ASC']],
       attributes: [
         'id',
@@ -59,8 +71,18 @@ class ProductiveProcessController {
         {
           model: SupplyStorage,
           as: 'storages',
-          order: [['identification', 'ASC']],
-          attributes: ['id', 'identification', 'amount', 'capacity', 'unit'],
+          order: [
+            ['location', 'ASC'],
+            ['identification', 'ASC'],
+          ],
+          attributes: [
+            'id',
+            'location',
+            'identification',
+            'amount',
+            'capacity',
+            'unit',
+          ],
         },
       ],
     });

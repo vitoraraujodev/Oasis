@@ -22,6 +22,9 @@ import GeneralArea from '../../models/SpecificInfo/GeneralArea';
 import File from '../../models/SpecificInfo/File';
 import SpecificArea from '../../models/SpecificInfo/SpecificArea';
 
+import Supply from '../../models/ProductiveProcess/Supply';
+import SupplyStorage from '../../models/ProductiveProcess/SupplyStorage';
+
 class DocumentController {
   async index(req, res) {
     const company = await Company.findByPk(req.params.id);
@@ -235,6 +238,44 @@ class DocumentController {
       .map((area) => area.area)
       .reduce((total, amount) => total + amount);
 
+    const supplies = await Supply.findAll({
+      where: { company_id: req.params.id },
+      order: [['identification', 'ASC']],
+      attributes: [
+        'id',
+        'identification',
+        'physical_state',
+        'quantity',
+        'unit',
+        'transport',
+        'packaging',
+      ],
+      include: [
+        {
+          model: SupplyStorage,
+          as: 'storages',
+          order: [
+            ['location', 'ASC'],
+            ['identification', 'ASC'],
+          ],
+          attributes: [
+            'id',
+            'location',
+            'identification',
+            'amount',
+            'capacity',
+            'unit',
+          ],
+        },
+      ],
+    });
+
+    if (supplies.length === 0) {
+      return res.status(400).json({
+        error: 'Preencha os insumos da sua empresa e tente novamente.',
+      });
+    }
+
     const documentFile = fs.readFileSync(
       resolve(
         __dirname,
@@ -262,6 +303,7 @@ class DocumentController {
       generalArea,
       specificAreas,
       totalArea,
+      supplies,
     });
 
     pdf
