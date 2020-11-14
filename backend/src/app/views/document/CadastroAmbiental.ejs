@@ -146,20 +146,13 @@
       border: 1px solid black;
       border-collapse: collapse;
     }
-    table + table,
-    table + table th,
-    table + table td,
-    table + table caption {
-      border-left: 0;
-    }
     th, td {
-      padding: 8px;
+      padding: 4px;
       text-align: left;
       font-size: 9px;
       color: #252525;
     }
     th {
-      padding: 8px;
       background: #ddd;
     }
     td {
@@ -174,6 +167,14 @@
       color: #252525;
       padding: 4px 0;
     }
+    hr {
+      box-shadow: 0;
+      height: 0.5px;
+      border-width: 0;
+      background: black;
+      width: calc(100% + 8px);
+      margin-left: -4px;
+    }
 
     .table-container {
       text-align: center;
@@ -183,7 +184,7 @@
     }
     .table-label {
       font-weight: bold;
-      font-size: 10px;
+      font-size: 9px;
       color: #252525;
     }
     .caption {
@@ -194,7 +195,7 @@
       background: #bbb;
       color: #252525;
       text-align: center;
-      padding: 4px 0;
+      padding: 4px;
     }
 
     .panoramic-img {
@@ -418,7 +419,7 @@
         </caption>
         <tr>
           <th>Tipo</th>
-          <th>Quantidade</th>
+          <th style="text-align: center;">Quanti<br>dade</th>
         </tr>
         <% employees.forEach(function(employee) { %>
           <tr>
@@ -489,14 +490,14 @@
           <th class="caption" colspan="3">Armazenamento</th>
         </tr>
         <tr>
-          <th>Identi<br>ficaçao</th>
-          <th>Forma <br> física</th>
-          <th>Quant. <br> média/ano</th>
+          <th>Identificaçao</th>
+          <th>Forma<br>física</th>
+          <th>Quant.<br>média/ano</th>
           <th>Transporte</th>
           <th>Acond.</th>
           <th>Local</th>
           <th>Forma</th>
-          <th>Capaci<br>dade</th>
+          <th style="text-align: center;">Capaci<br>dade</th>
         </tr>
         <% supplies.forEach(function(supply) { %>
           <% supply.storages.forEach(function(storage) { %>
@@ -525,11 +526,11 @@
           </tr>
           <tr>
             <th>Identificaçao</th>
-            <th>Quanti<br>dade</th>
-            <th>Data de <br> instalação</th>
-            <th>Capaci <br> dade</th>
+            <th style="text-align: center;">Quanti<br>dade</th>
+            <th>Data de<br>instalação</th>
+            <th style="text-align: center;">Capaci<br>dade</th>
             <th>Combustível</th>
-            <th>Consumo <br> anual</th>
+            <th style="text-align: center;">Consumo<br>anual</th>
           </tr>
           <% productiveEquipments.forEach(function(equipment) { %>
               <tr>
@@ -568,11 +569,11 @@
           </tr>
           <tr>
             <th>Identificaçao</th>
-            <th>Quanti<br>dade</th>
-            <th>Data de <br> instalação</th>
-            <th>Capaci <br> dade</th>
+            <th style="text-align: center;">Quanti<br>dade</th>
+            <th>Data de<br>instalação</th>
+            <th style="text-align: center;">Capaci<br>dade</th>
             <th>Combustível</th>
-            <th>Consumo <br> anual</th>
+            <th style="text-align: center;">Consumo<br>anual</th>
           </tr>
           <% auxiliaryEquipments.forEach(function(equipment) { %>
               <tr>
@@ -611,11 +612,11 @@
           </tr>
           <tr>
             <th>Identificaçao</th>
-            <th>Quanti<br>dade</th>
-            <th>Data de <br> instalação</th>
-            <th>Capaci <br> dade</th>
+            <th style="text-align: center;">Quanti<br>dade</th>
+            <th>Data de<br>instalação</th>
+            <th style="text-align: center;">Capaci<br>dade</th>
             <th>Combustível</th>
-            <th>Consumo <br> anual</th>
+            <th style="text-align: center;">Consumo<br>anual</th>
           </tr>
           <% controlEquipments.forEach(function(equipment) { %>
               <tr>
@@ -644,6 +645,146 @@
       </p>
     <% } %>
 
+    <p class="document-text">
+      A relação dos principais Produtos fabricados, com as respectivas especificidades, está
+      descrita na tabela a seguir:
+    </p>
+    <div class="table-container">
+      <strong class="table-label">Tabela 11. Principais Produtos fabricados</strong>
+      <table>
+        <tr>
+          <th class="caption" colspan="4">Relação de Produtos</th>
+          <th class="caption" colspan="3">Armazenamento</th>
+          <th class="caption" colspan="2">Expedição</th>
+        </tr>
+        <tr>
+          <th>Identificaçao</th>
+          <th>Forma<br>física</th>
+          <th>Quant.<br>média/ano</th>
+          <th>Capaci<br>dade<br>produtiva</th>
+          <th>Local</th>
+          <th>Forma</th>
+          <th style="text-align: center;">Capaci<br>dade</th>
+          <th>Transporte</th>
+          <th>Acond.</th>
+        </tr>
+        <% products.forEach(function(product) { %>
+          <% product.storages.forEach(function(storage) { %>
+            <tr>
+              <td><%= product.identification %></td>
+              <td style="text-align: center;"><%= product.physical_state %></td>
+              <td style="text-align: center;"><%= product.quantity %> <%= product.unit %></td>
+              <td style="text-align: center;"><%= product.capacity %> <%= product.unit %></td>
+              <td><%= storage.location %></td>
+              <td><%= storage.amount %> <%= storage.identification %></td>
+              <td style="text-align: center;"><%= storage.capacity %> <%= storage.unit %></td>
+              <td><%= product.transport %></td>
+              <td><%= product.packaging %></td></tr>
+          <% }); %>
+        <% }); %>
+      </table>
+    </div>
+
+
+    <p class="document-topic">5. Aspectos Ambientais</p>
+
+    <p class="document-subtopic">5.1. Abastecimento Hídrico</p>
+    <p class="document-text">
+      O fornecimento de água da empresa <b><%= company.name %></b> é realizado conforme
+      o Consumo Hídrico apresentado abaixo, o qual descreve todas as fontes, os
+      respectivos tipos de uso da água, assim como, as vazões de consumo
+      correspondentes a cada um, totalizando uma vazão de
+      <b><%= totalFlow %></b> m³ de água por dia.
+    </p>
+    <div class="table-container">
+      <strong class="table-label">Tabela 12. Consumo Hídrico na instalação e na operação</strong>
+      <table>
+        <tr>
+          <th class="caption" colspan="1">Fonte de água</th>
+          <th class="caption" colspan="3">Uso</th>
+        </tr>
+        <tr>
+          <th style="text-align: center;">Fonte</th>
+          <th>Tipo de Uso</th>
+          <th style="text-align: center;">Vazão<br>(m³/dia)</th>
+          <th style="text-align: center;">Vazão Total<br>(m³/dia)</th>
+        </tr>
+        <% waterSupplies.forEach(function(waterSupply) { %>
+          <tr>
+            <td style="text-align: center;">
+              <%= waterSupply.source %>
+              <% if (waterSupply.license) { %>
+                <br> n° <%= waterSupply.license %>
+              <% } %>
+            </td>
+            <td style="text-align: center;">
+              <% waterSupply.uses.forEach(function(use, index) { %>
+                <%= use.usage %>
+                <% if (index < waterSupply.uses.length - 1 ) { %>
+                  <br><hr>
+                <% } %>
+              <% }); %>
+            </td>
+            <td style="text-align: center;">
+              <% waterSupply.uses.forEach(function(use, index) { %>
+                <%= use.flow %>
+                <% if (index < waterSupply.uses.length - 1 ) { %>
+                  <br><hr>
+                <% } %>
+              <% }); %>
+            </td>
+            <td style="text-align: center;">
+              <%= waterSupply.totalFlow %>
+            </td>
+          </tr>
+        <% }); %>
+      </table>
+    </div>
+
+
+    <p class="document-subtopic">5.2. Emissões Atmosféricas</p>
+    <p class="document-text">
+      As fontes de emissões atmosféricas do referido empreendimento, os poluentes
+      gerados por meio destas, e as respectivas concentrações estão descritos na Tabela a seguir:
+    </p>
+    <div class="table-container">
+      <strong class="table-label">Tabela 13. Emissões Atmosféricas</strong>
+      <table>
+        <tr>
+          <th>Fonte</th>
+          <th>Poluente gerado</th>
+          <th style="text-align: center;">Concentração</th>
+          <th>Sistema de controle</th>
+        </tr>
+        <% emissions.forEach(function(emission) { %>
+          <tr>
+            <td>
+              <%= emission.source %>
+            </td>
+            <td>
+              <%= emission.pollutant %>
+            </td>
+            <td style="text-align: center;">
+              <%= emission.concentration %> <%= emission.unit %>
+            </td>
+            <td>
+              <%= emission.control_system %>
+            </td>
+          </tr>
+        <% }); %>
+      </table>
+    </div>
+    <p>
+      <span class="document-subtopic">Observação: </span>
+      <span class="document-subtext">
+        A empresa <% if (!emissionInfo.promonAir) { %><b>não</b><% } %>
+        se encontra cadastrada no PROMON AR, e <% if (!emissionInfo.procon) { %><b>não</b><% } %>
+        se encontra cadastrada no PROCON Fumaça Preta, conforme preconizado,
+        respectivamente, nas NOP01 e NOP14.
+      </span>
+    </p>
+
   </div>
+
 </body>
 </html>

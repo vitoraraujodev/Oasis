@@ -7,7 +7,7 @@ import ResidueInfo from '../../models/EnvironAspect/ResidueInfo';
 
 class EnvironAspectController {
   async index(req, res) {
-    const waterSupply = await WaterSupply.findAll({
+    const waterSupplies = await WaterSupply.findAll({
       where: { company_id: req.companyId },
       order: [['source', 'ASC']],
       attributes: ['id', 'source', 'license'],
@@ -106,7 +106,7 @@ class EnvironAspectController {
     });
 
     return res.json({
-      waterSupply,
+      waterSupplies,
       sanitaryEffluents,
       industrialEffluents,
       oilyEffluents,

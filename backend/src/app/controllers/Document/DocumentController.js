@@ -25,6 +25,14 @@ import SpecificArea from '../../models/SpecificInfo/SpecificArea';
 import Supply from '../../models/ProductiveProcess/Supply';
 import SupplyStorage from '../../models/ProductiveProcess/SupplyStorage';
 import Equipment from '../../models/ProductiveProcess/Equipment';
+import Product from '../../models/ProductiveProcess/Product';
+import ProductStorage from '../../models/ProductiveProcess/ProductStorage';
+
+import WaterSupply from '../../models/EnvironAspect/WaterSupply';
+import WaterUse from '../../models/EnvironAspect/WaterUse';
+
+import Emission from '../../models/CompAspect/Emission';
+import EmissionInfo from '../../models/CompAspect/EmissionInfo';
 
 class DocumentController {
   async index(req, res) {
@@ -300,6 +308,116 @@ class DocumentController {
       });
     }
 
+    const products = await Product.findAll({
+      where: { company_id: req.params.id },
+      order: [['identification', 'ASC']],
+      attributes: [
+        'id',
+        'identification',
+        'physical_state',
+        'quantity',
+        'capacity',
+        'unit',
+        'transport',
+        'packaging',
+      ],
+      include: [
+        {
+          model: ProductStorage,
+          as: 'storages',
+          order: [
+            ['location', 'ASC'],
+            ['identification', 'ASC'],
+          ],
+          attributes: [
+            'id',
+            'location',
+            'identification',
+            'amount',
+            'capacity',
+            'unit',
+          ],
+        },
+      ],
+    });
+
+    if (products.length === 0) {
+      return res.status(400).json({
+        error: 'Preencha os produtos da sua empresa e tente novamente.',
+      });
+    }
+
+    const waterSupplies = await WaterSupply.findAll({
+      where: { company_id: req.params.id },
+      order: [['source', 'ASC']],
+      attributes: ['id', 'source', 'license'],
+      include: [
+        {
+          model: WaterUse,
+          as: 'uses',
+          required: true,
+          order: [['usage', 'ASC']],
+          attributes: ['id', 'usage', 'flow'],
+        },
+      ],
+    });
+
+    if (waterSupplies.length === 0) {
+      return res.status(400).json({
+        error: 'Preencha as fontes de água da sua empresa e tente novamente.',
+      });
+    }
+
+    const formattedWaterSupplies = waterSupplies.map((waterSupply) => {
+      const totalFlow = waterSupply.uses
+        .map((use) => use.flow)
+        .reduce((total, value) => total + value);
+      return {
+        source: waterSupply.source,
+        license: waterSupply.license,
+        uses: waterSupply.uses,
+        totalFlow,
+      };
+    });
+
+    const totalFlow = formattedWaterSupplies
+      .map((waterSupply) => waterSupply.totalFlow)
+      .reduce((total, value) => total + value);
+
+    const emissions = await Emission.findAll({
+      where: { company_id: req.params.id },
+      order: [
+        ['source', 'ASC'],
+        ['pollutant', 'ASC'],
+      ],
+      attributes: [
+        'source',
+        'pollutant',
+        'unit',
+        'concentration',
+        'control_system',
+      ],
+    });
+
+    if (emissions.length === 0) {
+      return res.status(400).json({
+        error:
+          'Preencha as emissões atmosféricas da sua empresa e tente novamente.',
+      });
+    }
+
+    const emissionInfo = await EmissionInfo.findOne({
+      where: { company_id: req.params.id },
+      attributes: ['id', 'promonAir', 'fleet', 'procon'],
+    });
+
+    if (!emissionInfo) {
+      return res.status(400).json({
+        error:
+          'Preencha as informações de emissões atmosféricas da sua empresa e tente novamente.',
+      });
+    }
+
     const documentFile = fs.readFileSync(
       resolve(
         __dirname,
@@ -337,6 +455,11 @@ class DocumentController {
       controlEquipments: equipments.filter(
         (equipment) => equipment.kind === 'control'
       ),
+      products,
+      waterSupplies: formattedWaterSupplies,
+      totalFlow,
+      emissions,
+      emissionInfo,
     });
 
     pdf
@@ -344,10 +467,10 @@ class DocumentController {
         orientation: 'portrait',
         format: 'A4',
         border: {
-          top: '40px',
-          bottom: '40px',
-          right: '32px',
-          left: '32px',
+          top: '24px',
+          bottom: '24px',
+          right: '16px',
+          left: '16px',
         },
 
         header: {

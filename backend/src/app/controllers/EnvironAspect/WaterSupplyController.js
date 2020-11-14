@@ -33,6 +33,12 @@ class WaterSupplyController {
 
     const { uses } = req.body;
 
+    if (uses.length === 0) {
+      return res.status(400).json({
+        error: 'Informe os usos da água dessa fonte.',
+      });
+    }
+
     if (!supply) {
       // Creates new Water Supply
       await WaterSupply.create({
