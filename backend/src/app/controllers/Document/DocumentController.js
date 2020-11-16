@@ -30,6 +30,8 @@ import ProductStorage from '../../models/ProductiveProcess/ProductStorage';
 
 import WaterSupply from '../../models/EnvironAspect/WaterSupply';
 import WaterUse from '../../models/EnvironAspect/WaterUse';
+import Sanitary from '../../models/EnvironAspect/Sanitary';
+import Effluent from '../../models/EnvironAspect/Effluent';
 
 import Emission from '../../models/CompAspect/Emission';
 import EmissionInfo from '../../models/CompAspect/EmissionInfo';
@@ -418,6 +420,97 @@ class DocumentController {
       });
     }
 
+    const sanitaryEffluents = await Effluent.findAll({
+      where: { company_id: req.params.id, kind: 'sanitary' },
+      order: [['source', 'ASC']],
+      attributes: [
+        'id',
+        'kind',
+        'source',
+        'flow',
+        'treatment',
+        'quantity',
+        'water_body',
+        'license',
+        'water_body',
+      ],
+    });
+
+    if (sanitaryEffluents.length === 0) {
+      return res.status(400).json({
+        error:
+          'Preencha os efluentes sanitários da sua empresa e tente novamente.',
+      });
+    }
+
+    const sanitaryTotalFlow = sanitaryEffluents
+      .map((effluent) => effluent.flow)
+      .reduce((total, value) => total + value);
+
+    const oilyEffluents = await Effluent.findAll({
+      where: { company_id: req.params.id, kind: 'oily' },
+      order: [['source', 'ASC']],
+      attributes: [
+        'id',
+        'kind',
+        'source',
+        'flow',
+        'treatment',
+        'quantity',
+        'license',
+        'water_body',
+      ],
+    });
+
+    if (oilyEffluents.length === 0) {
+      return res.status(400).json({
+        error:
+          'Preencha os efluentes oleosos da sua empresa e tente novamente.',
+      });
+    }
+
+    const oilyTotalFlow = oilyEffluents
+      .map((effluent) => effluent.flow)
+      .reduce((total, value) => total + value);
+
+    const industrialEffluents = await Effluent.findAll({
+      where: { company_id: req.params.id, kind: 'industrial' },
+      order: [['source', 'ASC']],
+      attributes: [
+        'id',
+        'kind',
+        'source',
+        'flow',
+        'treatment',
+        'quantity',
+        'license',
+        'water_body',
+      ],
+    });
+
+    if (industrialEffluents.length === 0) {
+      return res.status(400).json({
+        error:
+          'Preencha os efluentes industriais da sua empresa e tente novamente.',
+      });
+    }
+
+    const industrialTotalFlow = industrialEffluents
+      .map((effluent) => effluent.flow)
+      .reduce((total, value) => total + value);
+
+    const sanitary = await Sanitary.findOne({
+      where: { company_id: req.params.id },
+      attributes: ['id', 'kitchen', 'theoric_flow', 'declaration'],
+    });
+
+    if (!sanitary) {
+      return res.status(400).json({
+        error:
+          'Preencha as informações do efluente sanitário da sua empresa e tente novamente.',
+      });
+    }
+
     const documentFile = fs.readFileSync(
       resolve(
         __dirname,
@@ -460,6 +553,13 @@ class DocumentController {
       totalFlow,
       emissions,
       emissionInfo,
+      sanitary,
+      sanitaryEffluents,
+      sanitaryTotalFlow,
+      oilyEffluents,
+      oilyTotalFlow,
+      industrialEffluents,
+      industrialTotalFlow,
     });
 
     pdf

@@ -784,6 +784,179 @@
       </span>
     </p>
 
+
+    <p class="document-subtopic">5.3. Efluentes Líquidos</p>
+    <p class="document-text">
+      As relações dos Efluentes Sanitário, Industrial, e Oleoso, gerados nas operações da
+      requerente, assim como as respectivas especificidades estão descritos nas a seguir:
+    </p>
+    <div class="table-container">
+      <strong class="table-label">Tabela 14. Efluente Sanitário</strong>
+      <table>
+        <tr>
+          <th class="caption" colspan="2">
+            Efluente
+          </th>
+          <th class="caption" colspan="2">
+            Tratamento
+          </th>
+          <th class="caption" colspan="2">
+            Escoamento
+          </th>
+        </tr>
+        <tr>
+          <th>Fonte</th>
+          <th style="text-align: center;">Vazão<br>(m³/dia)</th>
+          <th>Forma de<br>tratamento</th>
+          <th style="text-align: center;">Quantidade</th>
+          <th>Drenagem</th>
+        </tr>
+        <% sanitaryEffluents.forEach(function(effluent) { %>
+          <tr>
+            <td>
+              <%= effluent.source %>
+            </td>
+            <td style="text-align: center;">
+              <%= effluent.flow %>
+            </td>
+            <td>
+              <%= effluent.treatment %>
+            </td>
+            <td style="text-align: center;">
+              <% if (effluent.quantity) { %>
+                <%= effluent.quantity %>
+              <% } else { %>
+                -
+              <% } %>
+            </td>
+            <td>
+              <%= effluent.water_body %>
+            </td>
+          </tr>
+        <% }); %>
+        <tr>
+          <th>Total</th>
+          <td style="text-align: center;"><%= sanitaryTotalFlow %></td>
+        </tr>
+        <tr>
+          <th>Teórico</th>
+          <td style="text-align: center;">
+            <%= sanitary.theoric_flow*0.8 %> - <%= sanitary.theoric_flow*1.2 %>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <p>
+      <span class="document-subtopic">Observação: </span>
+      <span class="document-subtext">
+        A empresa <% if (!sanitary.kitchen) { %><b>não</b><% } %>
+        é dotada de cozinha industrial. Além disso,
+        <% if (!sanitary.kitchen) { %><b>não</b><% } %> possui DPE.
+      </span>
+    </p>
+
+    <div class="table-container">
+      <strong class="table-label">Tabela 14. Efluente Industrial</strong>
+      <table>
+        <tr>
+          <th class="caption" colspan="2">
+            Efluente
+          </th>
+          <th class="caption" colspan="2">
+            Tratamento
+          </th>
+          <th class="caption" colspan="2">
+            Escoamento
+          </th>
+        </tr>
+        <tr>
+          <th>Fonte</th>
+          <th style="text-align: center;">Vazão<br>(m³/dia)</th>
+          <th>Forma de<br>tratamento</th>
+          <th style="text-align: center;">Quantidade</th>
+          <th>Drenagem</th>
+        </tr>
+        <% industrialEffluents.forEach(function(effluent) { %>
+          <tr>
+            <td>
+              <%= effluent.source %>
+            </td>
+            <td style="text-align: center;">
+              <%= effluent.flow %>
+            </td>
+            <td>
+              <%= effluent.treatment %>
+            </td>
+            <td style="text-align: center;">
+              <% if (effluent.quantity) { %>
+                <%= effluent.quantity %>
+              <% } else { %>
+                -
+              <% } %>
+            </td>
+            <td>
+              <%= effluent.water_body %>
+            </td>
+          </tr>
+        <% }); %>
+        <tr>
+          <th>Total</th>
+          <td style="text-align: center;"><%= industrialTotalFlow %></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="table-container">
+      <strong class="table-label">Tabela 14. Efluente Oleoso</strong>
+      <table>
+        <tr>
+          <th class="caption" colspan="2">
+            Efluente
+          </th>
+          <th class="caption" colspan="2">
+            Tratamento
+          </th>
+          <th class="caption" colspan="2">
+            Escoamento
+          </th>
+        </tr>
+        <tr>
+          <th>Fonte</th>
+          <th style="text-align: center;">Vazão<br>(m³/dia)</th>
+          <th>Forma de<br>tratamento</th>
+          <th style="text-align: center;">Quantidade</th>
+          <th>Drenagem</th>
+        </tr>
+        <% industrialEffluents.forEach(function(effluent) { %>
+          <tr>
+            <td>
+              <%= effluent.source %>
+            </td>
+            <td style="text-align: center;">
+              <%= effluent.flow %>
+            </td>
+            <td>
+              <%= effluent.treatment %>
+            </td>
+            <td style="text-align: center;">
+              <% if (effluent.quantity) { %>
+                <%= effluent.quantity %>
+              <% } else { %>
+                -
+              <% } %>
+            </td>
+            <td>
+              <%= effluent.water_body %>
+            </td>
+          </tr>
+        <% }); %>
+        <tr>
+          <th>Total</th>
+          <td style="text-align: center;"><%= oilyTotalFlow %></td>
+        </tr>
+      </table>
+    </div>
+
   </div>
 
 </body>
