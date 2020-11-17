@@ -39,6 +39,8 @@ import Emission from '../../models/CompAspect/Emission';
 import EmissionInfo from '../../models/CompAspect/EmissionInfo';
 import Noise from '../../models/CompAspect/Noise';
 import NoiseInfo from '../../models/CompAspect/NoiseInfo';
+import Risk from '../../models/CompAspect/Risk';
+import RiskStorage from '../../models/CompAspect/RiskStorage';
 
 class DocumentController {
   async index(req, res) {
@@ -63,7 +65,7 @@ class DocumentController {
     if (!specific) {
       return res.status(400).json({
         error:
-          'Preencha as informações específicas da sua empresa e tente novamente.',
+          'Por favor, preencha as informações específicas da sua empresa e tente novamente.',
       });
     }
 
@@ -83,7 +85,8 @@ class DocumentController {
 
     if (!address) {
       return res.status(400).json({
-        error: 'Preencha o endereço da sua empresa e tente novamente.',
+        error:
+          'Por favor, preencha o endereço da sua empresa e tente novamente.',
       });
     }
 
@@ -114,14 +117,14 @@ class DocumentController {
     if (!operatingInfo) {
       return res.status(400).json({
         error:
-          'Preencha as informações de funcionamento da sua empresa e tente novamente.',
+          'Por favor, preencha as informações de funcionamento da sua empresa e tente novamente.',
       });
     }
 
     if (operatingInfo.shifts.length === 0) {
       return res.status(400).json({
         error:
-          'Preencha os turnos das informações de funcionamento da sua empresa e tente novamente.',
+          'Por favor, preencha os turnos das informações de funcionamento da sua empresa e tente novamente.',
       });
     }
 
@@ -154,7 +157,7 @@ class DocumentController {
     if (!representatives) {
       return res.status(400).json({
         error:
-          'Preencha as informações dos representantes da sua empresa e tente novamente.',
+          'Por favor, preencha as informações dos representantes da sua empresa e tente novamente.',
       });
     }
 
@@ -174,7 +177,7 @@ class DocumentController {
     if (!technicalManager) {
       return res.status(400).json({
         error:
-          'Preencha as informações do representante técnico da sua empresa e tente novamente.',
+          'Por favor, preencha as informações do representante técnico da sua empresa e tente novamente.',
       });
     }
 
@@ -186,7 +189,7 @@ class DocumentController {
     if (!contactManager) {
       return res.status(400).json({
         error:
-          'Preencha as informações da pessoa de contato da sua empresa e tente novamente.',
+          'Por favor, preencha as informações da pessoa de contato da sua empresa e tente novamente.',
       });
     }
 
@@ -198,7 +201,7 @@ class DocumentController {
     if (!contactInfo) {
       return res.status(400).json({
         error:
-          'Preencha as informações de contato da sua empresa e tente novamente.',
+          'Por favor, preencha as informações de contato da sua empresa e tente novamente.',
       });
     }
 
@@ -210,7 +213,8 @@ class DocumentController {
 
     if (employees.length === 0) {
       return res.status(400).json({
-        error: 'Preencha os funcionários da sua empresa e tente novamente.',
+        error:
+          'Por favor, preencha os funcionários da sua empresa e tente novamente.',
       });
     }
 
@@ -233,7 +237,7 @@ class DocumentController {
     if (!generalArea || !generalArea.image) {
       return res.status(400).json({
         error:
-          'Preencha as informações da área da sua empresa e tente novamente.',
+          'Por favor, preencha as informações da área da sua empresa e tente novamente.',
       });
     }
 
@@ -245,7 +249,7 @@ class DocumentController {
     if (specificAreas.length === 0) {
       return res.status(400).json({
         error:
-          'Preencha as áreas específicas da sua empresa e tente novamente.',
+          'Por favor, preencha as áreas específicas da sua empresa e tente novamente.',
       });
     }
 
@@ -287,7 +291,8 @@ class DocumentController {
 
     if (supplies.length === 0) {
       return res.status(400).json({
-        error: 'Preencha os insumos da sua empresa e tente novamente.',
+        error:
+          'Por favor, preencha os insumos da sua empresa e tente novamente.',
       });
     }
 
@@ -310,7 +315,8 @@ class DocumentController {
 
     if (equipments.length === 0) {
       return res.status(400).json({
-        error: 'Preencha os equipamentos da sua empresa e tente novamente.',
+        error:
+          'Por favor, preencha os equipamentos da sua empresa e tente novamente.',
       });
     }
 
@@ -349,7 +355,8 @@ class DocumentController {
 
     if (products.length === 0) {
       return res.status(400).json({
-        error: 'Preencha os produtos da sua empresa e tente novamente.',
+        error:
+          'Por favor, preencha os produtos da sua empresa e tente novamente.',
       });
     }
 
@@ -370,7 +377,8 @@ class DocumentController {
 
     if (waterSupplies.length === 0) {
       return res.status(400).json({
-        error: 'Preencha as fontes de água da sua empresa e tente novamente.',
+        error:
+          'Por favor, preencha as fontes de água da sua empresa e tente novamente.',
       });
     }
 
@@ -408,7 +416,7 @@ class DocumentController {
     if (emissions.length === 0) {
       return res.status(400).json({
         error:
-          'Preencha as emissões atmosféricas da sua empresa e tente novamente.',
+          'Por favor, preencha as emissões atmosféricas da sua empresa e tente novamente.',
       });
     }
 
@@ -420,7 +428,7 @@ class DocumentController {
     if (!emissionInfo) {
       return res.status(400).json({
         error:
-          'Preencha as informações de emissões atmosféricas da sua empresa e tente novamente.',
+          'Por favor, preencha as informações de emissões atmosféricas da sua empresa e tente novamente.',
       });
     }
 
@@ -448,7 +456,7 @@ class DocumentController {
     if (!sanitary) {
       return res.status(400).json({
         error:
-          'Preencha as informações do efluente sanitário da sua empresa e tente novamente.',
+          'Por favor, preencha as informações do efluente sanitário da sua empresa e tente novamente.',
       });
     }
 
@@ -459,7 +467,7 @@ class DocumentController {
     if (sanitaryEffluents.length === 0) {
       return res.status(400).json({
         error:
-          'Preencha os efluentes sanitários da sua empresa e tente novamente.',
+          'Por favor, preencha os efluentes sanitários da sua empresa e tente novamente.',
       });
     }
 
@@ -474,7 +482,7 @@ class DocumentController {
     if (oilyEffluents.length === 0) {
       return res.status(400).json({
         error:
-          'Preencha os efluentes oleosos da sua empresa e tente novamente.',
+          'Por favor, preencha os efluentes oleosos da sua empresa e tente novamente.',
       });
     }
 
@@ -489,7 +497,7 @@ class DocumentController {
     if (industrialEffluents.length === 0) {
       return res.status(400).json({
         error:
-          'Preencha os efluentes industriais da sua empresa e tente novamente.',
+          'Por favor, preencha os efluentes industriais da sua empresa e tente novamente.',
       });
     }
 
@@ -518,7 +526,8 @@ class DocumentController {
 
     if (residues.length === 0) {
       return res.status(400).json({
-        error: 'Preencha os resíduos da sua empresa e tente novamente.',
+        error:
+          'Por favor, preencha os resíduos da sua empresa e tente novamente.',
       });
     }
 
@@ -530,7 +539,7 @@ class DocumentController {
     if (!residueInfo) {
       return res.status(400).json({
         error:
-          'Preencha as informações de resíduos da sua empresa e tente novamente.',
+          'Por favor, preencha as informações de resíduos da sua empresa e tente novamente.',
       });
     }
 
@@ -542,7 +551,8 @@ class DocumentController {
 
     if (noises.length === 0) {
       return res.status(400).json({
-        error: 'Preencha os ruídos gerados da sua empresa e tente novamente.',
+        error:
+          'Por favor, preencha os ruídos gerados da sua empresa e tente novamente.',
       });
     }
 
@@ -554,7 +564,28 @@ class DocumentController {
     if (!noiseInfo) {
       return res.status(400).json({
         error:
-          'Preencha as informações de ruídos da sua empresa e tente novamente.',
+          'Por favor, preencha as informações de ruídos da sua empresa e tente novamente.',
+      });
+    }
+
+    const risks = await Risk.findAll({
+      order: [['substance', 'ASC']],
+      attributes: ['id', 'substance', 'physical_state'],
+      include: [
+        {
+          model: RiskStorage,
+          as: 'storages',
+          required: true,
+          order: [['identification', 'ASC']],
+          attributes: ['id', 'identification', 'amount', 'capacity', 'unit'],
+        },
+      ],
+    });
+
+    if (risks.length === 0) {
+      return res.status(400).json({
+        error:
+          'Por favor, preencha os riscos ambientais da sua empresa e tente novamente.',
       });
     }
 
@@ -616,6 +647,7 @@ class DocumentController {
       residueInfo,
       noises,
       noiseInfo,
+      risks,
     });
 
     pdf

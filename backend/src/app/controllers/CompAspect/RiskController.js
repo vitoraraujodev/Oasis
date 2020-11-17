@@ -35,6 +35,12 @@ class RiskController {
 
     const { storages } = req.body;
 
+    if (storages.length === 0) {
+      return res.status(400).json({
+        error: 'Por favor, informe o sistema de armazenamento.',
+      });
+    }
+
     if (!risk) {
       // Creates new Risk
       await Risk.create({

@@ -491,7 +491,7 @@
         </tr>
         <tr>
           <th>Identificaçao</th>
-          <th>Forma<br>física</th>
+          <th style="text-align: center;">Forma<br>física</th>
           <th>Quant.<br>média/ano</th>
           <th>Transporte</th>
           <th>Acond.</th>
@@ -659,7 +659,7 @@
         </tr>
         <tr>
           <th>Identificaçao</th>
-          <th>Forma<br>física</th>
+          <th style="text-align: center;">Forma<br>física</th>
           <th>Quant.<br>média/ano</th>
           <th>Capaci<br>dade<br>produtiva</th>
           <th>Local</th>
@@ -978,7 +978,7 @@
           </tr>
           <tr>
             <th>Identificaçao +<br>Constituinte</th>
-            <th>Forma<br>física</th>
+            <th style="text-align: center;">Forma<br>física</th>
             <th>Fonte</th>
             <th>Quant.<br>média/ano</th>
             <th>Local</th>
@@ -1027,7 +1027,7 @@
           </tr>
           <tr>
             <th>Identificaçao +<br>Constituinte</th>
-            <th>Forma<br>física</th>
+            <th style="text-align: center;">Forma<br>física</th>
             <th>Fonte</th>
             <th>Quant.<br>média/ano</th>
             <th>Local</th>
@@ -1112,11 +1112,48 @@
       </span>
     </p>
 
-    <p class="document-subtopic">5.5. Pressão Sonora</p>
+
+    <p class="document-subtopic">5.6. Risco Ambiental</p>
     <p class="document-text">
-      As fontes de ruído provenientes das atividades realizadas na área da
-      requerente estão relacionadas abaixo:
+      Os produtos químicos e/ou inflamáveis que são utilizados nas atividades
+      desenvolvidas pela <%= company.name %>, assim como, o detalhamento a respeito do
+      armazenamento destes, estão mostrados na tabela abaixo:
     </p>
+    <div class="table-container">
+      <strong class="table-label">
+        Tabela 20. Relação de Produtos químicos e/ou inflamáveis armazenados
+      </strong>
+      <table>
+        <tr>
+          <th class="caption" colspan="2">Produto</th>
+          <th class="caption" colspan="4">Armazenamento</th>
+        </tr>
+        <tr>
+          <th>Substância</th>
+          <th style="text-align: center;">Forma<br>Física</th>
+          <th>Tipo de<br>reservatório</th>
+          <th style="text-align: center;">Quanti<br>dade</th>
+          <th>Capacidade<br>Unitária</th>
+          <th>Capacidade<br>Máxima</th>
+        </tr>
+        <% risks.forEach(function(risk) { %>
+          <% risk.storages.forEach(function(storage) { %>
+            <tr>
+              <td><%= risk.substance %></td>
+              <td style="text-align: center;"><%= risk.physical_state %></td>
+              <td><%= storage.identification %></td>
+              <td style="text-align: center;"><%= storage.amount %></td>
+              <td style="text-align: center;">
+                <%= storage.capacity %> <%= storage.unit %>
+              </td>
+              <td style="text-align: center;">
+                <%= storage.amount * storage.capacity %> <%= storage.unit %>
+              </td>
+            </tr>
+          <% }); %>
+        <% }); %>
+      </table>
+    </div>
 
   </div>
 
