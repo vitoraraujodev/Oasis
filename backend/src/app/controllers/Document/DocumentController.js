@@ -11,6 +11,8 @@ import Address from '../../models/GeneralInfo/Address';
 import OperatingInfo from '../../models/GeneralInfo/OperatingInfo';
 import Shift from '../../models/GeneralInfo/Shift';
 import Representative from '../../models/GeneralInfo/Representative';
+import History from '../../models/GeneralInfo/History';
+import Pending from '../../models/GeneralInfo/Pending';
 
 import TechnicalManager from '../../models/FollowUp/TechnicalManager';
 import ContactManager from '../../models/FollowUp/ContactManager';
@@ -589,6 +591,25 @@ class DocumentController {
       });
     }
 
+    const history = await History.findAll({
+      where: { company_id: req.params.id },
+      order: [['expiration_date', 'ASC']],
+      attributes: [
+        'id',
+        'instrument',
+        'number',
+        'process',
+        'expiration_date',
+        'objective',
+      ],
+    });
+
+    const pendencies = await Pending.findAll({
+      where: { company_id: req.params.id },
+      order: [['instrument', 'ASC']],
+      attributes: ['id', 'instrument', 'process', 'objective'],
+    });
+
     const documentFile = fs.readFileSync(
       resolve(
         __dirname,
@@ -648,6 +669,8 @@ class DocumentController {
       noises,
       noiseInfo,
       risks,
+      history,
+      pendencies,
     });
 
     pdf

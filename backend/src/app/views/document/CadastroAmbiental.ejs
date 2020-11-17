@@ -101,6 +101,18 @@
       color: #555;
     }
 
+    .attachment-page {
+      position: relative;
+      height: calc(100%);
+      width: 100%;
+      page-break-before: always;
+    }
+    .attachments {
+      position: absolute;
+      width: calc(100% - 48px);
+      padding: 0 24px;
+    }
+
 
     .document {
       position: relative;
@@ -419,7 +431,7 @@
         </caption>
         <tr>
           <th>Tipo</th>
-          <th style="text-align: center;">Quanti<br>dade</th>
+          <th style="text-align: center;">Quantidade</th>
         </tr>
         <% employees.forEach(function(employee) { %>
           <tr>
@@ -432,7 +444,7 @@
 
     <p class="document-text">
       Cumpre registrar que, o empreendimento dispõe de área total o equivalente a
-      <b><%= generalArea.area %></b> m², cuja delimitação poligonal do entorno
+      <b><%= generalArea.area %>  m²</b>, cuja delimitação poligonal do entorno
       está mostrada na Figura 1, e as relações de valores em m² das respectivas áreas específicas
       constam na Tabela 7:
     </p>
@@ -459,7 +471,7 @@
         </caption>
         <tr>
           <th>Tipo</th>
-          <th>Área(m²)</th>
+          <th>Área (m²)</th>
         </tr>
         <% specificAreas.forEach(function(specificArea) { %>
           <tr>
@@ -490,7 +502,7 @@
           <th class="caption" colspan="3">Armazenamento</th>
         </tr>
         <tr>
-          <th>Identificaçao</th>
+          <th>Identificação</th>
           <th style="text-align: center;">Forma<br>física</th>
           <th>Quant.<br>média/ano</th>
           <th>Transporte</th>
@@ -518,14 +530,14 @@
 
     <% if (productiveEquipments.length > 0) { %>
       <div class="table-container">
-        <strong class="table-label">Tabela 9. Principais Equipamentos de Processo na Produção</strong>
+        <strong class="table-label">Tabela 9. Principais Equipamentos de Processo</strong>
         <table>
           <tr>
             <th class="caption" colspan="4">Relação de Equipamentos</th>
             <th class="caption" colspan="2">Combustível</th>
           </tr>
           <tr>
-            <th>Identificaçao</th>
+            <th>Identificação</th>
             <th style="text-align: center;">Quanti<br>dade</th>
             <th>Data de<br>instalação</th>
             <th style="text-align: center;">Capaci<br>dade</th>
@@ -568,7 +580,7 @@
             <th class="caption" colspan="2">Combustível</th>
           </tr>
           <tr>
-            <th>Identificaçao</th>
+            <th>Identificação</th>
             <th style="text-align: center;">Quanti<br>dade</th>
             <th>Data de<br>instalação</th>
             <th style="text-align: center;">Capaci<br>dade</th>
@@ -611,7 +623,7 @@
             <th class="caption" colspan="2">Combustível</th>
           </tr>
           <tr>
-            <th>Identificaçao</th>
+            <th>Identificação</th>
             <th style="text-align: center;">Quanti<br>dade</th>
             <th>Data de<br>instalação</th>
             <th style="text-align: center;">Capaci<br>dade</th>
@@ -658,7 +670,7 @@
           <th class="caption" colspan="2">Expedição</th>
         </tr>
         <tr>
-          <th>Identificaçao</th>
+          <th>Identificação</th>
           <th style="text-align: center;">Forma<br>física</th>
           <th>Quant.<br>média/ano</th>
           <th>Capaci<br>dade<br>produtiva</th>
@@ -694,7 +706,7 @@
       o Consumo Hídrico apresentado abaixo, o qual descreve todas as fontes, os
       respectivos tipos de uso da água, assim como, as vazões de consumo
       correspondentes a cada um, totalizando uma vazão de
-      <b><%= totalFlow %></b> m³ de água por dia.
+      <b><%= totalFlow %> m³</b> de água por dia.
     </p>
     <div class="table-container">
       <strong class="table-label">Tabela 12. Consumo Hídrico na instalação e na operação</strong>
@@ -977,7 +989,7 @@
             <th class="caption">Destinação</th>
           </tr>
           <tr>
-            <th>Identificaçao +<br>Constituinte</th>
+            <th>Identificação +<br>Constituinte</th>
             <th style="text-align: center;">Forma<br>física</th>
             <th>Fonte</th>
             <th>Quant.<br>média/ano</th>
@@ -1026,7 +1038,7 @@
             <th class="caption">Destinação</th>
           </tr>
           <tr>
-            <th>Identificaçao +<br>Constituinte</th>
+            <th>Identificação +<br>Constituinte</th>
             <th style="text-align: center;">Forma<br>física</th>
             <th>Fonte</th>
             <th>Quant.<br>média/ano</th>
@@ -1153,6 +1165,182 @@
           <% }); %>
         <% }); %>
       </table>
+    </div>
+
+    <p class="document-topic">6. Histórico de Processos</p>
+    <p class="document-text">
+      O resumo dos instrumentos obtidos pela requerente junto ao INEA, assim como, os
+      respectivos processos de licenciamento ambiental e informações complementares se
+      encontram descritos abaixo:
+    </p>
+    <% if (history.length > 0) { %>
+      <div class="table-container">
+        <strong class="table-label">Tabela 21. Histórico de processos</strong>
+        <table>
+          <caption>Processos</caption>
+          <tr>
+            <th>Instrumento obtido</th>
+            <th>Objeto</th>
+            <th style="text-align: center;">Número</th>
+            <th style="text-align: center;">Processo</th>
+            <th style="text-align: center;">Data de validade</th>
+          </tr>
+          <% history.forEach(function(process) { %>
+            <tr>
+              <td><%= process.instrument %></td>
+              <td><%= process.objective %></td>
+              <td style="text-align: center;"><%= process.number %></td>
+              <td style="text-align: center;"><%= process.process %></td>
+              <td style="text-align: center;">
+                <%= ("0" + (process.expiration_date.getDate() + 1)).slice(-2) %>/<%= ("0" + (process.expiration_date.getMonth() + 1)).slice(-2) %>/<%= process.expiration_date.getFullYear() %>
+              </td>
+            </tr>
+          <% }); %>
+        </table>
+      </div>
+    <% } else { %>
+      <p>
+        <span class="document-subtopic">Observação: </span>
+        <span class="document-subtext">
+          A empresa não obtem nenhum instrumento ou processo de licenciamento
+          junto ao INEA.
+        </span>
+      </p>
+    <% } %>
+
+    <p class="document-text">
+      Os processos da <b><%= company.name %> </b> que estão em andamento no órgão,
+      e suas respecitivas informações complementares se encontram descritos
+      na Tabela abaixo:
+    </p>
+    <% if (pendencies.length > 0) { %>
+      <div class="table-container">
+        <strong class="table-label">Tabela 22. Processos em andamento junto ao INEA</strong>
+        <table>
+          <caption>Processos</caption>
+          <tr>
+            <th>Instrumento<br>requerido</th>
+            <th>Objeto</th>
+            <th style="text-align: center;">Processo</th>
+          </tr>
+          <% pendencies.forEach(function(pending) { %>
+            <tr>
+              <td><%= pending.instrument %></td>
+              <td><%= pending.objective %></td>
+              <td style="text-align: center;"><%= pending.process %></td>
+            </tr>
+          <% }); %>
+        </table>
+      </div>
+    <% } else { %>
+      <p>
+        <span class="document-subtopic">Observação: </span>
+        <span class="document-subtext">
+          A empresa não possui nenhum instrumento ou processo de licenciamento
+          em andamento junto ao órgão.
+        </span>
+      </p>
+    <% } %>
+  </div>
+
+  <div class="attachment-page">
+    <div class="attachments">
+      <p class="document-topic">7. Anexos</p>
+
+      <p>
+        <span class="document-subtopic">a)</span>
+        <span class="document-subtext">
+          Memorial descritivo dos processos industriais com as etapas, incluindo diagramas de
+          bloco ou fluxogramas das linhas de produção. Esses deverão
+          ser separados por linha de produção;
+        </span>
+      </p>
+
+      <p>
+        <span class="document-subtopic">b)</span>
+        <span class="document-subtext">
+          Apresentar imagem de satélite com a área da empresa demarcada por uma
+          poligonal, informando as coordenadas geográficas dos vértices do
+          polígono e o datum utilizado;
+        </span>
+      </p>
+
+      <p>
+        <span class="document-subtopic">c)</span>
+        <span class="document-subtext">
+          Planta lay-out, se possível, relacionando todas as áreas com os
+          valores em m² e os respectivos equipamentos de processo, auxiliares
+          e de controle de emissão;
+        </span>
+      </p>
+
+      <p>
+        <span class="document-subtopic">d)</span>
+        <span class="document-subtext">
+          Planta de drenagem, diferenciando os efluentes industriais, oleosos,
+          sanitários e pluviais e contemplando os sistemas de tratamento existentes,
+          com diferença de cor e traçado;
+        </span>
+      </p>
+
+      <p>
+        <span class="document-subtopic">e)</span>
+        <span class="document-subtext">
+          Comprovante de cadastro, quando aplicável, no CAR (Lei 12651/12),
+          PROMON-Ar (NOP01), PROCON-Fumaça Preta (NOP14), MTR (NOP35),
+          Inventário de Resíduos (CONAMA313/02) e PROCON-Água (DZ942);
+        </span>
+      </p>
+
+      <p>
+        <span class="document-subtopic">f)</span>
+        <span class="document-subtext">
+          Apresentar balanço hídrico, com as respectivas vazões (incluir registros
+          de medidores de vazão), englobando todas as fontes de abastecimento
+          de água, os respectivos pontos de consumo, perda, reuso e lançamento;
+        </span>
+      </p>
+
+      <p>
+        <span class="document-subtopic">g)</span>
+        <span class="document-subtext">
+          Declaração de Possibilidade de Esgotamento, no caso de lançamento em
+          Rede Coletora;
+        </span>
+      </p>
+
+      <p>
+        <span class="document-subtopic">h)</span>
+        <span class="document-subtext">
+          Relatório de Avaliação Técnica de Pressão Sonora (NBR10.151), Relatório
+          de Auditoria Ambiental (DZ056), Relatório de Investigação Preliminar,
+          Confirmatória e/ou Detalhada, quando aplicável;
+        </span>
+      </p>
+
+      <p>
+        <span class="document-subtopic">i)</span>
+        <span class="document-subtext">
+          Plano de Gerenciamento de Resíduos Sólidos (PGRS), Plano de
+          Atendimento a Emergências (PAE), Plano de Emergência Individual (PEI)
+          e/ou Programa de Gerenciamento de Riscos (PGR), quando aplicável;
+        </span>
+      </p>
+
+      <p>
+        <span class="document-subtopic">j)</span>
+        <span class="document-subtext">
+          Cópia dos Instrumentos Ambientais declarados no item 6 –Histórico de
+          Processos, do presente Cadastro Ambiental;
+        </span>
+      </p>
+
+      <p>
+        <span class="document-subtopic">Observação: </span>
+        <span class="document-subtext">
+          Este Cadastro foi desenvolvido para ser preenchido diretamente pelo
+          responsável da indústria, sem ser necessária contratação de suporte especializado.
+      </p>
     </div>
 
   </div>
