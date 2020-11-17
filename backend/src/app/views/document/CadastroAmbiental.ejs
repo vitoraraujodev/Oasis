@@ -372,7 +372,7 @@
     <p class="document-topic">2. Informações de Funcionamento</p>
     <p class="document-text">
       A empresa requerente teve início de suas atividades em
-      <b><%= ("0" + (operatingInfo.date.getDate()  + 1)).slice(-2) %>/<%= ("0" + (operatingInfo.date.getMonth() + 1)).slice(-2) %>/<%= operatingInfo.date.getFullYear() %></b>
+      <b><%= ("0" + (operatingInfo.date.getDate() + 1)).slice(-2) %>/<%= ("0" + (operatingInfo.date.getMonth() + 1)).slice(-2) %>/<%= operatingInfo.date.getFullYear() %></b>
       e desenvolve, atualmente, o regime de trabalho descrito na Tabela 5:
     </p>
     <div class="table-container">
@@ -1072,6 +1072,52 @@
         preconizadas, respectivamente, nas NOP35 e CONAMA n° 313/2002.
       </span>
     </p>
+
+
+    <p class="document-subtopic">5.5. Pressão Sonora</p>
+    <p class="document-text">
+      As fontes de ruído provenientes das atividades realizadas na área da
+      requerente estão relacionadas abaixo:
+    </p>
+    <div class="table-container">
+      <strong class="table-label">Tabela 19. Relação das fontes de geração de ruído</strong>
+      <table>
+        <caption>
+          Ruídos
+        </caption>
+        <tr>
+          <th>Fonte</th>
+          <th>Proteção acúsitca</th>
+        </tr>
+        <% noises.forEach(function(noise) { %>
+          <tr>
+            <td><%= noise.source %></td>
+            <td><%= noise.protection %></td>
+          </tr>
+        <% }); %>
+      </table>
+    </div>
+    <p>
+      <span class="document-subtopic">Observação: </span>
+      <span class="document-subtext">
+        <% if (!noiseInfo.report_date) { %>
+          A empresa <b>não</b> está reportando Relatórios Técnicos de Avaliação de Ruídos.
+        <% } else { %>
+          A empresa está reportando Relatórios Técnicos de Avaliação de Ruídos,
+          sendo o mais atualizado elaborado em
+          <b>
+            <%= ("0" + (noiseInfo.report_date.getDate() + 1)).slice(-2) %>/<%= ("0" + (noiseInfo.report_date.getMonth() + 1)).slice(-2) %>/<%= noiseInfo.report_date.getFullYear() %>
+          </b>.
+        <% } %>
+      </span>
+    </p>
+
+    <p class="document-subtopic">5.5. Pressão Sonora</p>
+    <p class="document-text">
+      As fontes de ruído provenientes das atividades realizadas na área da
+      requerente estão relacionadas abaixo:
+    </p>
+
   </div>
 
 </body>

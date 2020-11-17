@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { parseISO, isAfter } from 'date-fns';
 import Company from '../../models/Company';
 import NoiseInfo from '../../models/CompAspect/NoiseInfo';
 
@@ -20,12 +21,21 @@ class NoiseInfoController {
         .json({ error: 'Essa empresa não está registrada' });
     }
 
+    const { report_date } = req.body;
+
+    // If date is in future, return
+    if (report_date) {
+      if (isAfter(parseISO(report_date), new Date())) {
+        return res.status(400).json({ error: 'Data inválida.' });
+      }
+    }
+
     const noiseInfo = await NoiseInfo.findOne({
       where: { company_id: req.companyId },
     });
 
     if (noiseInfo) {
-      const { id, report_date } = await noiseInfo.update({
+      const { id } = await noiseInfo.update({
         ...req.body,
       });
 
@@ -35,7 +45,7 @@ class NoiseInfoController {
       });
     }
 
-    const { id, report_date } = await NoiseInfo.create({
+    const { id } = await NoiseInfo.create({
       ...req.body,
       company_id: req.companyId,
     });

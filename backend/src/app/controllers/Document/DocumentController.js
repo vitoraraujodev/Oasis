@@ -37,6 +37,8 @@ import ResidueInfo from '../../models/EnvironAspect/ResidueInfo';
 
 import Emission from '../../models/CompAspect/Emission';
 import EmissionInfo from '../../models/CompAspect/EmissionInfo';
+import Noise from '../../models/CompAspect/Noise';
+import NoiseInfo from '../../models/CompAspect/NoiseInfo';
 
 class DocumentController {
   async index(req, res) {
@@ -532,6 +534,30 @@ class DocumentController {
       });
     }
 
+    const noises = await Noise.findAll({
+      where: { company_id: req.params.id },
+      order: [['source', 'ASC']],
+      attributes: ['id', 'source', 'protection'],
+    });
+
+    if (noises.length === 0) {
+      return res.status(400).json({
+        error: 'Preencha os ruídos gerados da sua empresa e tente novamente.',
+      });
+    }
+
+    const noiseInfo = await NoiseInfo.findOne({
+      where: { company_id: req.params.id },
+      attributes: ['id', 'report_date'],
+    });
+
+    if (!noiseInfo) {
+      return res.status(400).json({
+        error:
+          'Preencha as informações de ruídos da sua empresa e tente novamente.',
+      });
+    }
+
     const documentFile = fs.readFileSync(
       resolve(
         __dirname,
@@ -588,6 +614,8 @@ class DocumentController {
         (residue) => residue.classification === '2'
       ),
       residueInfo,
+      noises,
+      noiseInfo,
     });
 
     pdf
