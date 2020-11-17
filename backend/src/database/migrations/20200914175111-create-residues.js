@@ -29,7 +29,7 @@ module.exports = {
       },
       classification: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       quantity: {
         type: Sequelize.FLOAT,

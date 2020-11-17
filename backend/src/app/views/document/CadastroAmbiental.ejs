@@ -957,6 +957,121 @@
       </table>
     </div>
 
+
+    <p class="document-subtopic">5.4. Resíduos</p>
+    <p class="document-text">
+      Os principais resíduos gerados pelas atividades da requerente, assim como,
+      as respectivas classificações, armazenamentos e destinações finais,
+      estão apresentados na Tabela a seguir:
+    </p>
+    <% if (residuesClass1.length > 0) { %>
+      <div class="table-container">
+        <strong class="table-label">Tabela 17. Gerenciamento de Resíduos Classe I</strong>
+        <table>
+          <caption>
+            Classe I
+          </caption>
+          <tr>
+            <th class="caption" colspan="4">Relação de resíduos</th>
+            <th class="caption" colspan="3">Disposição interna</th>
+            <th class="caption">Destinação</th>
+          </tr>
+          <tr>
+            <th>Identificaçao +<br>Constituinte</th>
+            <th>Forma<br>física</th>
+            <th>Fonte</th>
+            <th>Quant.<br>média/ano</th>
+            <th>Local</th>
+            <th>Forma</th>
+            <th style="text-align: center;">Capaci<br>dade</th>
+            <th>Sistema de<br>Tratamento</th>
+          </tr>
+          <% residuesClass1.forEach(function(residue) { %>
+            <tr>
+              <td><%= residue.identification %>/<br><%= residue.constituent %></td>
+              <td style="text-align: center;"><%= residue.physical_state %></td>
+              <td><%= residue.source %></td>
+              <td style="text-align: center;">
+                <%= residue.quantity %> <%= residue.quantity_unit %>
+              </td>
+              <td><%= residue.storage_location %></td>
+              <td><%= residue.storage_form %></td>
+              <td style="text-align: center;">
+                <%= residue.capacity %> <%= residue.capacity_unit %>
+              </td>
+              <td><%= residue.treatment %></td>
+            </tr>
+          <% }); %>
+        </table>
+      </div>
+    <% } else { %>
+      <p>
+        <span class="document-subtopic">Observação: </span>
+        <span class="document-subtext">
+          A empresa não apresenta nenhum resíduo de classe I.
+        </span>
+      </p>
+    <% } %>
+
+    <% if (residuesClass2.length > 0) { %>
+      <div class="table-container">
+        <strong class="table-label">Tabela 18. Gerenciamento de Resíduos Classe II</strong>
+        <table>
+          <caption>
+            Classe II
+          </caption>
+          <tr>
+            <th class="caption" colspan="4">Relação de resíduos</th>
+            <th class="caption" colspan="3">Disposição interna</th>
+            <th class="caption">Destinação</th>
+          </tr>
+          <tr>
+            <th>Identificaçao +<br>Constituinte</th>
+            <th>Forma<br>física</th>
+            <th>Fonte</th>
+            <th>Quant.<br>média/ano</th>
+            <th>Local</th>
+            <th>Forma</th>
+            <th style="text-align: center;">Capaci<br>dade</th>
+            <th>Sistema de<br>Tratamento</th>
+          </tr>
+          <% residuesClass2.forEach(function(residue) { %>
+            <tr>
+              <td><%= residue.identification %>/<br><%= residue.constituent %></td>
+              <td style="text-align: center;"><%= residue.physical_state %></td>
+              <td><%= residue.source %></td>
+              <td style="text-align: center;">
+                <%= residue.quantity %> <%= residue.quantity_unit %>
+              </td>
+              <td><%= residue.storage_location %></td>
+              <td><%= residue.storage_form %></td>
+              <td style="text-align: center;">
+                <%= residue.capacity %> <%= residue.capacity_unit %>
+              </td>
+              <td><%= residue.treatment %></td>
+            </tr>
+          <% }); %>
+        </table>
+      </div>
+    <% } else { %>
+      <p>
+        <span class="document-subtopic">Observação: </span>
+        <span class="document-subtext">
+          A empresa não apresenta nenhum resíduo de classe II.
+        </span>
+      </p>
+    <% } %>
+
+    <p>
+      <span class="document-subtopic">Observação: </span>
+      <span class="document-subtext">
+        A empresa <% if (!residueInfo.manifest) { %><b>não</b><% } %>
+        se encontra cadastrada no sistema on-line de manifesto de resíduos.
+        Além disso, <% if (!residueInfo.inventory) { %><b>não</b><% } %>
+        está reportando os Inventários de Resíduos. Ambas as condutas são
+        preconizadas, respectivamente, nas NOP35 e CONAMA n° 313/2002.
+      </span>
+    </p>
   </div>
 
 </body>

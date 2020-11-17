@@ -32,6 +32,8 @@ import WaterSupply from '../../models/EnvironAspect/WaterSupply';
 import WaterUse from '../../models/EnvironAspect/WaterUse';
 import Sanitary from '../../models/EnvironAspect/Sanitary';
 import Effluent from '../../models/EnvironAspect/Effluent';
+import Residue from '../../models/EnvironAspect/Residue';
+import ResidueInfo from '../../models/EnvironAspect/ResidueInfo';
 
 import Emission from '../../models/CompAspect/Emission';
 import EmissionInfo from '../../models/CompAspect/EmissionInfo';
@@ -420,8 +422,8 @@ class DocumentController {
       });
     }
 
-    const sanitaryEffluents = await Effluent.findAll({
-      where: { company_id: req.params.id, kind: 'sanitary' },
+    const effluents = await Effluent.findAll({
+      where: { company_id: req.params.id },
       order: [['source', 'ASC']],
       attributes: [
         'id',
@@ -435,6 +437,22 @@ class DocumentController {
         'water_body',
       ],
     });
+
+    const sanitary = await Sanitary.findOne({
+      where: { company_id: req.params.id },
+      attributes: ['id', 'kitchen', 'theoric_flow', 'declaration'],
+    });
+
+    if (!sanitary) {
+      return res.status(400).json({
+        error:
+          'Preencha as informações do efluente sanitário da sua empresa e tente novamente.',
+      });
+    }
+
+    const sanitaryEffluents = effluents.filter(
+      (effluent) => effluent.kind === 'sanitary'
+    );
 
     if (sanitaryEffluents.length === 0) {
       return res.status(400).json({
@@ -447,20 +465,9 @@ class DocumentController {
       .map((effluent) => effluent.flow)
       .reduce((total, value) => total + value);
 
-    const oilyEffluents = await Effluent.findAll({
-      where: { company_id: req.params.id, kind: 'oily' },
-      order: [['source', 'ASC']],
-      attributes: [
-        'id',
-        'kind',
-        'source',
-        'flow',
-        'treatment',
-        'quantity',
-        'license',
-        'water_body',
-      ],
-    });
+    const oilyEffluents = effluents.filter(
+      (effluent) => effluent.kind === 'oily'
+    );
 
     if (oilyEffluents.length === 0) {
       return res.status(400).json({
@@ -473,20 +480,9 @@ class DocumentController {
       .map((effluent) => effluent.flow)
       .reduce((total, value) => total + value);
 
-    const industrialEffluents = await Effluent.findAll({
-      where: { company_id: req.params.id, kind: 'industrial' },
-      order: [['source', 'ASC']],
-      attributes: [
-        'id',
-        'kind',
-        'source',
-        'flow',
-        'treatment',
-        'quantity',
-        'license',
-        'water_body',
-      ],
-    });
+    const industrialEffluents = effluents.filter(
+      (effluent) => effluent.kind === 'industrial'
+    );
 
     if (industrialEffluents.length === 0) {
       return res.status(400).json({
@@ -499,15 +495,40 @@ class DocumentController {
       .map((effluent) => effluent.flow)
       .reduce((total, value) => total + value);
 
-    const sanitary = await Sanitary.findOne({
+    const residues = await Residue.findAll({
       where: { company_id: req.params.id },
-      attributes: ['id', 'kitchen', 'theoric_flow', 'declaration'],
+      order: [['identification', 'ASC']],
+      attributes: [
+        'identification',
+        'physical_state',
+        'constituent',
+        'source',
+        'treatment',
+        'classification',
+        'quantity',
+        'quantity_unit',
+        'capacity',
+        'capacity_unit',
+        'storage_form',
+        'storage_location',
+      ],
     });
 
-    if (!sanitary) {
+    if (residues.length === 0) {
+      return res.status(400).json({
+        error: 'Preencha os resíduos da sua empresa e tente novamente.',
+      });
+    }
+
+    const residueInfo = await ResidueInfo.findOne({
+      where: { company_id: req.params.id },
+      attributes: ['id', 'manifest', 'inventory'],
+    });
+
+    if (!residueInfo) {
       return res.status(400).json({
         error:
-          'Preencha as informações do efluente sanitário da sua empresa e tente novamente.',
+          'Preencha as informações de resíduos da sua empresa e tente novamente.',
       });
     }
 
@@ -560,6 +581,13 @@ class DocumentController {
       oilyTotalFlow,
       industrialEffluents,
       industrialTotalFlow,
+      residuesClass1: residues.filter(
+        (residue) => residue.classification === '1'
+      ),
+      residuesClass2: residues.filter(
+        (residue) => residue.classification === '2'
+      ),
+      residueInfo,
     });
 
     pdf
