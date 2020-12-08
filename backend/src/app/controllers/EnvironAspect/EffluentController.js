@@ -28,12 +28,6 @@ class EffluentController {
 
     const { kind, water_body } = req.body;
 
-    if (kind === 'sanitary' && !water_body) {
-      return res.status(400).json({
-        error: 'Informe o corpo receptor deste efluente.',
-      });
-    }
-
     const effluent = await Effluent.findByPk(req.body.id);
 
     if (effluent) {

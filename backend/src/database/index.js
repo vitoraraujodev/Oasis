@@ -3,6 +3,8 @@ import Sequelize from 'sequelize';
 import Company from '../app/models/Company';
 import Administrator from '../app/models/Administrator';
 
+import DocumentType from '../app/models/Document/DocumentType';
+
 import Address from '../app/models/GeneralInfo/Address';
 import Representative from '../app/models/GeneralInfo/Representative';
 import OperatingInfo from '../app/models/GeneralInfo/OperatingInfo';
@@ -15,6 +17,7 @@ import ContactManager from '../app/models/FollowUp/ContactManager';
 import TechnicalManager from '../app/models/FollowUp/TechnicalManager';
 
 import Employee from '../app/models/SpecificInfo/Employee';
+import InstallEmployee from '../app/models/SpecificInfo/InstallEmployee';
 import Specific from '../app/models/SpecificInfo/Specific';
 import GeneralArea from '../app/models/SpecificInfo/GeneralArea';
 import File from '../app/models/SpecificInfo/File';
@@ -48,6 +51,7 @@ import databaseConfig from '../config/database';
 const models = [
   Company,
   Administrator,
+  DocumentType,
   Address,
   Representative,
   OperatingInfo,
@@ -58,6 +62,7 @@ const models = [
   ContactManager,
   TechnicalManager,
   Employee,
+  InstallEmployee,
   Specific,
   GeneralArea,
   File,

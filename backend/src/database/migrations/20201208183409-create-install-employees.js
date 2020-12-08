@@ -1,14 +1,18 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('specifics', {
+    return queryInterface.createTable('install_employees', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      cnpj: {
+      kind: {
         type: Sequelize.STRING,
+        allowNull: true,
+      },
+      amount: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       company_id: {
@@ -30,6 +34,6 @@ module.exports = {
   },
 
   down: (queryInterface) => {
-    return queryInterface.dropTable('specifics');
+    return queryInterface.dropTable('install_employees');
   },
 };

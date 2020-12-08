@@ -1,13 +1,13 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('specifics', {
+    return queryInterface.createTable('document_types', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
-      cnpj: {
+      document_type: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -30,6 +30,6 @@ module.exports = {
   },
 
   down: (queryInterface) => {
-    return queryInterface.dropTable('specifics');
+    return queryInterface.dropTable('document_types');
   },
 };

@@ -1,10 +1,10 @@
 import Sequelize, { Model } from 'sequelize';
 
-class Specific extends Model {
+class DocumentType extends Model {
   static init(sequelize) {
     super.init(
       {
-        cnpj: Sequelize.STRING,
+        document_type: Sequelize.STRING,
       },
       {
         sequelize,
@@ -22,4 +22,4 @@ class Specific extends Model {
   }
 }
 
-export default Specific;
+export default DocumentType;

@@ -1,10 +1,11 @@
 import Sequelize, { Model } from 'sequelize';
 
-class Specific extends Model {
+class InstallEmployee extends Model {
   static init(sequelize) {
     super.init(
       {
-        cnpj: Sequelize.STRING,
+        kind: Sequelize.STRING,
+        amount: Sequelize.NUMBER,
       },
       {
         sequelize,
@@ -22,4 +23,4 @@ class Specific extends Model {
   }
 }
 
-export default Specific;
+export default InstallEmployee;

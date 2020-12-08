@@ -7,6 +7,8 @@ import { pt } from 'date-fns/locale';
 
 import Company from '../../models/Company';
 
+import DocumentType from '../../models/Document/DocumentType';
+
 import Address from '../../models/GeneralInfo/Address';
 import OperatingInfo from '../../models/GeneralInfo/OperatingInfo';
 import Shift from '../../models/GeneralInfo/Shift';
@@ -20,6 +22,7 @@ import ContactInfo from '../../models/FollowUp/ContactInfo';
 
 import Specific from '../../models/SpecificInfo/Specific';
 import Employee from '../../models/SpecificInfo/Employee';
+import InstallEmployee from '../../models/SpecificInfo/InstallEmployee';
 import GeneralArea from '../../models/SpecificInfo/GeneralArea';
 import File from '../../models/SpecificInfo/File';
 import SpecificArea from '../../models/SpecificInfo/SpecificArea';
@@ -61,13 +64,25 @@ class DocumentController {
 
     const specific = await Specific.findOne({
       where: { company_id: req.params.id },
-      attributes: ['cnpj', 'document_type'],
+      attributes: ['cnpj'],
     });
 
     if (!specific) {
       return res.status(400).json({
         error:
           'Por favor, preencha as informações específicas da sua empresa e tente novamente.',
+      });
+    }
+
+    const documentType = await DocumentType.findOne({
+      where: { company_id: req.params.id },
+      attributes: ['document_type'],
+    });
+
+    if (!documentType) {
+      return res.status(400).json({
+        error:
+          'Por favor, informe o tipo de documento requerido e tente novamente.',
       });
     }
 
@@ -223,6 +238,31 @@ class DocumentController {
     const totalEmployees = employees
       .map((employee) => employee.amount)
       .reduce((total, amount) => total + amount);
+
+    const installEmployees = await InstallEmployee.findAll({
+      where: { company_id: req.params.id },
+      order: [['kind', 'ASC']],
+      attributes: ['id', 'kind', 'amount'],
+    });
+
+    if (
+      (documentType.document_type === 'Licença Ambiental Integrada' ||
+        documentType.document_type === 'Licença Ambiental Unificada' ||
+        documentType.document_type === 'Licença Ambiental de Instalação') &&
+      installEmployees.length === 0
+    ) {
+      return res.status(400).json({
+        error:
+          'Por favor, preencha os funcionários da fase de instalação da sua empresa e tente novamente.',
+      });
+    }
+
+    const totalInstallEmployees =
+      installEmployees.length > 0
+        ? installEmployees
+            .map((employee) => employee.amount)
+            .reduce((total, amount) => total + amount)
+        : 0;
 
     const generalArea = await GeneralArea.findOne({
       where: { company_id: req.params.id },
@@ -450,6 +490,13 @@ class DocumentController {
       ],
     });
 
+    if (effluents.length === 0) {
+      return res.status(400).json({
+        error:
+          'Por favor, preencha os efluentes da sua empresa e tente novamente.',
+      });
+    }
+
     const sanitary = await Sanitary.findOne({
       where: { company_id: req.params.id },
       attributes: ['id', 'kitchen', 'theoric_flow', 'declaration'],
@@ -473,39 +520,34 @@ class DocumentController {
       });
     }
 
-    const sanitaryTotalFlow = sanitaryEffluents
-      .map((effluent) => effluent.flow)
-      .reduce((total, value) => total + value);
+    const sanitaryTotalFlow =
+      sanitaryEffluents.length > 0
+        ? sanitaryEffluents
+            .map((effluent) => effluent.flow)
+            .reduce((total, value) => total + value)
+        : 0;
 
     const oilyEffluents = effluents.filter(
       (effluent) => effluent.kind === 'oily'
     );
 
-    if (oilyEffluents.length === 0) {
-      return res.status(400).json({
-        error:
-          'Por favor, preencha os efluentes oleosos da sua empresa e tente novamente.',
-      });
-    }
-
-    const oilyTotalFlow = oilyEffluents
-      .map((effluent) => effluent.flow)
-      .reduce((total, value) => total + value);
+    const oilyTotalFlow =
+      oilyEffluents.length > 0
+        ? oilyEffluents
+            .map((effluent) => effluent.flow)
+            .reduce((total, value) => total + value)
+        : 0;
 
     const industrialEffluents = effluents.filter(
       (effluent) => effluent.kind === 'industrial'
     );
 
-    if (industrialEffluents.length === 0) {
-      return res.status(400).json({
-        error:
-          'Por favor, preencha os efluentes industriais da sua empresa e tente novamente.',
-      });
-    }
-
-    const industrialTotalFlow = industrialEffluents
-      .map((effluent) => effluent.flow)
-      .reduce((total, value) => total + value);
+    const industrialTotalFlow =
+      industrialEffluents.length > 0
+        ? industrialEffluents
+            .map((effluent) => effluent.flow)
+            .reduce((total, value) => total + value)
+        : 0;
 
     const residues = await Residue.findAll({
       where: { company_id: req.params.id },
@@ -626,6 +668,7 @@ class DocumentController {
       company,
       actualDate,
       specific,
+      documentType,
       address,
       operatingInfo: formattedOperatingInfo,
       representatives,
@@ -634,6 +677,8 @@ class DocumentController {
       contactInfo,
       employees,
       totalEmployees,
+      installEmployees,
+      totalInstallEmployees,
       generalArea,
       specificAreas,
       totalArea,

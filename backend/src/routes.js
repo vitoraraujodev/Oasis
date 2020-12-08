@@ -7,6 +7,8 @@ import authMiddleware from './app/middlewares/auth';
 import CompanyController from './app/controllers/CompanyController';
 import SessionController from './app/controllers/SessionController';
 
+import DocumentType from './app/controllers/Document/DocumentTypeController';
+
 import AddressController from './app/controllers/GeneralInfo/AddressController';
 import RepresentativeController from './app/controllers/GeneralInfo/RepresentativeController';
 import OperatingInfoController from './app/controllers/GeneralInfo/OperatingInfoController';
@@ -20,6 +22,7 @@ import TechnicalManagerController from './app/controllers/FollowUp/TechnicalMana
 import FollowUpController from './app/controllers/FollowUp/FollowUpController';
 
 import EmployeeController from './app/controllers/SpecificInfo/EmployeeController';
+import InstallEmployeeController from './app/controllers/SpecificInfo/InstallEmployeeController';
 import SpecificController from './app/controllers/SpecificInfo/SpecificController';
 import GeneralAreaController from './app/controllers/SpecificInfo/GeneralAreaController';
 import SpecificAreaController from './app/controllers/SpecificInfo/SpecificAreaController';
@@ -65,6 +68,9 @@ routes.post('/company', CompanyController.store);
 routes.put('/company', authMiddleware, CompanyController.update);
 routes.delete('/company', authMiddleware, CompanyController.delete);
 
+routes.get('/document-type', authMiddleware, DocumentType.index);
+routes.post('/document-type', authMiddleware, DocumentType.store);
+
 routes.post('/address', authMiddleware, AddressController.store);
 routes.post('/representative', authMiddleware, RepresentativeController.store);
 routes.delete(
@@ -92,6 +98,16 @@ routes.get('/follow-up', authMiddleware, FollowUpController.index);
 
 routes.post('/employee', authMiddleware, EmployeeController.store);
 routes.delete('/employee/:id', authMiddleware, EmployeeController.delete);
+routes.post(
+  '/install-employee',
+  authMiddleware,
+  InstallEmployeeController.store
+);
+routes.delete(
+  '/install-employee/:id',
+  authMiddleware,
+  InstallEmployeeController.delete
+);
 routes.post('/specific', authMiddleware, SpecificController.store);
 routes.post('/general-area', authMiddleware, GeneralAreaController.store);
 routes.post('/specific-area', authMiddleware, SpecificAreaController.store);

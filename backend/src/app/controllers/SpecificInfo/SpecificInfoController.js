@@ -1,4 +1,5 @@
 import Employee from '../../models/SpecificInfo/Employee';
+import InstallEmployee from '../../models/SpecificInfo/InstallEmployee';
 import Specific from '../../models/SpecificInfo/Specific';
 import GeneralArea from '../../models/SpecificInfo/GeneralArea';
 import File from '../../models/SpecificInfo/File';
@@ -14,9 +15,15 @@ class SpecificInfoController {
       attributes: ['id', 'kind', 'amount'],
     });
 
+    const installEmployees = await InstallEmployee.findAll({
+      where: { company_id: req.companyId },
+      order: [['kind', 'ASC']],
+      attributes: ['id', 'kind', 'amount'],
+    });
+
     const specific = await Specific.findOne({
       where: { company_id: req.companyId },
-      attributes: ['id', 'cnpj', 'document_type'],
+      attributes: ['id', 'cnpj'],
     });
 
     const generalArea = await GeneralArea.findOne({
@@ -46,7 +53,13 @@ class SpecificInfoController {
       ],
     });
 
-    return res.json({ employees, specific, generalArea, specificAreas });
+    return res.json({
+      employees,
+      installEmployees,
+      specific,
+      generalArea,
+      specificAreas,
+    });
   }
 }
 

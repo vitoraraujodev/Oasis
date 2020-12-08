@@ -269,7 +269,7 @@
       conforme as informações prestadas pelo representante da empresa
       <b><%= company.name %></b> inscrita no CNPJ <b><%= specific.cnpj %></b>
       do ramo de <b><%= company.typology %></b>. Este documento tem como
-      objetivo subsidiar o requerimento de <b><%= specific.document_type %></b>, de modo a
+      objetivo subsidiar o requerimento de <b><%= documentType.document_type %></b>, de modo a
       regularizar a situação legal da empresa junto ao órgão ambiental.
     </p>
     <p class="document-text">
@@ -295,7 +295,7 @@
     </p>
 
     <div class="table-container">
-      <strong class="table-label">Tabela 1. Dados de identificação dos representantes legais</strong>
+      <strong class="table-label">Tabela de Dados de identificação dos representantes legais</strong>
       <table>
         <caption>
           Representantes Legais
@@ -318,7 +318,7 @@
     </div>
 
     <div class="table-container">
-      <strong class="table-label">Tabela 2. Dados de identificação do responsável técnico</strong>
+      <strong class="table-label">Tabela de Dados de identificação do responsável técnico</strong>
       <table>
         <caption>
           Responsável técnico
@@ -343,7 +343,7 @@
     </div>
 
     <div class="table-container">
-      <strong class="table-label">Tabela 3. Dados de identificação da pessoa de contato</strong>
+      <strong class="table-label">Tabela de Dados de identificação da pessoa de contato</strong>
       <table>
         <caption>
           Pessoa de Contato
@@ -364,7 +364,7 @@
     </div>
 
     <div class="table-container">
-      <strong class="table-label">Tabela 4. Informações de contato</strong>
+      <strong class="table-label">Tabela de Informações de contato</strong>
       <table>
         <caption>
           Informações de contato
@@ -385,10 +385,10 @@
     <p class="document-text">
       A empresa requerente teve início de suas atividades em
       <b><%= ("0" + (operatingInfo.date.getDate() + 1)).slice(-2) %>/<%= ("0" + (operatingInfo.date.getMonth() + 1)).slice(-2) %>/<%= operatingInfo.date.getFullYear() %></b>
-      e desenvolve, atualmente, o regime de trabalho descrito na Tabela 5:
+      e desenvolve, atualmente, o regime de trabalho descrito na Tabela:
     </p>
     <div class="table-container">
-      <strong class="table-label">Tabela 5. Regime de trabalho</strong>
+      <strong class="table-label">Tabela de Regime de trabalho</strong>
       <table>
         <caption>
           Turnos
@@ -420,11 +420,18 @@
     <p class="document-topic">3. Informações Específicas</p>
     <p class="document-text">
       As atividades contempladas no objeto do presente requirimento são realizadas
-      com o auxílio de <b><%= totalEmployees %></b> funcionários, os quais estão
-      distribuidos conforme apresentado na Tabela 6:
+      com o auxílio de <b><%= totalEmployees + totalInstallEmployees %></b> funcionários, os quais estão
+      distribuidos conforme apresentado abaixo:
     </p>
     <div class="table-container">
-      <strong class="table-label">Tabela 6. Distribuição dos funcionários</strong>
+      <% if (documentType.document_type === 'Licença Ambiental Integrada' ||
+          documentType.document_type === 'Licença Ambiental Unificada' ||
+          documentType.document_type === 'Licença Ambiental de Instalação') { %>
+        <strong class="table-label">Tabela de Distribuição dos funcionários na fase de operação</strong>
+      <% } else { %>
+        <strong class="table-label">Tabela de Distribuição dos funcionários</strong>
+      <% } %>
+
       <table>
         <caption>
           Funcionários
@@ -442,11 +449,34 @@
       </table>
     </div>
 
+    <% if (documentType.document_type === 'Licença Ambiental Integrada' ||
+          documentType.document_type === 'Licença Ambiental Unificada' ||
+          documentType.document_type === 'Licença Ambiental de Instalação') { %>
+      <div class="table-container">
+        <strong class="table-label">Tabela de Distribuição dos funcionários na fase de instalação</strong>
+        <table>
+          <caption>
+            Funcionários
+          </caption>
+          <tr>
+            <th>Tipo</th>
+            <th style="text-align: center;">Quantidade</th>
+          </tr>
+          <% employees.forEach(function(employee) { %>
+            <tr>
+              <td><%= employee.kind %></td>
+              <td style="text-align: center;"><%= employee.amount %></td>
+            </tr>
+          <% }); %>
+        </table>
+      </div>
+    <% } %>
+
     <p class="document-text">
       Cumpre registrar que, o empreendimento dispõe de área total o equivalente a
       <b><%= generalArea.area %>  m²</b>, cuja delimitação poligonal do entorno
       está mostrada na Figura 1, e as relações de valores em m² das respectivas áreas específicas
-      constam na Tabela 7:
+      constam na Tabela:
     </p>
 
     <div class="table-container">
@@ -464,7 +494,7 @@
     </div>
 
     <div class="table-container">
-      <strong class="table-label">Tabela 7. Relação das áreas específicas do empreendimento</strong>
+      <strong class="table-label">Tabela de Relação das áreas específicas do empreendimento</strong>
       <table>
         <caption>
           Áreas específicas
@@ -494,7 +524,7 @@
       descritos nas Tabelas abaixo respectivamente.
     </p>
     <div class="table-container">
-      <strong class="table-label">Tabela 8. Principais Insumos usados na Produção</strong>
+      <strong class="table-label">Tabela dos Principais Insumos usados na Produção</strong>
       <table>
         <tr>
           <th class="caption" colspan="3">Relação de Insumos</th>
@@ -530,7 +560,7 @@
 
     <% if (productiveEquipments.length > 0) { %>
       <div class="table-container">
-        <strong class="table-label">Tabela 9. Principais Equipamentos de Processo</strong>
+        <strong class="table-label">Tabela dos Principais Equipamentos de Processo</strong>
         <table>
           <tr>
             <th class="caption" colspan="4">Relação de Equipamentos</th>
@@ -573,7 +603,7 @@
 
     <% if (auxiliaryEquipments.length > 0) { %>
       <div class="table-container">
-        <strong class="table-label">Tabela 10. Principais Equipamentos Auxiliares na Produção</strong>
+        <strong class="table-label">Tabela dos Principais Equipamentos Auxiliares na Produção</strong>
         <table>
           <tr>
             <th class="caption" colspan="4">Relação de Equipamentos</th>
@@ -616,7 +646,7 @@
 
     <% if (controlEquipments.length > 0) { %>
       <div class="table-container">
-        <strong class="table-label">Tabela 10. Principais Equipamentos de Controle de Emissão</strong>
+        <strong class="table-label">Tabela dos Principais Equipamentos de Controle de Emissão</strong>
         <table>
           <tr>
             <th class="caption" colspan="4">Relação de Equipamentos</th>
@@ -662,7 +692,7 @@
       descrita na tabela a seguir:
     </p>
     <div class="table-container">
-      <strong class="table-label">Tabela 11. Principais Produtos fabricados</strong>
+      <strong class="table-label">Tabela de Principais Produtos fabricados</strong>
       <table>
         <tr>
           <th class="caption" colspan="4">Relação de Produtos</th>
@@ -709,7 +739,7 @@
       <b><%= totalFlow %> m³</b> de água por dia.
     </p>
     <div class="table-container">
-      <strong class="table-label">Tabela 12. Consumo Hídrico na instalação e na operação</strong>
+      <strong class="table-label">Tabela de Consumo Hídrico na instalação e na operação</strong>
       <table>
         <tr>
           <th class="caption" colspan="1">Fonte de água</th>
@@ -757,10 +787,11 @@
     <p class="document-subtopic">5.2. Emissões Atmosféricas</p>
     <p class="document-text">
       As fontes de emissões atmosféricas do referido empreendimento, os poluentes
-      gerados por meio destas, e as respectivas concentrações estão descritos na Tabela a seguir:
+      gerados por meio destas, e as respectivas concentrações estão descritos
+      na Tabela a seguir:
     </p>
     <div class="table-container">
-      <strong class="table-label">Tabela 13. Emissões Atmosféricas</strong>
+      <strong class="table-label">Tabela de Emissões Atmosféricas</strong>
       <table>
         <tr>
           <th>Fonte</th>
@@ -803,7 +834,7 @@
       requerente, assim como as respectivas especificidades estão descritos nas a seguir:
     </p>
     <div class="table-container">
-      <strong class="table-label">Tabela 14. Efluente Sanitário</strong>
+      <strong class="table-label">Tabela de Efluente Sanitário</strong>
       <table>
         <tr>
           <th class="caption" colspan="2">
@@ -842,7 +873,16 @@
               <% } %>
             </td>
             <td>
-              <%= effluent.water_body %>
+              <% if (!effluent.water_body) { %>
+                <% if (!effluent.license) { %>
+                  Rede coletora
+                <% } %>
+              <% }  else { %>
+                <%= effluent.water_body %>
+                <% if (effluent.license) { %>
+                  <br>n° <%= effluent.license %>
+                <% } %>
+              <% } %>
             </td>
           </tr>
         <% }); %>
@@ -868,7 +908,7 @@
     </p>
 
     <div class="table-container">
-      <strong class="table-label">Tabela 14. Efluente Industrial</strong>
+      <strong class="table-label">Tabela de Efluente Industrial</strong>
       <table>
         <tr>
           <th class="caption" colspan="2">
@@ -919,7 +959,7 @@
     </div>
 
     <div class="table-container">
-      <strong class="table-label">Tabela 14. Efluente Oleoso</strong>
+      <strong class="table-label">Tabela de Efluente Oleoso</strong>
       <table>
         <tr>
           <th class="caption" colspan="2">
@@ -978,7 +1018,7 @@
     </p>
     <% if (residuesClass1.length > 0) { %>
       <div class="table-container">
-        <strong class="table-label">Tabela 17. Gerenciamento de Resíduos Classe I</strong>
+        <strong class="table-label">Tabela de Gerenciamento de Resíduos Classe I</strong>
         <table>
           <caption>
             Classe I
@@ -1027,7 +1067,7 @@
 
     <% if (residuesClass2.length > 0) { %>
       <div class="table-container">
-        <strong class="table-label">Tabela 18. Gerenciamento de Resíduos Classe II</strong>
+        <strong class="table-label">Tabela de Gerenciamento de Resíduos Classe II</strong>
         <table>
           <caption>
             Classe II
@@ -1092,7 +1132,7 @@
       requerente estão relacionadas abaixo:
     </p>
     <div class="table-container">
-      <strong class="table-label">Tabela 19. Relação das fontes de geração de ruído</strong>
+      <strong class="table-label">Tabela de Relação das fontes de geração de ruído</strong>
       <table>
         <caption>
           Ruídos
@@ -1133,7 +1173,7 @@
     </p>
     <div class="table-container">
       <strong class="table-label">
-        Tabela 20. Relação de Produtos químicos e/ou inflamáveis armazenados
+        Tabela de Relação de Produtos químicos e/ou inflamáveis armazenados
       </strong>
       <table>
         <tr>
@@ -1175,7 +1215,7 @@
     </p>
     <% if (history.length > 0) { %>
       <div class="table-container">
-        <strong class="table-label">Tabela 21. Histórico de processos</strong>
+        <strong class="table-label">Tabela de Histórico de processos</strong>
         <table>
           <caption>Processos</caption>
           <tr>

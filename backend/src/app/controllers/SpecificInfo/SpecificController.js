@@ -5,7 +5,6 @@ import Specific from '../../models/SpecificInfo/Specific';
 class SpecificController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      document_type: Yup.string().required(),
       cnpj: Yup.string().required(),
     });
 
@@ -26,23 +25,21 @@ class SpecificController {
     });
 
     if (specific) {
-      const { id, document_type, cnpj } = await specific.update(req.body);
+      const { id, cnpj } = await specific.update(req.body);
 
       return res.json({
         id,
-        document_type,
         cnpj,
       });
     }
 
-    const { id, document_type, cnpj } = await Specific.create({
+    const { id, cnpj } = await Specific.create({
       ...req.body,
       company_id: req.companyId,
     });
 
     return res.json({
       id,
-      document_type,
       cnpj,
     });
   }
