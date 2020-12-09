@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import { signInRequest } from '~/store/modules/auth/actions';
@@ -10,6 +11,8 @@ import './styles.css';
 export default function SignUp() {
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(false);
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [typology, setTypology] = useState('');
@@ -17,6 +20,7 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   async function handleSubmit() {
+    setLoading(true);
     const data = {
       name,
       email,
@@ -32,11 +36,16 @@ export default function SignUp() {
         alert(err.response.data.error);
       }
     }
+    setLoading(false);
   }
 
   return (
-    <div id="signin-page">
-      <div className="form">
+    <div id="sign-up-page">
+      <div className="container">
+        <h1 className="logo">Oasis</h1>
+
+        <p className="sign-up-label">Cadastre sua conta</p>
+
         <p className="input-label">Nome da empresa</p>
         <input
           className="input"
@@ -73,10 +82,13 @@ export default function SignUp() {
           onChange={(e) => setConfirmPassword(e.target.value)}
           placeholder="********"
         />
-
-        <button type="button" onClick={handleSubmit}>
-          Acessar
+        <button type="button" className="submit-button" onClick={handleSubmit}>
+          {loading ? 'Carregando' : 'Cadastrar'}
         </button>
+
+        <Link to="/">
+          <div className="registration-link">ou acesse sua conta</div>
+        </Link>
       </div>
     </div>
   );

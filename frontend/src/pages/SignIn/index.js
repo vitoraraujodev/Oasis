@@ -24,6 +24,7 @@ export default function SignIn() {
         <h1 className="logo">Oasis</h1>
 
         <p className="sign-in-label">Acesse sua conta</p>
+
         <p className="input-label">E-mail</p>
         <input
           className="input"
