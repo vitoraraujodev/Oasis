@@ -1,12 +1,22 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Redirect } from 'react-router-dom';
 
-import Home from '~/pages/Home';
+import Route from './Route';
+
+import SignIn from '~/pages/SignIn';
+import SignUp from '~/pages/SignUp';
+
+import history from '~/services/history';
 
 export default function Routes() {
   return (
-    <Switch>
-      <Route path="/" exact component={Home} />
-    </Switch>
+    <BrowserRouter history={history}>
+      <Switch>
+        <Route path="/" exact component={SignIn} />
+        <Route path="/cadastro" component={SignUp} />
+
+        <Redirect from="*" to="/" />
+      </Switch>
+    </BrowserRouter>
   );
 }
