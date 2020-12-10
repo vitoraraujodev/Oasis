@@ -31,7 +31,7 @@ class SessionController {
 
       // Sets admin as false in token
       return res.json({
-        user: { id, typology, name, email, status },
+        company: { id, typology, name, email, status },
         token: jwt.sign({ id, admin: false }, authConfig.secret, {
           expiresIn: authConfig.expiresIn,
         }),
@@ -55,7 +55,7 @@ class SessionController {
 
     // Sets admin as true in token
     return res.json({
-      user: { id, name, email, admin: true },
+      company: { id, name, email, admin: true },
       token: jwt.sign({ id, admin: true }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),

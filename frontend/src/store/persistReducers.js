@@ -7,7 +7,7 @@ export default (reducers) => {
     {
       key: 'oasis',
       storage,
-      whitelist: ['auth'],
+      whitelist: ['auth', 'company'],
     },
     reducers
   );

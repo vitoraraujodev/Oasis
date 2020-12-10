@@ -12,11 +12,11 @@ export function* signIn({ payload }) {
   try {
     const response = yield call(api.post, 'sessions', { email, password });
 
-    const { token } = response.data;
+    const { token, user } = response.data;
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    yield put(signInSuccess(token));
+    yield put(signInSuccess(token, user));
 
     history.push('/');
   } catch (err) {

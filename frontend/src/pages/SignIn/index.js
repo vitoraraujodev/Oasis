@@ -36,6 +36,9 @@ export default function SignIn() {
         <input
           type="password"
           className="input"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') handleSubmit();
+          }}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="********"
         />
