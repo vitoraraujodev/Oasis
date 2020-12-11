@@ -14,14 +14,6 @@ class PendingController {
       return res.status(400).json({ error: 'Falha na validação dos dados.' });
     }
 
-    const companyExists = await Company.findByPk(req.companyId);
-
-    if (!companyExists) {
-      return res.status(400).json({
-        error: 'Essa Empresa não está registrada.',
-      });
-    }
-
     const pending = await Pending.findByPk(req.body.id);
 
     if (pending) {

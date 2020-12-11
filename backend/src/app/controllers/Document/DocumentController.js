@@ -49,7 +49,7 @@ import RiskStorage from '../../models/CompAspect/RiskStorage';
 
 class DocumentController {
   async index(req, res) {
-    const company = await Company.findByPk(req.params.id);
+    const company = await Company.findByPk(req.companyId);
 
     if (!company) {
       return res
@@ -63,7 +63,7 @@ class DocumentController {
     };
 
     const specific = await Specific.findOne({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       attributes: ['cnpj'],
     });
 
@@ -75,7 +75,7 @@ class DocumentController {
     }
 
     const documentType = await DocumentType.findOne({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       attributes: ['document_type'],
     });
 
@@ -87,7 +87,7 @@ class DocumentController {
     }
 
     const address = await Address.findOne({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       attributes: [
         'id',
         'cep',
@@ -108,7 +108,7 @@ class DocumentController {
     }
 
     const operatingInfo = await OperatingInfo.findOne({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       attributes: [
         'id',
         'date',
@@ -166,7 +166,7 @@ class DocumentController {
     };
 
     const representatives = await Representative.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       order: [['name', 'ASC']],
       attributes: ['id', 'name', 'cpf', 'email', 'phone_number'],
     });
@@ -179,7 +179,7 @@ class DocumentController {
     }
 
     const technicalManager = await TechnicalManager.findOne({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       attributes: [
         'id',
         'name',
@@ -199,7 +199,7 @@ class DocumentController {
     }
 
     const contactManager = await ContactManager.findOne({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       attributes: ['id', 'name', 'cpf', 'email', 'phone_number'],
     });
 
@@ -211,7 +211,7 @@ class DocumentController {
     }
 
     const contactInfo = await ContactInfo.findOne({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       attributes: ['id', 'phone_number', 'start_at', 'end_at'],
     });
 
@@ -223,7 +223,7 @@ class DocumentController {
     }
 
     const employees = await Employee.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       order: [['kind', 'ASC']],
       attributes: ['id', 'kind', 'amount'],
     });
@@ -240,7 +240,7 @@ class DocumentController {
       .reduce((total, amount) => total + amount);
 
     const installEmployees = await InstallEmployee.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       order: [['kind', 'ASC']],
       attributes: ['id', 'kind', 'amount'],
     });
@@ -265,7 +265,7 @@ class DocumentController {
         : 0;
 
     const generalArea = await GeneralArea.findOne({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       attributes: ['id', 'area'],
       include: [
         {
@@ -284,7 +284,7 @@ class DocumentController {
     }
 
     const specificAreas = await SpecificArea.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       attributes: ['id', 'kind', 'area'],
     });
 
@@ -300,7 +300,7 @@ class DocumentController {
       .reduce((total, amount) => total + amount);
 
     const supplies = await Supply.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       order: [['identification', 'ASC']],
       attributes: [
         'id',
@@ -339,7 +339,7 @@ class DocumentController {
     }
 
     const equipments = await Equipment.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       order: [['identification', 'ASC']],
       attributes: [
         'id',
@@ -363,7 +363,7 @@ class DocumentController {
     }
 
     const products = await Product.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       order: [['identification', 'ASC']],
       attributes: [
         'id',
@@ -403,7 +403,7 @@ class DocumentController {
     }
 
     const waterSupplies = await WaterSupply.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       order: [['source', 'ASC']],
       attributes: ['id', 'source', 'license'],
       include: [
@@ -441,7 +441,7 @@ class DocumentController {
       .reduce((total, value) => total + value);
 
     const emissions = await Emission.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       order: [
         ['source', 'ASC'],
         ['pollutant', 'ASC'],
@@ -463,7 +463,7 @@ class DocumentController {
     }
 
     const emissionInfo = await EmissionInfo.findOne({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       attributes: ['id', 'promonAir', 'fleet', 'procon'],
     });
 
@@ -475,7 +475,7 @@ class DocumentController {
     }
 
     const effluents = await Effluent.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       order: [['source', 'ASC']],
       attributes: [
         'id',
@@ -498,7 +498,7 @@ class DocumentController {
     }
 
     const sanitary = await Sanitary.findOne({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       attributes: ['id', 'kitchen', 'theoric_flow', 'declaration'],
     });
 
@@ -550,7 +550,7 @@ class DocumentController {
         : 0;
 
     const residues = await Residue.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       order: [['identification', 'ASC']],
       attributes: [
         'identification',
@@ -576,7 +576,7 @@ class DocumentController {
     }
 
     const residueInfo = await ResidueInfo.findOne({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       attributes: ['id', 'manifest', 'inventory'],
     });
 
@@ -588,7 +588,7 @@ class DocumentController {
     }
 
     const noises = await Noise.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       order: [['source', 'ASC']],
       attributes: ['id', 'source', 'protection'],
     });
@@ -601,7 +601,7 @@ class DocumentController {
     }
 
     const noiseInfo = await NoiseInfo.findOne({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       attributes: ['id', 'report_date'],
     });
 
@@ -634,7 +634,7 @@ class DocumentController {
     }
 
     const history = await History.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       order: [['expiration_date', 'ASC']],
       attributes: [
         'id',
@@ -647,7 +647,7 @@ class DocumentController {
     });
 
     const pendencies = await Pending.findAll({
-      where: { company_id: req.params.id },
+      where: { company_id: req.companyId },
       order: [['instrument', 'ASC']],
       attributes: ['id', 'instrument', 'process', 'objective'],
     });

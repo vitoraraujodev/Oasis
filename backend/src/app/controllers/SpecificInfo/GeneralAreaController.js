@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 import fs from 'fs';
 import { resolve } from 'path';
-import Company from '../../models/Company';
 import GeneralArea from '../../models/SpecificInfo/GeneralArea';
 import File from '../../models/SpecificInfo/File';
 
@@ -14,14 +13,6 @@ class GeneralAreaController {
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Falha na validação dos dados.' });
-    }
-
-    const companyExists = await Company.findByPk(req.companyId);
-
-    if (!companyExists) {
-      return res.status(400).json({
-        error: 'Essa Empresa não está registrada.',
-      });
     }
 
     const { image_id } = req.body;

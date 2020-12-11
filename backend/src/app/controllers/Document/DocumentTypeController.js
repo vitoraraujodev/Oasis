@@ -1,17 +1,8 @@
 import * as Yup from 'yup';
-import Company from '../../models/Company';
 import DocumentType from '../../models/Document/DocumentType';
 
 class DocumentTypeController {
   async index(req, res) {
-    const companyExists = await Company.findByPk(req.companyId);
-
-    if (!companyExists) {
-      return res
-        .status(400)
-        .json({ error: 'Essa empresa não está registrada' });
-    }
-
     const documentType = await DocumentType.findOne({
       where: { company_id: req.companyId },
     });
@@ -28,12 +19,10 @@ class DocumentTypeController {
       return res.status(400).json({ error: 'Falha na validação dos dados.' });
     }
 
-    const companyExists = await Company.findByPk(req.companyId);
-
-    if (!companyExists) {
+    if (req.body.document_type === 'oi') {
       return res
         .status(400)
-        .json({ error: 'Essa empresa não está registrada' });
+        .json({ error: 'Essa empresa não está registrada.' });
     }
 
     const documentType = await DocumentType.findOne({

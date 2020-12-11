@@ -158,6 +158,6 @@ routes.delete('/noise/:id', authMiddleware, NoiseController.delete);
 
 routes.get('/comp-aspect', authMiddleware, CompAspectController.index);
 
-routes.get('/document/:id', DocumentController.index);
+routes.get('/document', authMiddleware, DocumentController.index);
 
 export default routes;

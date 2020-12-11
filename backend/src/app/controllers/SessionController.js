@@ -22,9 +22,10 @@ class SessionController {
 
     if (company) {
       if (!(await company.checkPassword(password))) {
-        return res
-          .status(401)
-          .json({ error: 'Verifique se a senha ou o e-mail estão corretos.' });
+        return res.status(401).json({
+          error:
+            'Verifique se a senha ou o e-mail estão corretos  e tente novamente.',
+        });
       }
 
       const { id, name, typology, status } = company;
@@ -42,13 +43,17 @@ class SessionController {
     const admin = await Administrator.findOne({ where: { email } });
 
     if (!admin) {
-      return res.status(401).json({ error: 'Essa conta não está registrada.' });
+      return res.status(401).json({
+        error:
+          'Essa conta não está registrada. Verifique os dados e tente novamente',
+      });
     }
 
     if (!(await admin.checkPassword(password))) {
-      return res
-        .status(401)
-        .json({ error: 'Verifique se a senha ou o e-mail estão corretos.' });
+      return res.status(401).json({
+        error:
+          'Verifique se a senha ou o e-mail estão corretos e tente novamente.',
+      });
     }
 
     const { id, name } = admin;

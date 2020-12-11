@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import Company from '../../models/Company';
 import Address from '../../models/GeneralInfo/Address';
 
 class AddressController {
@@ -16,14 +15,6 @@ class AddressController {
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Falha na validação dos dados.' });
-    }
-
-    const companyExists = await Company.findByPk(req.companyId);
-
-    if (!companyExists) {
-      return res
-        .status(400)
-        .json({ error: 'Essa empresa não está registrada' });
     }
 
     const address = await Address.findOne({

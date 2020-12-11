@@ -15,14 +15,6 @@ class RepresentativeController {
       return res.status(400).json({ error: 'Falha na validação dos dados.' });
     }
 
-    const companyExists = await Company.findByPk(req.companyId);
-
-    if (!companyExists) {
-      return res
-        .status(400)
-        .json({ error: 'Essa empresa não está registrada' });
-    }
-
     const representative = await Representative.findByPk(req.body.id);
 
     if (representative) {

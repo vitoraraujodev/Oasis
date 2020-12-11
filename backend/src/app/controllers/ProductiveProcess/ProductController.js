@@ -29,14 +29,6 @@ class ProductController {
       return res.status(400).json({ error: 'Falha na validação dos dados.' });
     }
 
-    const companyExists = await Company.findByPk(req.companyId);
-
-    if (!companyExists) {
-      return res.status(400).json({
-        error: 'Essa Empresa não está registrada.',
-      });
-    }
-
     const product = await Product.findByPk(req.body.id);
 
     const { storages } = req.body;

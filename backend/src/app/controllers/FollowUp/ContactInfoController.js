@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import Company from '../../models/Company';
 import ContactInfo from '../../models/FollowUp/ContactInfo';
 
 class ContactInfoController {
@@ -12,14 +11,6 @@ class ContactInfoController {
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Falha na validação dos dados.' });
-    }
-
-    const companyExists = await Company.findByPk(req.companyId);
-
-    if (!companyExists) {
-      return res
-        .status(400)
-        .json({ error: 'Essa empresa não está registrada' });
     }
 
     const contactInfo = await ContactInfo.findOne({

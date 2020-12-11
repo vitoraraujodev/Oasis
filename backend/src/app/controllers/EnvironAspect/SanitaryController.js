@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import Company from '../../models/Company';
 import Sanitary from '../../models/EnvironAspect/Sanitary';
 import Employee from '../../models/SpecificInfo/Employee';
 
@@ -12,14 +11,6 @@ class SanitaryController {
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Falha na validação dos dados.' });
-    }
-
-    const companyExists = await Company.findByPk(req.companyId);
-
-    if (!companyExists) {
-      return res
-        .status(400)
-        .json({ error: 'Essa empresa não está registrada' });
     }
 
     const sanitary = await Sanitary.findOne({

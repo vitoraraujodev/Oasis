@@ -81,7 +81,9 @@ class CompanyController {
     const company = await Company.findByPk(req.companyId);
 
     if (!company) {
-      return res.status(400).json({ error: 'Empresa não existe.' });
+      return res.status(400).json({
+        error: 'Empresa não registrada. Verifique os dados e tente novamente.',
+      });
     }
 
     if (mail && mail !== company.email) {
