@@ -1,19 +1,21 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 
+import { store } from '~/store';
+
 export default function RouteWrapper({
   component: Component,
-  notPrivate,
+  isPublic = false,
   ...rest
 }) {
-  const signed = true;
+  const { token } = store.getState().auth;
 
-  if (!signed && !notPrivate) {
+  if (!token && !isPublic) {
     return <Redirect to="/" />;
   }
 
-  if (signed && notPrivate) {
-    return <Redirect to="/" />;
+  if (token && isPublic) {
+    return <Redirect to="/forms" />;
   }
 
   return <Route {...rest} component={Component} />;

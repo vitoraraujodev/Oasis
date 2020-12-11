@@ -23,32 +23,29 @@
 
 #sign-in-page .sign-in-label {
   text-align: center;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 500;
   margin-bottom: 8px;
   color: #444;
 }
 
 #sign-in-page .input-label {
-  font-size: 17px;
+  font-size: 19px;
   color: #252525;
   margin-bottom: 4px;
 }
 
 #sign-in-page .input {
   width: 100%;
-  height: 40px;
-  font-size: 16px;
+  height: 48px;
+  font-size: 18px;
   padding: 0 16px;
   border: 0;
   border-radius: 5px;
   background: #f2f2f2;
   border: 1px solid #e6e6e6;
   color: #444;
-}
-
-#sign-in-page .input {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 #sign-in-page .registration-link {
@@ -56,9 +53,11 @@
   margin-top: 8px;
   color: #252525;
   height: 32px;
+  font-size: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: underline;
 }
 
 #sign-in-page .submit-button {
@@ -66,7 +65,7 @@
   border-radius: 5px;
   background: #D2902D;
   color: #fff;
-  font-size: 18px;
+  font-size: 20px;
   width: 100%;
   margin-top: 16px;
   font-weight: 500;

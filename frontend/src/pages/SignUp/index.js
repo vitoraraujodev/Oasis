@@ -32,8 +32,8 @@ export default function SignUp() {
       await api.post('company', data);
       dispatch(signInRequest(email, password));
     } catch (err) {
-      if (err.response) {
-        alert(err.response.data.error);
+      if (err.response.data) {
+        window.alert(err.response.data.error);
       }
     }
     setLoading(false);
@@ -64,7 +64,7 @@ export default function SignUp() {
         <input
           className="input"
           onChange={(e) => setTypology(e.target.value)}
-          placeholder=""
+          placeholder="Cervejaria, Mineiradora..."
         />
 
         <p className="input-label">Senha</p>

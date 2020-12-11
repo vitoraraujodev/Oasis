@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { signInRequest } from '~/store/modules/auth/actions';
+
+import history from '~/services/history';
 
 import './styles.css';
 
@@ -47,9 +48,12 @@ export default function SignIn() {
           {loading ? 'Carregando' : 'Acessar'}
         </button>
 
-        <Link to="/cadastro">
-          <div className="registration-link">ou cadastre sua conta</div>
-        </Link>
+        <div
+          className="registration-link"
+          onClick={() => history.push('/cadastro')}
+        >
+          ou cadastre sua conta
+        </div>
       </div>
     </div>
   );

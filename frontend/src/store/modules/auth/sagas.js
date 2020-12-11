@@ -12,13 +12,13 @@ export function* signIn({ payload }) {
   try {
     const response = yield call(api.post, 'sessions', { email, password });
 
-    const { token, user } = response.data;
+    const { token, company } = response.data;
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    yield put(signInSuccess(token, user));
+    yield put(signInSuccess(token, company));
 
-    history.push('/');
+    history.push('/forms');
   } catch (err) {
     yield put(signFailure());
 

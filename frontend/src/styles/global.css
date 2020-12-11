@@ -19,9 +19,9 @@
 }
 
 html, body, #root {
+  min-height: 100% !important;
   height: 100%;
-  width: 100%;
-  min-width: 320px;
+  min-width: 768px;
 }
 
 body {
@@ -31,6 +31,7 @@ body {
 
 a,
 a:active {
+  text-decoration: none;
   color: #252525;
 }
 
