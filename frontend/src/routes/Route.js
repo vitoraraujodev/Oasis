@@ -15,7 +15,7 @@ export default function RouteWrapper({
   }
 
   if (token && isPublic) {
-    return <Redirect to="/forms" />;
+    return <Redirect to="/form" />;
   }
 
   return <Route {...rest} component={Component} />;

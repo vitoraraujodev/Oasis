@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FaCheck } from 'react-icons/fa';
 
 import Header from '~/components/Header';
 import Topic from './Topic';
@@ -20,8 +21,9 @@ export default function Menu() {
     try {
       await api.get('document');
     } catch (err) {
-      console.tron.log(err);
-      if (err.respose) window.alert(err.respose.data.error);
+      if (err.response) {
+        window.alert(err.response.data.error);
+      }
     }
 
     setLoading(false);
@@ -39,8 +41,9 @@ export default function Menu() {
       setDocumentType(response.data.document_type);
       setSaveButton(false);
     } catch (err) {
-      console.tron.log(err);
-      if (err.respose) window.alert(err.respose.data.error);
+      if (err.response.data) {
+        window.alert(err.response.data.error);
+      }
     }
   }
 
@@ -51,8 +54,7 @@ export default function Menu() {
         setDocumentType(response.data.document_type);
       }
     } catch (err) {
-      console.tron.log(err.respose);
-      if (err.respose) window.alert(err.respose.data.error);
+      if (err.respose) alert(err.respose.data.error);
     }
   }
 
@@ -98,23 +100,24 @@ export default function Menu() {
           {saveButton && (
             <button
               type="button"
-              className="save-block"
+              className="save-button"
               onClick={() => handleDocumentType()}
             >
+              <FaCheck size={21} color="#fff" style={{ marginRight: 8 }} />
               Salvar
             </button>
           )}
         </div>
 
-        <Link to="/forms">
+        <Link to="/form/informacoes-gerais">
           <Topic
             topicNumber="1"
-            topicTitle="Informaçõe gerais"
+            topicTitle="Informações gerais"
             topicDescription="Endereço, representante legal, informações de funcionamento"
           />
         </Link>
 
-        <Link to="/forms">
+        <Link to="/form">
           <Topic
             topicNumber="2"
             topicTitle="Acompanhamento"
@@ -122,7 +125,7 @@ export default function Menu() {
           />
         </Link>
 
-        <Link to="/forms">
+        <Link to="/form">
           <Topic
             topicNumber="3"
             topicTitle="Informações específicas"
@@ -130,7 +133,7 @@ export default function Menu() {
           />
         </Link>
 
-        <Link to="/forms">
+        <Link to="/form">
           <Topic
             topicNumber="4"
             topicTitle="Processo produtivo"
@@ -138,7 +141,7 @@ export default function Menu() {
           />
         </Link>
 
-        <Link to="/forms">
+        <Link to="/form">
           <Topic
             topicNumber="5"
             topicTitle="Aspéctos ambientais"
@@ -146,7 +149,7 @@ export default function Menu() {
           />
         </Link>
 
-        <Link to="/forms">
+        <Link to="/form">
           <Topic
             topicNumber="6"
             topicTitle="Aspéctos ambientais complementares"

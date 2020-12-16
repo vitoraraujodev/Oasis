@@ -1,0 +1,97 @@
+#form-block {
+  position: relative;
+  margin-top: 16px;
+  padding: 32px 56px;
+  border-radius: 5px;
+  border-left: 8px solid #c4c4c4;
+  background: #ffffff;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+}
+
+#form-block .title {
+  color: #444;
+  font-weight: 500;
+  font-size: 25px;
+  margin-bottom: 8px;
+}
+
+#form-block .block-description {
+  color: #888888;
+  font-size: 16px;
+}
+
+#form-block .input-line {
+  display: flex;
+  align-items: center;
+}
+
+#form-block .input-line + .input-line {
+  margin-top: 16px;
+}
+
+#form-block .input-group {
+  width: 100%;
+}
+
+#form-block .input-group + .input-group {
+  margin-left: 16px;
+}
+
+#form-block .input-label {
+  font-size: 18px;
+  color: #444;
+}
+
+#form-page .input {
+  height: 48px;
+  width: 100%;
+  font-size: 18px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 5px;
+  background: #f2f2f2;
+  border: 1.5px solid #e6e6e6;
+  color: #444;
+  margin-top: 8px;
+}
+
+#form-page .input[disabled] {
+  background: #e0e0e0;
+  border: 1.5px solid #cccccc;
+  color: #666;
+}
+
+#form-page .medium {
+  min-width: 128px;
+  max-width: 200px;
+}
+
+#form-page .small {
+  max-width: 96px;
+}
+
+#form-page .save-button {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 8px;
+  border: 0;
+  border-radius: 5px;
+  background: #64B34D;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 16px;
+  padding: 8px 24px;
+  right: 40px;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+#form-page .save-button:hover {
+  transform: scale(1.02);
+}
+
+#form-page .save-button:active {
+  transform: none;
+}

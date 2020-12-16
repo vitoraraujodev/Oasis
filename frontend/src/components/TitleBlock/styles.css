@@ -1,0 +1,19 @@
+#title-block {
+  text-align: center;
+  padding: 24px 40px 32px;
+  border-radius: 5px;
+  border-top: 8px solid #c4c4c4;
+  background: #ffffff;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+}
+
+#title-block .title {
+  color: #444;
+  font-size: 30px;
+}
+
+#title-block .description {
+  color: #888888;
+  font-size: 18px;
+  margin-top: 24px;
+}

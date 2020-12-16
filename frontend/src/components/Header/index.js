@@ -26,7 +26,7 @@ export default function Header() {
             <NavLink
               className="navlink"
               activeStyle={{ color: '#444' }}
-              to="/forms"
+              to="/form"
             >
               <strong>Formulário</strong>
             </NavLink>

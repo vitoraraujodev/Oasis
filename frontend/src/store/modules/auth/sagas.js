@@ -18,7 +18,7 @@ export function* signIn({ payload }) {
 
     yield put(signInSuccess(token, company));
 
-    history.push('/forms');
+    history.push('/form');
   } catch (err) {
     yield put(signFailure());
 

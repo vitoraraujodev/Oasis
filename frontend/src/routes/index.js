@@ -8,6 +8,8 @@ import SignUp from '~/pages/SignUp';
 
 import Menu from '~/pages/Menu';
 
+import GeneralInfo from '~/pages/Forms/GeneralInfo';
+
 import history from '~/services/history';
 
 export default function Routes() {
@@ -17,7 +19,12 @@ export default function Routes() {
         <Route path="/" exact component={SignIn} isPublic />
         <Route path="/cadastro" component={SignUp} isPublic />
 
-        <Route path="/forms" component={Menu} />
+        <Route path="/form" exact component={Menu} />
+        <Route
+          path="/form/informacoes-gerais"
+          component={GeneralInfo}
+          stateRequired
+        />
 
         <Redirect from="*" to="/" />
       </Switch>

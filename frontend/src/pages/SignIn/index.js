@@ -12,6 +12,8 @@ export default function SignIn() {
 
   const loading = useSelector((state) => state.auth.loading);
 
+  // const [height, setHeight] = useState(window.innerHeight);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
