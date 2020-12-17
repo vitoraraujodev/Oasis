@@ -2,41 +2,37 @@ import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
 import { FaPlus } from 'react-icons/fa';
 
-import ConcludedProcessForm from './ConcludedProcessForm';
+import PendingProcessForm from './PendingProcessForm';
 
 import Accordion from '~/components/Accordion';
 
 import api from '~/services/api';
 
-import { Capitalize, formatDate } from '~/util/format';
+import { Capitalize } from '~/util/format';
 
-export default function ConcludedProcess({
-  concludedProcesses,
-  onChangeConcludedProcesses,
+export default function PendingProcess({
+  pendingProcesses,
+  onChangePendingProcesses,
   editable,
 }) {
   const [loading, setLoading] = useState(false);
   const [saveButton, setSaveButton] = useState(false);
 
   const [instrument, setInstrument] = useState('');
-  const [number, setNumber] = useState('');
   const [process, setProcess] = useState('');
-  const [expirationDate, setExpirationDate] = useState('');
   const [objective, setObjective] = useState('');
 
   function handleUpdate(p) {
-    const processes = concludedProcesses.map((concludedProcess) =>
-      concludedProcess.id === p.id ? p : concludedProcess
+    const processes = pendingProcesses.map((pendingProcess) =>
+      pendingProcess.id === p.id ? p : pendingProcess
     );
 
-    onChangeConcludedProcesses(processes);
+    onChangePendingProcesses(processes);
   }
 
   function handleDelete(id) {
-    onChangeConcludedProcesses(
-      concludedProcesses.filter(
-        (concludedProcess) => concludedProcess.id !== id
-      )
+    onChangePendingProcesses(
+      pendingProcesses.filter((pendingProcess) => pendingProcess.id !== id)
     );
   }
 
@@ -45,19 +41,15 @@ export default function ConcludedProcess({
 
     const data = {
       instrument: Capitalize(instrument),
-      number,
       process,
-      expiration_date: formatDate(expirationDate),
       objective,
     };
 
     try {
-      const response = await api.post('history', data);
-      onChangeConcludedProcesses([...concludedProcesses, response.data]);
+      const response = await api.post('pending', data);
+      onChangePendingProcesses([...pendingProcesses, response.data]);
       setInstrument('');
-      setNumber('');
       setProcess('');
-      setExpirationDate('');
       setObjective('');
     } catch (err) {
       if (err.response) alert(err.response.data.error);
@@ -66,29 +58,29 @@ export default function ConcludedProcess({
   }
 
   useEffect(() => {
-    if (instrument || number || process || expirationDate || objective) {
+    if (instrument || process || objective) {
       if (!saveButton) setSaveButton(true);
     } else {
       setSaveButton(false);
     }
-  }, [instrument, number, process, expirationDate, objective]); // eslint-disable-line
+  }, [instrument, process, objective]); // eslint-disable-line
 
   return (
     <>
-      <p className="block-subtitle">Processos concluídos</p>
+      <p className="block-subtitle">Processos em andamento</p>
 
-      {concludedProcesses.length > 0 &&
-        concludedProcesses.map((concludedProcess, index) => (
+      {pendingProcesses.length > 0 &&
+        pendingProcesses.map((pendingProcess, index) => (
           <Accordion
-            key={concludedProcess.id}
+            key={pendingProcess.id}
             number={index + 1}
-            title={concludedProcess.instrument}
+            title={pendingProcess.instrument}
             editable={editable}
           >
-            <ConcludedProcessForm
-              concludedProcess={concludedProcess}
-              onChangeConcludedProcess={handleUpdate}
-              onDeleteConcludedProcess={handleDelete}
+            <PendingProcessForm
+              pendingProcess={pendingProcess}
+              onChangePendingProcess={handleUpdate}
+              onDeletePendingProcess={handleDelete}
               editable={editable}
             />
           </Accordion>
@@ -97,7 +89,7 @@ export default function ConcludedProcess({
       <div className="block-form">
         <div className="input-line">
           <div className="input-group">
-            <p className="input-label">Instrumento obtido</p>
+            <p className="input-label">Instrumento requerido</p>
             <input
               value={instrument}
               className="input"
@@ -108,50 +100,18 @@ export default function ConcludedProcess({
           </div>
 
           <div className="input-group">
-            <p className="input-label">Número</p>
-            <input
-              value={number}
-              type="tel"
-              className="input"
-              disabled={!editable}
-              onKeyDown={(e) => {
-                if (e.key === ' ') e.preventDefault();
-              }}
-              onChange={(e) => setNumber(e.target.value)}
-              placeholder="123.456.789-01"
-            />
-          </div>
-        </div>
-
-        <div className="input-line">
-          <div className="input-group">
             <p className="input-label">Processo</p>
-            <input
+            <InputMask
               value={process}
               type="tel"
               className="input"
               disabled={!editable}
+              mask="999-999.9"
               onKeyDown={(e) => {
                 if (e.key === ' ') e.preventDefault();
               }}
               onChange={(e) => setProcess(e.target.value)}
               placeholder="123-456.7"
-            />
-          </div>
-
-          <div className="input-group">
-            <p className="input-label">Data de válidade</p>
-            <InputMask
-              value={expirationDate}
-              type="tel"
-              mask="99/99/9999"
-              className="input"
-              disabled={!editable}
-              onKeyDown={(e) => {
-                if (e.key === ' ') e.preventDefault();
-              }}
-              onChange={(e) => setExpirationDate(e.target.value)}
-              placeholder="25/12/2020"
             />
           </div>
         </div>

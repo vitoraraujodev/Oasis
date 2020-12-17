@@ -1,23 +1,17 @@
 import React from 'react';
 
 import ConcludedProcess from './ConcludedProcess';
-// import PendingProcess from './PendingProcess';
+import PendingProcess from './PendingProcess';
 
 import FormBlock from '~/components/FormBlock';
 
 export default function History({
   concludedProcesses,
-  // pendingProcesses,
+  pendingProcesses,
   onChangeConcludedProcesses,
-  // onChangePendingProcesses,
+  onChangePendingProcesses,
   editable,
 }) {
-  // <PendingProcess
-  //   pendingProcess={pendingProcesses}
-  //   onChangePendingProcess={onChangePendingProcesses}
-  //   editable={editable}
-  // />;
-
   return (
     <FormBlock>
       <p className="block-title">Histórico da empresa no INEA</p>
@@ -29,6 +23,12 @@ export default function History({
       <ConcludedProcess
         concludedProcesses={concludedProcesses}
         onChangeConcludedProcesses={onChangeConcludedProcesses}
+        editable={editable}
+      />
+
+      <PendingProcess
+        pendingProcesses={pendingProcesses}
+        onChangePendingProcesses={onChangePendingProcesses}
         editable={editable}
       />
     </FormBlock>
