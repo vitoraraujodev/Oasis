@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { FaArrowLeft, FaLock, FaLockOpen } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 
 import Address from './Address';
+import Representative from './Representative';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -12,7 +13,7 @@ import history from '~/services/history';
 import '../styles.css';
 
 export default function GeneralInfo() {
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [address, setAddress] = useState({
@@ -25,11 +26,16 @@ export default function GeneralInfo() {
     complement: '',
   });
 
+  const [representatives, setRepresentatives] = useState([]);
+
   async function loadGeneralInfo() {
     setLoading(true);
+
     try {
       const response = await api.get('general-info');
       if (response.data.address) setAddress(response.data.address);
+      if (response.data.representatives)
+        setRepresentatives(response.data.representatives);
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }
@@ -46,10 +52,10 @@ export default function GeneralInfo() {
       <Header />
 
       <div className="container">
-        <div className="top-buttons">
+        <div className="form-buttons">
           <button
             type="button"
-            className="back-button"
+            className="page-button"
             onClick={() => history.push('/form')}
           >
             <FaArrowLeft size={21} color="#fff" />
@@ -81,12 +87,42 @@ export default function GeneralInfo() {
             Carregando...
           </div>
         ) : (
-          <Address
-            address={address}
-            onChangeAdress={(a) => setAddress(a)}
-            editable={editable}
-          />
+          <>
+            <Address
+              address={address}
+              onChangeAdress={(a) => setAddress(a)}
+              editable={editable}
+            />
+
+            <Representative
+              representatives={representatives}
+              onChangeRepresentatives={(r) => {
+                setRepresentatives(r);
+              }}
+              editable={editable}
+            />
+          </>
         )}
+
+        <div className="form-buttons">
+          <button
+            type="button"
+            className="page-button"
+            onClick={() => history.push('/form')}
+          >
+            <FaArrowLeft size={21} color="#fff" />
+            <strong style={{ marginLeft: 12 }}>Voltar</strong>
+          </button>
+
+          <button
+            type="button"
+            className="page-button"
+            onClick={() => setEditable(!editable)}
+          >
+            <strong style={{ marginRight: 12 }}>Avançar</strong>
+            <FaArrowRight size={21} color="#fff" />
+          </button>
+        </div>
       </div>
     </div>
   );

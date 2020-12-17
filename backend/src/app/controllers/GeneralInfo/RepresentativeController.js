@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import Company from '../../models/Company';
 import Representative from '../../models/GeneralInfo/Representative';
 
 class RepresentativeController {
@@ -50,12 +49,6 @@ class RepresentativeController {
   }
 
   async delete(req, res) {
-    const company = await Company.findByPk(req.companyId);
-
-    if (!company) {
-      return res.status(400).json('Empresa não encontrada.');
-    }
-
     const representative = await Representative.findByPk(req.params.id);
 
     if (!representative)

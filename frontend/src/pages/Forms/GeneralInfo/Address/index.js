@@ -70,10 +70,6 @@ export default function Address({ address, onChangeAddress, editable }) {
     }
   }, [cep]); // eslint-disable-line
 
-  useEffect(() => {
-    console.tron.log(address);
-  }, []); // eslint-disable-line
-
   async function handleSubmit() {
     setLoading(true);
 
@@ -97,8 +93,8 @@ export default function Address({ address, onChangeAddress, editable }) {
     setLoading(false);
   }
   return (
-    <FormBlock title="Endereço">
-      <p className="title">Endereço</p>
+    <FormBlock>
+      <p className="block-title">Endereço</p>
 
       <p className="input-label">Informe seu CEP</p>
       <div className="input-line">
@@ -215,8 +211,8 @@ export default function Address({ address, onChangeAddress, editable }) {
       {saveButton && (
         <button
           type="button"
-          className="save-button"
-          onClick={() => handleSubmit()}
+          className="save-block-button"
+          onClick={!loading ? handleSubmit : null}
         >
           {loading ? (
             'Carregando...'

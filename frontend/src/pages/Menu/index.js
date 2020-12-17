@@ -101,7 +101,7 @@ export default function Menu() {
             <button
               type="button"
               className="save-button"
-              onClick={() => handleDocumentType()}
+              onClick={!loading ? handleDocumentType : null}
             >
               <FaCheck size={21} color="#fff" style={{ marginRight: 8 }} />
               Salvar

@@ -6,20 +6,20 @@
 #form-page .container {
   position: relative;
   max-width: 960px;
-  padding: 40px 32px;
+  padding: 0 32px;
   margin: 0 auto;
   z-index: 5;
 }
 
-#form-page .top-buttons {
+#form-page .form-buttons {
   display: flex;
   justify-content: space-between;
   width: 100%;
   align-items: center;
-  margin-bottom: 32px;
+  padding: 40px 0;
 }
 
-#form-page .back-button, #form-page .edit-button {
+#form-page .page-button, #form-page .edit-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,11 +28,11 @@
   border-radius: 5px;
   color: #fff;
   font-size: 24px;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
   font-weight: 700;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.25);
 }
 
-#form-page .back-button {
+#form-page .page-button {
   background: #D2902D;
 }
 
@@ -40,11 +40,11 @@
   background: #64B34D
 }
 
-#form-page .back-button:hover, #form-page .edit-button:hover {
+#form-page .page-button:hover, #form-page .edit-button:hover {
   transform: scale(1.02);
 }
 
-#form-page .back-button:active, #form-page .edit-button:active {
+#form-page .page-button:active, #form-page .edit-button:active {
   transform: none;
 }
 
