@@ -49,7 +49,7 @@ export default function Representative({
 
     try {
       const response = await api.post('representative', data);
-      onChangeRepresentatives(response.data);
+      onChangeRepresentatives([...representatives, response.data]);
       setName('');
       setCpf('');
       setEmail('');
@@ -82,6 +82,7 @@ export default function Representative({
             key={representative.id}
             number={index + 1}
             title={representative.name}
+            editable={editable}
           >
             <RepresentativeForm
               representative={representative}

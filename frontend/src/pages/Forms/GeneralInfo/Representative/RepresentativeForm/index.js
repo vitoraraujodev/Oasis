@@ -5,11 +5,11 @@ import api from '~/services/api';
 
 import { Capitalize } from '~/util/format';
 
-export default function Representative({
-  editable,
+export default function RepresentativeForm({
   representative,
   onChangeRepresentative,
   onDeleteRepresentative,
+  editable,
 }) {
   const [loading, setLoading] = useState(false);
   const [saveButton, setSaveButton] = useState(false);
@@ -86,7 +86,7 @@ export default function Representative({
           <input
             value={cpf}
             type="tel"
-            className="input"
+            className="input medium"
             disabled={!editable}
             onKeyDown={(e) => {
               if (e.key === ' ') e.preventDefault();
@@ -117,7 +117,7 @@ export default function Representative({
           <input
             value={phoneNumber}
             type="tel"
-            className="input"
+            className="input medium"
             disabled={!editable}
             onKeyDown={(e) => {
               if (e.key === ' ') e.preventDefault();
@@ -129,22 +129,24 @@ export default function Representative({
       </div>
 
       <div className="accordion-buttons">
-        <button
-          type="button"
-          className="delete-form-button"
-          onClick={!loading ? handleDelete : null}
-        >
-          {loading ? (
-            'Carregando...'
-          ) : (
-            <>
-              <span className="delete-icon">
-                <FaTrash size={16} color="#fff" style={{ marginRight: 8 }} />
-              </span>
-              Excluir
-            </>
-          )}
-        </button>
+        {editable && (
+          <button
+            type="button"
+            className="delete-form-button"
+            onClick={!loading ? handleDelete : null}
+          >
+            {loading ? (
+              'Carregando...'
+            ) : (
+              <>
+                <span className="delete-icon">
+                  <FaTrash size={16} color="#fff" style={{ marginRight: 8 }} />
+                </span>
+                Excluir
+              </>
+            )}
+          </button>
+        )}
 
         {saveButton && (
           <button

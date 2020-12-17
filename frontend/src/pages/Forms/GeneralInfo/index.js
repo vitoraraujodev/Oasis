@@ -3,6 +3,7 @@ import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 
 import Address from './Address';
 import Representative from './Representative';
+import History from './History';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -28,6 +29,9 @@ export default function GeneralInfo() {
 
   const [representatives, setRepresentatives] = useState([]);
 
+  const [concludedProcesses, setConcludedProcesses] = useState([]);
+  const [pendingProcesses, setPendingProcesses] = useState([]);
+
   async function loadGeneralInfo() {
     setLoading(true);
 
@@ -36,6 +40,8 @@ export default function GeneralInfo() {
       if (response.data.address) setAddress(response.data.address);
       if (response.data.representatives)
         setRepresentatives(response.data.representatives);
+      if (response.data.history) setConcludedProcesses(response.data.history);
+      if (response.data.pending) setPendingProcesses(response.data.pending);
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }
@@ -90,15 +96,21 @@ export default function GeneralInfo() {
           <>
             <Address
               address={address}
-              onChangeAdress={(a) => setAddress(a)}
+              onChangeAdress={setAddress}
               editable={editable}
             />
 
             <Representative
               representatives={representatives}
-              onChangeRepresentatives={(r) => {
-                setRepresentatives(r);
-              }}
+              onChangeRepresentatives={setRepresentatives}
+              editable={editable}
+            />
+
+            <History
+              concludedProcesses={concludedProcesses}
+              pendingProcesses={pendingProcesses}
+              onChangeConcludedProcesses={setConcludedProcesses}
+              onChangePendingProcesses={setPendingProcesses}
               editable={editable}
             />
           </>

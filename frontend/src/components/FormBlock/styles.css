@@ -15,6 +15,14 @@
   margin-bottom: 8px;
 }
 
+#form-block .block-subtitle {
+  color: #444;
+  font-weight: 500;
+  font-size: 22px;
+  margin-bottom: 8px;
+  margin-top: 32px;
+}
+
 #form-block .block-description {
   color: #888888;
   font-size: 16px;
