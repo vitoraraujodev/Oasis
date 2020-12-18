@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Input from 'react-input-mask';
 import { FaPlus } from 'react-icons/fa';
 
 import RepresentativeForm from './RepresentativeForm';
@@ -60,6 +61,11 @@ export default function Representative({
     setLoading(false);
   }
 
+  function handlePhoneNumber(e) {
+    const phone = e.target.value.replace(/[^0-9]+/g, '');
+    setPhoneNumber(phone);
+  }
+
   useEffect(() => {
     if (name || cpf || email || phoneNumber) {
       if (!saveButton) setSaveButton(true);
@@ -109,14 +115,11 @@ export default function Representative({
 
           <div className="input-group">
             <p className="input-label ">CPF</p>
-            <input
+            <Input
               value={cpf}
-              type="tel"
+              mask="999.999.999-99"
               className="input medium"
               disabled={!editable}
-              onKeyDown={(e) => {
-                if (e.key === ' ') e.preventDefault();
-              }}
               onChange={(e) => setCpf(e.target.value)}
               placeholder="123.456.789-01"
             />
@@ -140,15 +143,18 @@ export default function Representative({
           </div>
           <div className="input-group">
             <p className="input-label ">Telefone</p>
-            <input
+            <Input
               value={phoneNumber}
-              type="tel"
+              type="custom"
+              inputMode="numeric"
+              mask={
+                phoneNumber.length <= 10 ? '(99) 9999-9999?' : '(99) 99999-9999'
+              }
+              formatChars={{ 9: '[0-9]', '?': '[0-9 ]' }}
+              maskChar={null}
               className="input medium"
               disabled={!editable}
-              onKeyDown={(e) => {
-                if (e.key === ' ') e.preventDefault();
-              }}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              onChange={handlePhoneNumber}
               placeholder="(11) 99999-9999"
             />
           </div>

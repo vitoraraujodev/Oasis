@@ -102,7 +102,6 @@ export default function PendingProcess({
             <p className="input-label">Processo</p>
             <input
               value={process}
-              type="tel"
               className="input"
               disabled={!editable}
               onKeyDown={(e) => {

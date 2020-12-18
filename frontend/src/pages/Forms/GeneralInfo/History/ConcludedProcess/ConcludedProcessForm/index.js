@@ -100,11 +100,8 @@ export default function ConcludedProcessForm({
             type="tel"
             className="input"
             disabled={!editable}
-            onKeyDown={(e) => {
-              if (e.key === ' ') e.preventDefault();
-            }}
             onChange={(e) => setNumber(e.target.value)}
-            placeholder="123.456.789-01"
+            placeholder="LO N°IN000000"
           />
         </div>
       </div>
@@ -114,14 +111,13 @@ export default function ConcludedProcessForm({
           <p className="input-label">Processo</p>
           <input
             value={process}
-            type="tel"
             className="input"
             disabled={!editable}
             onKeyDown={(e) => {
               if (e.key === ' ') e.preventDefault();
             }}
             onChange={(e) => setProcess(e.target.value)}
-            placeholder="123-456.7"
+            placeholder="PD-00/000.000/0000"
           />
         </div>
 

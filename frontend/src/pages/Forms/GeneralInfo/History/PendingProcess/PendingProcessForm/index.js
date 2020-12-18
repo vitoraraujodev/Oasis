@@ -86,7 +86,6 @@ export default function PendingProcessForm({
           <p className="input-label">Processo</p>
           <input
             value={process}
-            type="tel"
             className="input"
             disabled={!editable}
             onChange={(e) => setProcess(e.target.value)}

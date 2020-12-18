@@ -1,0 +1,35 @@
+#day-selector {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+  background: #f2f2f2;
+  border: 1.5px solid #e6e6e6;
+  border-radius: 5px;
+}
+
+#day-selector .day, #day-selector .selected-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 12px;
+  border: 0;
+  font-weight: 500;
+  font-size: 18px;
+  color: #666;
+}
+
+#day-selector .day + .day,
+#day-selector .day + .selected-day,
+#day-selector .selected-day + .day,
+#day-selector .selected-day + .selected-day {
+  border-left: 2px solid #e6e6e6
+}
+
+#day-selector .day:hover {
+  background: #e6e6e6;
+}
+
+#day-selector .selected-day {
+  background: #ddd;
+}

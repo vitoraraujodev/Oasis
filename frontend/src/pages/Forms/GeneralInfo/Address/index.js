@@ -50,9 +50,10 @@ export default function Address({ address, onChangeAddress, editable }) {
   }
 
   useEffect(() => {
+    console.tron.log(number, address.number);
     if (
       cep !== address.cep ||
-      number !== address.number ||
+      parseInt(number, 10) !== address.number ||
       complement !== address.complement
     ) {
       setSaveButton(true);
@@ -85,10 +86,10 @@ export default function Address({ address, onChangeAddress, editable }) {
 
     try {
       const response = await api.post('address', data);
-      onChangeAddress(response.data);
       setSaveButton(false);
+      onChangeAddress(response.data);
     } catch (err) {
-      if (err.response) alert(err.response.data.err);
+      if (err.response) alert(err.response.data.error);
     }
     setLoading(false);
   }

@@ -15,7 +15,9 @@ import history from '~/services/history';
 import '../styles.css';
 
 export default function GeneralInfo() {
-  const [editable, setEditable] = useState(false);
+  const ENV = process.env.NODE_ENV;
+
+  const [editable, setEditable] = useState(ENV !== 'production');
   const [loading, setLoading] = useState(false);
 
   const [address, setAddress] = useState({
@@ -38,7 +40,7 @@ export default function GeneralInfo() {
     rural: null,
     registration: null,
     observation: '',
-    shifts: {},
+    shifts: [],
   });
 
   async function loadGeneralInfo() {
@@ -51,6 +53,8 @@ export default function GeneralInfo() {
         setRepresentatives(response.data.representatives);
       if (response.data.history) setConcludedProcesses(response.data.history);
       if (response.data.pending) setPendingProcesses(response.data.pending);
+      if (response.data.operatingInfo)
+        setOperatingInfo(response.data.operatingInfo);
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }
@@ -105,7 +109,7 @@ export default function GeneralInfo() {
           <>
             <Address
               address={address}
-              onChangeAdress={setAddress}
+              onChangeAddress={setAddress}
               editable={editable}
             />
 

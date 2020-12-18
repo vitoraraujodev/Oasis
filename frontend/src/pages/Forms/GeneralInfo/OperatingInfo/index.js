@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import InputMask from 'react-input-mask';
-import { FaCheck } from 'react-icons/fa';
+import { FaPlus, FaCheck } from 'react-icons/fa';
+
+import Shift from './Shift';
 
 import FormBlock from '~/components/FormBlock';
 import CheckInput from '~/components/CheckInput';
@@ -17,16 +19,26 @@ export default function OperatingInfo({
   const [loading, setLoading] = useState(false);
   const [saveButton, setSaveButton] = useState(false);
 
-  const [date, setDate] = useState(operatingInfo.date);
+  const [date, setDate] = useState(formatDate(operatingInfo.date));
   const [rural, setRural] = useState(operatingInfo.rural);
   const [ruralPast, setRuralPast] = useState(operatingInfo.registration);
   const [registration, setRegistration] = useState(operatingInfo.registration);
   const [observation, setObservation] = useState(operatingInfo.observation);
-  // const [shifts, setShifts] = useState(operatingInfo.shifts);
+  const [shifts, setShifts] = useState(
+    operatingInfo.shifts.length > 0
+      ? operatingInfo.shifts
+      : [
+          {
+            start_at: '',
+            end_at: '',
+            week: '0000000',
+          },
+        ]
+  );
 
   useEffect(() => {
     if (
-      date !== operatingInfo.date ||
+      date !== formatDate(operatingInfo.date) ||
       rural !== operatingInfo.rural ||
       registration !== operatingInfo.registration ||
       observation !== operatingInfo.observation
@@ -38,25 +50,60 @@ export default function OperatingInfo({
   }, [date, rural, registration, observation]); // eslint-disable-line
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {
       date: formatDate(date),
-      rural: false,
-      registration: false,
+      rural,
+      registration: registration || false,
       observation: Capitalize(observation),
-      // shifts,
+      shifts,
     };
 
     try {
       const response = await api.post('operating-info', data);
-      onChangeOperatingInfo(response.data);
       setSaveButton(false);
+      onChangeOperatingInfo(response.data);
     } catch (err) {
-      if (err.response) alert(err.response.data.err);
+      if (err.response) alert(err.response.data.error);
     }
     setLoading(false);
   }
+
+  function handleUpdateShifts(shift, index) {
+    if (loading) return;
+
+    const newShifts = shifts.map((s, i) => (i === index ? shift : s));
+    setShifts(newShifts);
+
+    setSaveButton(true);
+  }
+
+  function handleAddShift() {
+    if (loading) return;
+
+    const shift = {
+      start_at: '',
+      end_at: '',
+      week: '0000000',
+    };
+    setShifts([...shifts, shift]);
+
+    setSaveButton(true);
+  }
+
+  function handleDelete(index) {
+    if (loading) return;
+
+    const newShifts = [...shifts];
+    newShifts.splice(index, 1);
+    setShifts(newShifts);
+
+    setSaveButton(true);
+  }
+
   return (
     <FormBlock>
       <p className="block-title">Informações de funcionamento</p>
@@ -138,7 +185,37 @@ export default function OperatingInfo({
 
       <div className="input-line">
         <div className="input-group">
-          <p className="input-label b">Objeto</p>
+          <p className="input-label b">Turnos de funcionamento</p>
+          {shifts.map((shift, index) => (
+            <Shift
+              shift={shift}
+              onChangeShift={(s) => {
+                handleUpdateShifts(s, index);
+              }}
+              onDeleteShift={() => handleDelete(index)}
+              editable={editable}
+            />
+          ))}
+          <button
+            type="button"
+            className="add-subform-button"
+            onClick={handleAddShift}
+          >
+            <FaPlus size={16} color="#3366BB" style={{ marginRight: 8 }} />
+            Adicionar um turno
+          </button>
+        </div>
+      </div>
+
+      <div className="input-line">
+        <div className="input-group">
+          <p className="input-label">
+            Existe alguma outra atividade secundária auxiliar que tenha um
+            horário distinto?
+            <span className="hint" style={{ marginLeft: 4 }}>
+              (Opcional)
+            </span>
+          </p>
           <textarea
             value={observation}
             length="192"
@@ -155,20 +232,22 @@ export default function OperatingInfo({
       </div>
 
       {saveButton && (
-        <button
-          type="button"
-          className="save-block-button"
-          onClick={!loading ? handleSubmit : null}
-        >
-          {loading ? (
-            'Carregando...'
-          ) : (
-            <>
-              <FaCheck size={21} color="#fff" style={{ marginRight: 8 }} />
-              Salvar
-            </>
-          )}
-        </button>
+        <div className="input-line">
+          <button
+            type="button"
+            className="save-block-button bottom"
+            onClick={!loading ? handleSubmit : null}
+          >
+            {loading ? (
+              'Carregando...'
+            ) : (
+              <>
+                <FaCheck size={21} color="#fff" style={{ marginRight: 8 }} />
+                Salvar
+              </>
+            )}
+          </button>
+        </div>
       )}
     </FormBlock>
   );
