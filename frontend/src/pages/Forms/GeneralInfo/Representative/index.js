@@ -108,11 +108,11 @@ export default function Representative({
           </div>
 
           <div className="input-group">
-            <p className="input-label">CPF</p>
+            <p className="input-label ">CPF</p>
             <input
               value={cpf}
               type="tel"
-              className="input"
+              className="input medium"
               disabled={!editable}
               onKeyDown={(e) => {
                 if (e.key === ' ') e.preventDefault();
@@ -139,11 +139,11 @@ export default function Representative({
             />
           </div>
           <div className="input-group">
-            <p className="input-label">Telefone</p>
+            <p className="input-label ">Telefone</p>
             <input
               value={phoneNumber}
               type="tel"
-              className="input"
+              className="input medium"
               disabled={!editable}
               onKeyDown={(e) => {
                 if (e.key === ' ') e.preventDefault();

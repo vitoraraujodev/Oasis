@@ -59,6 +59,10 @@
   color: #444;
 }
 
+#form-block .b{
+  font-weight: 500;
+}
+
 #form-page .input {
   height: 48px;
   width: 100%;

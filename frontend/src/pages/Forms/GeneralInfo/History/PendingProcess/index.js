@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import InputMask from 'react-input-mask';
 import { FaPlus } from 'react-icons/fa';
 
 import PendingProcessForm from './PendingProcessForm';
@@ -101,17 +100,16 @@ export default function PendingProcess({
 
           <div className="input-group">
             <p className="input-label">Processo</p>
-            <InputMask
+            <input
               value={process}
               type="tel"
               className="input"
               disabled={!editable}
-              mask="999-999.9"
               onKeyDown={(e) => {
                 if (e.key === ' ') e.preventDefault();
               }}
               onChange={(e) => setProcess(e.target.value)}
-              placeholder="123-456.7"
+              placeholder="PD-00/000.000/0000"
             />
           </div>
         </div>

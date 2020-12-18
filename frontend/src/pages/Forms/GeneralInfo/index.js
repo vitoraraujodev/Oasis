@@ -4,6 +4,7 @@ import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 import Address from './Address';
 import Representative from './Representative';
 import History from './History';
+import OperatingInfo from './OperatingInfo';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -31,6 +32,14 @@ export default function GeneralInfo() {
 
   const [concludedProcesses, setConcludedProcesses] = useState([]);
   const [pendingProcesses, setPendingProcesses] = useState([]);
+
+  const [operatingInfo, setOperatingInfo] = useState({
+    date: '',
+    rural: null,
+    registration: null,
+    observation: '',
+    shifts: {},
+  });
 
   async function loadGeneralInfo() {
     setLoading(true);
@@ -111,6 +120,12 @@ export default function GeneralInfo() {
               pendingProcesses={pendingProcesses}
               onChangeConcludedProcesses={setConcludedProcesses}
               onChangePendingProcesses={setPendingProcesses}
+              editable={editable}
+            />
+
+            <OperatingInfo
+              operatingInfo={operatingInfo}
+              onChangeOperatingInfo={setOperatingInfo}
               editable={editable}
             />
           </>

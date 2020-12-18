@@ -1,0 +1,38 @@
+#check-input {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 240px;
+  margin-top: 8px;
+}
+
+#check-input .check-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  border: 0;
+}
+
+#check-input .check-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 24px;
+  width: 24px;
+  min-width: 24px;
+  background: #F2F2F2;
+  border: 2px solid #dddd;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+#check-input .check {
+  height: 12px;
+  min-height: 12px;
+  width: 12px;
+  min-width: 12px;
+  background: #c4c4c4;
+  border-radius: 50%;
+}
