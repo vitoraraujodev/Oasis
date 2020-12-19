@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 
 import ContactInfo from './ContactInfo';
+import ContactManager from './ContactManager';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -23,12 +24,21 @@ export default function FollowUp() {
     end_at: '',
   });
 
+  const [contactManager, setContactManager] = useState({
+    name: '',
+    email: '',
+    cpf: '',
+    phone_number: '',
+  });
+
   async function loadFollowUp() {
     setLoading(true);
 
     try {
       const response = await api.get('follow-up');
       if (response.data.contactInfo) setContactInfo(response.data.contactInfo);
+      if (response.data.contactManager)
+        setContactManager(response.data.contactManager);
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }
@@ -71,7 +81,7 @@ export default function FollowUp() {
 
         <TitleBlock
           title="Acompanhamento"
-          description="Explicação breve sobre o tópico do formulário, lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque finibus commodo ornare."
+          description="Descrição de informações administrativas complementares às Informações Gerais."
         />
 
         {loading ? (
@@ -84,6 +94,12 @@ export default function FollowUp() {
             <ContactInfo
               contactInfo={contactInfo}
               onChangeContactInfo={setContactInfo}
+              editable={editable}
+            />
+
+            <ContactManager
+              contactManager={contactManager}
+              onChangeContactManager={setContactManager}
               editable={editable}
             />
           </>

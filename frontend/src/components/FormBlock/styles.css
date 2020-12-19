@@ -18,7 +18,7 @@
 #form-block .block-description {
   color: #888888;
   font-size: 16px;
-  margin-bottom: 8px;
+  margin-bottom: 24px;
 }
 
 #form-block .block-subtitle {
@@ -102,7 +102,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  top: 16px;
+  top: 8px;
   border: 0;
   border-radius: 5px;
   background: #64B34D;

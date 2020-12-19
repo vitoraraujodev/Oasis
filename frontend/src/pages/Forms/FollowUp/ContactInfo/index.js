@@ -111,6 +111,10 @@ export default function ContactInfo({
               />
             </div>
 
+            <span className="hint" style={{ margin: '0 8px' }}>
+              às
+            </span>
+
             <div className="input-group small">
               <input
                 value={endAt}
