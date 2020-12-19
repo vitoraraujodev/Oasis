@@ -29,6 +29,11 @@
   margin-top: 32px;
 }
 
+#form-block .block-subdescription {
+  color: #888888;
+  font-size: 16px;
+}
+
 #form-block .block-form {
   margin-top: 16px;
   padding: 24px;
