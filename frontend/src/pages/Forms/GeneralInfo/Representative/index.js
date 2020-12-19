@@ -106,10 +106,9 @@ export default function Representative({
             <input
               value={name}
               className="input"
-              style={{ textTransform: 'capitalize' }}
               disabled={!editable}
               onChange={(e) => setName(e.target.value)}
-              placeholder="nome completo"
+              placeholder="Nome completo"
             />
           </div>
 

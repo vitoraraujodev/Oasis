@@ -8,18 +8,24 @@ import api from '~/services/api';
 
 import { Capitalize } from '~/util/format';
 
-export default function ContactManager({
-  contactManager,
-  onChangeContactManager,
+export default function TechnicalManager({
+  technicalManager,
+  onChangeTechnicalManager,
   editable,
 }) {
   const [loading, setLoading] = useState(false);
   const [saveButton, setSaveButton] = useState(false);
 
-  const [name, setName] = useState(contactManager.name);
-  const [cpf, setCpf] = useState(contactManager.cpf);
-  const [email, setEmail] = useState(contactManager.email);
-  const [phoneNumber, setPhoneNumber] = useState(contactManager.phone_number);
+  const [name, setName] = useState(technicalManager.name);
+  const [cpf, setCpf] = useState(technicalManager.cpf);
+  const [email, setEmail] = useState(technicalManager.email);
+  const [phoneNumber, setPhoneNumber] = useState(technicalManager.phone_number);
+  const [qualification, setQualification] = useState(
+    technicalManager.qualification
+  );
+  const [licensureCode, setLicensureCode] = useState(
+    technicalManager.licensure_code
+  );
 
   async function handleSubmit() {
     setLoading(true);
@@ -29,12 +35,14 @@ export default function ContactManager({
       cpf,
       email,
       phone_number: phoneNumber,
+      qualification,
+      licensure_code: licensureCode,
     };
 
     try {
-      const response = await api.post('contact-manager', data);
+      const response = await api.post('technical-manager', data);
       setSaveButton(false);
-      onChangeContactManager(response.data);
+      onChangeTechnicalManager(response.data);
     } catch (err) {
       if (err.response) alert(err.response.data.error);
     }
@@ -48,16 +56,18 @@ export default function ContactManager({
 
   useEffect(() => {
     if (
-      name !== contactManager.name ||
-      cpf !== contactManager.cpf ||
-      email !== contactManager.email ||
-      phoneNumber !== contactManager.phone_number
+      name !== technicalManager.name ||
+      cpf !== technicalManager.cpf ||
+      email !== technicalManager.email ||
+      phoneNumber !== technicalManager.phone_number ||
+      qualification !== technicalManager.qualification ||
+      licensureCode !== technicalManager.licensure_code
     ) {
       if (!saveButton) setSaveButton(true);
     } else {
       setSaveButton(false);
     }
-  }, [name, cpf, email, phoneNumber]); // eslint-disable-line
+  }, [name, cpf, email, phoneNumber, qualification, licensureCode]); // eslint-disable-line
 
   return (
     <FormBlock>
@@ -123,6 +133,30 @@ export default function ContactManager({
             disabled={!editable}
             onChange={handlePhoneNumber}
             placeholder="(11) 99999-9999"
+          />
+        </div>
+      </div>
+
+      <div className="input-line">
+        <div className="input-group">
+          <p className="input-label">Formação acadêmica</p>
+          <input
+            value={qualification}
+            className="input"
+            disabled={!editable}
+            onChange={(e) => setQualification(e.target.value)}
+            placeholder="Sua formação"
+          />
+        </div>
+
+        <div className="input-group">
+          <p className="input-label ">Conselho/Registro</p>
+          <Input
+            value={licensureCode}
+            className="input medium"
+            disabled={!editable}
+            onChange={(e) => setLicensureCode(e.target.value)}
+            placeholder="CREA/UF-00000000000"
           />
         </div>
       </div>

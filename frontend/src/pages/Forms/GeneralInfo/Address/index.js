@@ -135,7 +135,6 @@ export default function Address({ address, onChangeAddress, editable }) {
           <input
             value={city}
             className="input"
-            style={{ textTransform: 'capitalize' }}
             disabled
             onChange={(e) => setCity(e.target.value)}
             placeholder="Cidade"
@@ -147,7 +146,6 @@ export default function Address({ address, onChangeAddress, editable }) {
           <input
             value={neighborhood}
             className="input"
-            style={{ textTransform: 'capitalize' }}
             disabled
             onChange={(e) => setNeighborhood(e.target.value)}
             placeholder="Bairro"
@@ -159,7 +157,6 @@ export default function Address({ address, onChangeAddress, editable }) {
           <input
             value={municipality}
             className="input"
-            style={{ textTransform: 'capitalize' }}
             disabled
             onChange={(e) => setMunicipality(e.target.value)}
             placeholder="Município"
@@ -173,7 +170,6 @@ export default function Address({ address, onChangeAddress, editable }) {
           <input
             value={street}
             className="input"
-            style={{ textTransform: 'capitalize' }}
             disabled
             onChange={(e) => setStreet(e.target.value)}
             placeholder="Rua, Estrada, Avenida..."

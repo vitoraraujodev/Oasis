@@ -3,6 +3,7 @@ import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 
 import ContactInfo from './ContactInfo';
 import ContactManager from './ContactManager';
+import TechnicalManager from './TechnicalManager';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -31,6 +32,15 @@ export default function FollowUp() {
     phone_number: '',
   });
 
+  const [technicalManager, setTechnicalManager] = useState({
+    name: '',
+    email: '',
+    cpf: '',
+    phone_number: '',
+    qualification: '',
+    lincensureCode: '',
+  });
+
   async function loadFollowUp() {
     setLoading(true);
 
@@ -39,6 +49,8 @@ export default function FollowUp() {
       if (response.data.contactInfo) setContactInfo(response.data.contactInfo);
       if (response.data.contactManager)
         setContactManager(response.data.contactManager);
+      if (response.data.technicalManager)
+        setTechnicalManager(response.data.technicalManager);
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }
@@ -100,6 +112,12 @@ export default function FollowUp() {
             <ContactManager
               contactManager={contactManager}
               onChangeContactManager={setContactManager}
+              editable={editable}
+            />
+
+            <TechnicalManager
+              technicalManager={technicalManager}
+              onChangeTechnicalManager={setTechnicalManager}
               editable={editable}
             />
           </>
