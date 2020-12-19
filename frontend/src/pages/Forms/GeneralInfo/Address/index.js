@@ -50,7 +50,6 @@ export default function Address({ address, onChangeAddress, editable }) {
   }
 
   useEffect(() => {
-    console.tron.log(number, address.number);
     if (
       cep !== address.cep ||
       parseInt(number, 10) !== address.number ||

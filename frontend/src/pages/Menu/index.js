@@ -117,7 +117,7 @@ export default function Menu() {
           />
         </Link>
 
-        <Link to="/form">
+        <Link to="/form/acompanhamento">
           <Topic
             topicNumber="2"
             topicTitle="Acompanhamento"

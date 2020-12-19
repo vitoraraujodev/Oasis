@@ -62,6 +62,7 @@ export default function OperatingInfo({
       shifts,
     };
 
+    console.tron.log(data);
     try {
       const response = await api.post('operating-info', data);
       setSaveButton(false);

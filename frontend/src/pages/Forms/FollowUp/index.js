@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 
-import Address from './Address';
-import Representative from './Representative';
-import History from './History';
-import OperatingInfo from './OperatingInfo';
+import ContactInfo from './ContactInfo';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -14,47 +11,24 @@ import history from '~/services/history';
 
 import '../styles.css';
 
-export default function GeneralInfo() {
+export default function FollowUp() {
   const ENV = process.env.NODE_ENV;
 
   const [editable, setEditable] = useState(ENV !== 'production');
   const [loading, setLoading] = useState(false);
 
-  const [address, setAddress] = useState({
-    cep: '',
-    city: '',
-    neighborhood: '',
-    municipality: '',
-    street: '',
-    number: '',
-    complement: '',
+  const [contactInfo, setContactInfo] = useState({
+    phone_number: '',
+    start_at: '',
+    end_at: '',
   });
 
-  const [representatives, setRepresentatives] = useState([]);
-
-  const [concludedProcesses, setConcludedProcesses] = useState([]);
-  const [pendingProcesses, setPendingProcesses] = useState([]);
-
-  const [operatingInfo, setOperatingInfo] = useState({
-    date: '',
-    rural: null,
-    registration: null,
-    observation: '',
-    shifts: [],
-  });
-
-  async function loadGeneralInfo() {
+  async function loadFollowUp() {
     setLoading(true);
 
     try {
-      const response = await api.get('general-info');
-      if (response.data.address) setAddress(response.data.address);
-      if (response.data.representatives)
-        setRepresentatives(response.data.representatives);
-      if (response.data.history) setConcludedProcesses(response.data.history);
-      if (response.data.pending) setPendingProcesses(response.data.pending);
-      if (response.data.operatingInfo)
-        setOperatingInfo(response.data.operatingInfo);
+      const response = await api.get('follow-up');
+      if (response.data.contactInfo) setContactInfo(response.data.contactInfo);
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }
@@ -63,7 +37,7 @@ export default function GeneralInfo() {
   }
 
   useEffect(() => {
-    loadGeneralInfo();
+    loadFollowUp();
   }, []);
 
   return (
@@ -96,7 +70,7 @@ export default function GeneralInfo() {
         </div>
 
         <TitleBlock
-          title="Informações Gerais"
+          title="Acompanhamento"
           description="Explicação breve sobre o tópico do formulário, lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque finibus commodo ornare."
         />
 
@@ -107,34 +81,13 @@ export default function GeneralInfo() {
           </div>
         ) : (
           <>
-            <Address
-              address={address}
-              onChangeAddress={setAddress}
-              editable={editable}
-            />
-
-            <Representative
-              representatives={representatives}
-              onChangeRepresentatives={setRepresentatives}
-              editable={editable}
-            />
-
-            <History
-              concludedProcesses={concludedProcesses}
-              pendingProcesses={pendingProcesses}
-              onChangeConcludedProcesses={setConcludedProcesses}
-              onChangePendingProcesses={setPendingProcesses}
-              editable={editable}
-            />
-
-            <OperatingInfo
-              operatingInfo={operatingInfo}
-              onChangeOperatingInfo={setOperatingInfo}
+            <ContactInfo
+              contactInfo={contactInfo}
+              onChangeContactInfo={setContactInfo}
               editable={editable}
             />
           </>
         )}
-
         {!loading && (
           <div className="form-buttons">
             <button
@@ -149,7 +102,7 @@ export default function GeneralInfo() {
             <button
               type="button"
               className="page-button"
-              onClick={() => history.push('/form/acompanhamento')}
+              onClick={() => setEditable(!editable)}
             >
               <strong style={{ marginRight: 12 }}>Avançar</strong>
               <FaArrowRight size={21} color="#fff" />

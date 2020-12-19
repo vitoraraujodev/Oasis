@@ -2,8 +2,14 @@ import React from 'react';
 
 import './styles.css';
 
-export default function WeekDayInput({ week = '0000000', onChangeWeek }) {
+export default function WeekDayInput({
+  week = '0000000',
+  onChangeWeek,
+  editable,
+}) {
   function handleDay(index) {
+    if (!editable) return;
+
     let value = week[index];
     if (parseInt(value, 10)) {
       value = 0;

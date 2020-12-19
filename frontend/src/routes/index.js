@@ -9,6 +9,7 @@ import SignUp from '~/pages/SignUp';
 import Menu from '~/pages/Menu';
 
 import GeneralInfo from '~/pages/Forms/GeneralInfo';
+import FollowUp from '~/pages/Forms/FollowUp';
 
 import history from '~/services/history';
 
@@ -20,11 +21,8 @@ export default function Routes() {
         <Route path="/cadastro" component={SignUp} isPublic />
 
         <Route path="/form" exact component={Menu} />
-        <Route
-          path="/form/informacoes-gerais"
-          component={GeneralInfo}
-          stateRequired
-        />
+        <Route path="/form/informacoes-gerais" component={GeneralInfo} />
+        <Route path="/form/acompanhamento" component={FollowUp} />
 
         <Redirect from="*" to="/" />
       </Switch>

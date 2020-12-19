@@ -9,11 +9,24 @@ export default function Shifts({
   onDeleteShift,
   editable,
 }) {
-  function handleHour(hour) {
-    if ((parseInt(hour, 10) >= 0 && parseInt(hour, 10) < 24) || hour === '') {
-      return true;
+  function handleStartHour(value) {
+    const hour = value ? parseInt(value, 10) : '';
+    if ((hour >= 0 && hour < 24) || hour === '') {
+      onChangeShift({
+        ...shift,
+        start_at: hour,
+      });
     }
-    return false;
+  }
+
+  function handleEndHour(value) {
+    const hour = value ? parseInt(value, 10) : '';
+    if ((hour >= 0 && hour < 24) || hour === '') {
+      onChangeShift({
+        ...shift,
+        end_at: hour,
+      });
+    }
   }
 
   return (
@@ -31,14 +44,7 @@ export default function Shifts({
               if ((e.key < 0 || e.key > 9) && e.key !== 'Backspace')
                 e.preventDefault();
             }}
-            onChange={(e) =>
-              handleHour(e.target.value)
-                ? onChangeShift({
-                    ...shift,
-                    start_at: e.target.value,
-                  })
-                : null
-            }
+            onChange={(e) => handleStartHour(e.target.value)}
             placeholder="00h"
           />
         </div>
@@ -55,14 +61,7 @@ export default function Shifts({
               if ((e.key < 0 || e.key > 9) && e.key !== 'Backspace')
                 e.preventDefault();
             }}
-            onChange={(e) =>
-              handleHour(e.target.value)
-                ? onChangeShift({
-                    ...shift,
-                    end_at: e.target.value,
-                  })
-                : null
-            }
+            onChange={(e) => handleEndHour(e.target.value)}
             placeholder="23h"
           />
         </div>
@@ -72,6 +71,7 @@ export default function Shifts({
           <WeekDayInput
             week={shift.week}
             onChangeWeek={(week) => onChangeShift({ ...shift, week })}
+            editable={editable}
           />
         </div>
 
