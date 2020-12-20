@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import Company from '../../models/Company';
 import InstallEmployee from '../../models/SpecificInfo/InstallEmployee';
 
 class InstallEmployeeController {
@@ -11,6 +10,12 @@ class InstallEmployeeController {
 
     if (!(await schema.isValid(req.body))) {
       return res.status(400).json({ error: 'Falha na validação dos dados.' });
+    }
+
+    if (req.body.amount <= 0) {
+      return res
+        .status(400)
+        .json({ error: 'Número de funcionários inválido.' });
     }
 
     const employee = await InstallEmployee.findByPk(req.body.id);
@@ -40,12 +45,6 @@ class InstallEmployeeController {
   }
 
   async delete(req, res) {
-    const company = await Company.findByPk(req.companyId);
-
-    if (!company) {
-      return res.status(400).json('Empresa não encontrada.');
-    }
-
     const employee = await InstallEmployee.findByPk(req.params.id);
 
     if (!employee)

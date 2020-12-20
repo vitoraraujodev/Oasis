@@ -71,12 +71,7 @@ export default function TechnicalManager({
 
   return (
     <FormBlock>
-      <p className="block-title">Pessoa de contato</p>
-      <p className="block-description">
-        Preencher os campos abaixo com dados que permitam direcionar a
-        comunicação entre algum colaborador ou prestador de serviço da empresa e
-        o órgão ambiental.
-      </p>
+      <p className="block-title">Representante técnico</p>
 
       <div className="input-line">
         <div className="input-group">

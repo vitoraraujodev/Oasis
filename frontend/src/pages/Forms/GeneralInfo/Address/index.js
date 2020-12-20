@@ -95,7 +95,11 @@ export default function Address({ address, onChangeAddress, editable }) {
   return (
     <FormBlock>
       <p className="block-title">Endereço</p>
-
+      <p className="block-description">
+        Preencher os campos abaixo com os dados referentes ao local onde
+        serão/são desenvolvidas as atividades contempladas no presente
+        requerimento.
+      </p>
       <p className="input-label">Informe seu CEP</p>
       <div className="input-line">
         <Cep

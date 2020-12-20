@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 
 import Specific from './Specific';
+import Employees from './Employees';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -17,14 +18,24 @@ export default function SpecificInfo() {
   const [editable, setEditable] = useState(ENV !== 'production');
   const [loading, setLoading] = useState(false);
 
-  const [specific, setSpecific] = useState({ cnpj: '' });
+  const [documentType, setDocumentType] = useState();
+
+  const [specific, setSpecific] = useState({});
+  const [employees, setEmployees] = useState([]);
+  const [installEmployees, setInstallEmployees] = useState([]);
 
   async function loadSpecificInfo() {
     setLoading(true);
 
     try {
+      const result = await api.get('document-type');
+      setDocumentType(result.data.document_type);
+
       const response = await api.get('specific-info');
       if (response.data.specific) setSpecific(response.data.specific);
+      if (response.data.employees) setEmployees(response.data.employees);
+      if (response.data.installEmployees)
+        setInstallEmployees(response.data.installEmployees);
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }
@@ -80,6 +91,15 @@ export default function SpecificInfo() {
             <Specific
               specific={specific}
               onChangeSpecific={setSpecific}
+              editable={editable}
+            />
+
+            <Employees
+              documentType={documentType}
+              employees={employees}
+              installEmployees={installEmployees}
+              onChangeEmployees={setEmployees}
+              onChangeInstallEmployees={setInstallEmployees}
               editable={editable}
             />
           </>

@@ -1,49 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import InputMask from 'react-input-mask';
 import { FaCheck, FaTrash } from 'react-icons/fa';
 
 import api from '~/services/api';
 
-import { Capitalize, formatDate } from '~/util/format';
+import { Capitalize } from '~/util/format';
 
-export default function ConcludedProcessForm({
-  concludedProcess,
-  onChangeConcludedProcess,
-  onDeleteConcludedProcess,
+export default function PendingProcessForm({
+  pendingProcess,
+  onChangePendingProcess,
+  onDeletePendingProcess,
   editable,
 }) {
   const [loading, setLoading] = useState(false);
   const [saveButton, setSaveButton] = useState(true);
 
-  const [instrument, setInstrument] = useState(concludedProcess.instrument);
-  const [number, setNumber] = useState(concludedProcess.number);
-  const [process, setProcess] = useState(concludedProcess.process);
-  const [objective, setObjective] = useState(concludedProcess.objective);
-  const [expirationDate, setExpirationDate] = useState(
-    formatDate(concludedProcess.expiration_date)
-  );
+  const [instrument, setInstrument] = useState(pendingProcess.instrument);
+  const [process, setProcess] = useState(pendingProcess.process);
+  const [objective, setObjective] = useState(pendingProcess.objective);
 
   async function handleSubmit() {
     setLoading(true);
 
     const data = {
-      id: concludedProcess.id,
+      id: pendingProcess.id,
       instrument: Capitalize(instrument),
-      number,
       process,
-      expiration_date: formatDate(expirationDate),
       objective,
     };
 
     try {
       const response = await api.post('history', data);
       setSaveButton(false);
-      onChangeConcludedProcess({
+      onChangePendingProcess({
         id: response.data.id,
         instrument: response.data.instrument,
-        number: response.data.number,
         process: response.data.process,
-        expiration_date: formatDate(response.data.expiration_date),
         objective: response.data.objective,
       });
     } catch (err) {
@@ -56,8 +47,8 @@ export default function ConcludedProcessForm({
     setLoading(true);
 
     try {
-      const response = await api.delete(`history/${concludedProcess.id}`);
-      if (response.data.okay) onDeleteConcludedProcess(concludedProcess.id);
+      const response = await api.delete(`pending/${pendingProcess.id}`);
+      if (response.data.okay) onDeletePendingProcess(pendingProcess.id);
     } catch (err) {
       if (err.response) alert(err.response.data.error);
     }
@@ -67,72 +58,38 @@ export default function ConcludedProcessForm({
 
   useEffect(() => {
     if (
-      instrument !== concludedProcess.instrument ||
-      number !== concludedProcess.number ||
-      process !== concludedProcess.process ||
-      expirationDate !== formatDate(concludedProcess.expiration_date) ||
-      objective !== concludedProcess.objective
+      instrument !== pendingProcess.instrument ||
+      process !== pendingProcess.process ||
+      objective !== pendingProcess.objective
     ) {
       if (!saveButton) setSaveButton(true);
     } else {
       setSaveButton(false);
     }
-  }, [instrument, number, process, expirationDate, objective]); // eslint-disable-line
+  }, [instrument, process, objective]); // eslint-disable-line
 
   return (
     <div className="accordion-form">
       <div className="input-line">
         <div className="input-group">
-          <p className="input-label">Instrumento obtido</p>
+          <p className="input-label">Instrumento requerido</p>
           <input
             value={instrument}
             className="input"
             disabled={!editable}
             onChange={(e) => setInstrument(Capitalize(e.target.value))}
-            placeholder="Lincença Ambiental"
+            placeholder="Licença Ambiental"
           />
         </div>
 
-        <div className="input-group">
-          <p className="input-label">Número</p>
-          <input
-            value={number}
-            type="tel"
-            className="input"
-            disabled={!editable}
-            onChange={(e) => setNumber(e.target.value)}
-            placeholder="LO N°IN000000"
-          />
-        </div>
-      </div>
-
-      <div className="input-line">
         <div className="input-group">
           <p className="input-label">Processo</p>
           <input
             value={process}
             className="input"
             disabled={!editable}
-            onKeyDown={(e) => {
-              if (e.key === ' ') e.preventDefault();
-            }}
             onChange={(e) => setProcess(e.target.value)}
             placeholder="PD-00/000.000/0000"
-          />
-        </div>
-
-        <div className="input-group">
-          <p className="input-label">Data de válidade</p>
-          <InputMask
-            value={expirationDate}
-            type="tel"
-            mask="99/99/9999"
-            className="input"
-            disabled={!editable}
-            onChange={(e) => {
-              setExpirationDate(e.target.value);
-            }}
-            placeholder="25/12/2020"
           />
         </div>
       </div>

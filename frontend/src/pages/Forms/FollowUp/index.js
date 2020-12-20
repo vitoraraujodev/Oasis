@@ -136,7 +136,7 @@ export default function FollowUp() {
             <button
               type="button"
               className="page-button"
-              onClick={() => setEditable(!editable)}
+              onClick={() => history.push('/form/informacoes-especificas')}
             >
               <strong style={{ marginRight: 12 }}>Avançar</strong>
               <FaArrowRight size={21} color="#fff" />

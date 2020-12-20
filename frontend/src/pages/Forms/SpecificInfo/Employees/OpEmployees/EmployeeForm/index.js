@@ -5,38 +5,31 @@ import api from '~/services/api';
 
 import { Capitalize } from '~/util/format';
 
-export default function PendingProcessForm({
-  pendingProcess,
-  onChangePendingProcess,
-  onDeletePendingProcess,
+export default function EmployeeForm({
+  employee,
+  onChangeEmployee,
+  onDeleteEmployee,
   editable,
 }) {
   const [loading, setLoading] = useState(false);
   const [saveButton, setSaveButton] = useState(true);
 
-  const [instrument, setInstrument] = useState(pendingProcess.instrument);
-  const [process, setProcess] = useState(pendingProcess.process);
-  const [objective, setObjective] = useState(pendingProcess.objective);
+  const [kind, setKind] = useState(employee.kind);
+  const [amount, setAmount] = useState(employee.amount);
 
   async function handleSubmit() {
     setLoading(true);
 
     const data = {
-      id: pendingProcess.id,
-      instrument: Capitalize(instrument),
-      process,
-      objective,
+      id: employee.id,
+      kind: Capitalize(kind),
+      amount: amount ? parseInt(amount, 10) : '',
     };
 
     try {
-      const response = await api.post('history', data);
+      const response = await api.post('employee', data);
       setSaveButton(false);
-      onChangePendingProcess({
-        id: response.data.id,
-        instrument: response.data.instrument,
-        process: response.data.process,
-        objective: response.data.objective,
-      });
+      onChangeEmployee(response.data);
     } catch (err) {
       if (err.response) alert(err.response.data.error);
     }
@@ -47,8 +40,8 @@ export default function PendingProcessForm({
     setLoading(true);
 
     try {
-      const response = await api.delete(`pending/${pendingProcess.id}`);
-      if (response.data.okay) onDeletePendingProcess(pendingProcess.id);
+      const response = await api.delete(`employee/${employee.id}`);
+      if (response.data.okay) onDeleteEmployee(employee.id);
     } catch (err) {
       if (err.response) alert(err.response.data.error);
     }
@@ -56,55 +49,41 @@ export default function PendingProcessForm({
     setLoading(false);
   }
 
+  function handleAmount(value) {
+    setAmount(value ? parseInt(value, 10) : '');
+  }
+
   useEffect(() => {
-    if (
-      instrument !== pendingProcess.instrument ||
-      process !== pendingProcess.process ||
-      objective !== pendingProcess.objective
-    ) {
+    if (kind !== employee.kind || amount !== employee.amount) {
       if (!saveButton) setSaveButton(true);
     } else {
       setSaveButton(false);
     }
-  }, [instrument, process, objective]); // eslint-disable-line
+  }, [kind, amount]); // eslint-disable-line
 
   return (
     <div className="accordion-form">
       <div className="input-line">
         <div className="input-group">
-          <p className="input-label">Instrumento requerido</p>
+          <p className="input-label">Tipo de funcionário</p>
           <input
-            value={instrument}
+            value={kind}
             className="input"
             disabled={!editable}
-            onChange={(e) => setInstrument(Capitalize(e.target.value))}
-            placeholder="Lincença Ambiental"
+            onChange={(e) => setKind(Capitalize(e.target.value))}
+            placeholder="Tipo"
           />
         </div>
 
         <div className="input-group">
-          <p className="input-label">Processo</p>
+          <p className="input-label">Quantidade</p>
           <input
-            value={process}
-            className="input"
+            value={amount}
+            type="number"
+            className="input small"
             disabled={!editable}
-            onChange={(e) => setProcess(e.target.value)}
-            placeholder="PD-00/000.000/0000"
-          />
-        </div>
-      </div>
-
-      <div className="input-line">
-        <div className="input-group">
-          <p className="input-label">Objeto</p>
-          <textarea
-            value={objective}
-            length="192"
-            className="input"
-            style={{ padding: '8px 16px', height: 64 }}
-            disabled={!editable}
-            onChange={(e) => setObjective(e.target.value)}
-            placeholder="Descreva a finalidade do documento"
+            onChange={(e) => handleAmount(e.target.value)}
+            placeholder="01"
           />
         </div>
       </div>

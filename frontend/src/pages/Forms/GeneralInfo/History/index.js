@@ -1,7 +1,7 @@
 import React from 'react';
 
-import ConcludedProcess from './ConcludedProcess';
-import PendingProcess from './PendingProcess';
+import ConcludedProcesses from './ConcludedProcesses';
+import PendingProcesses from './PendingProcesses';
 
 import FormBlock from '~/components/FormBlock';
 
@@ -16,17 +16,18 @@ export default function History({
     <FormBlock>
       <p className="block-title">Histórico da empresa no INEA</p>
       <p className="block-description">
-        Explicação breve sobre o tópico do formulário, lorem ipsum dolor sit
-        amet, consectetur adipiscing elit. Pellentesque finibus commodo ornare.
+        Preencher os campos abaixo fornecendo um breve histórico dos processos
+        administrativos concluídos e em andamento, da empresa, junto ao órgão
+        ambiental.
       </p>
 
-      <ConcludedProcess
+      <ConcludedProcesses
         concludedProcesses={concludedProcesses}
         onChangeConcludedProcesses={onChangeConcludedProcesses}
         editable={editable}
       />
 
-      <PendingProcess
+      <PendingProcesses
         pendingProcesses={pendingProcesses}
         onChangePendingProcesses={onChangePendingProcesses}
         editable={editable}

@@ -11,7 +11,7 @@ import api from '~/services/api';
 
 import { Capitalize } from '~/util/format';
 
-export default function Representative({
+export default function Representatives({
   representatives,
   onChangeRepresentatives,
   editable,

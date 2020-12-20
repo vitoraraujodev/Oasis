@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 
 import Address from './Address';
-import Representative from './Representative';
+import Representative from './Representatives';
 import History from './History';
 import OperatingInfo from './OperatingInfo';
 

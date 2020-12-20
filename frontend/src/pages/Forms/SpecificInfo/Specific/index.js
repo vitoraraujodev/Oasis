@@ -18,7 +18,7 @@ export default function Specific({ specific, onChangeSpecific, editable }) {
     } else if (saveButton) {
       setSaveButton(false);
     }
-  }, [ cnpj]); // eslint-disable-line
+  }, [cnpj]); // eslint-disable-line
 
   async function handleSubmit() {
     setLoading(true);
