@@ -3,6 +3,7 @@ import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 
 import Specific from './Specific';
 import Employees from './Employees';
+import GeneralArea from './GeneralArea';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -20,9 +21,15 @@ export default function SpecificInfo() {
 
   const [documentType, setDocumentType] = useState();
 
-  const [specific, setSpecific] = useState({});
+  const [specific, setSpecific] = useState({ cnpj: '' });
   const [employees, setEmployees] = useState([]);
   const [installEmployees, setInstallEmployees] = useState([]);
+  const [generalArea, setGeneralArea] = useState({
+    area: '',
+    image: {
+      url: null,
+    },
+  });
 
   async function loadSpecificInfo() {
     setLoading(true);
@@ -36,6 +43,7 @@ export default function SpecificInfo() {
       if (response.data.employees) setEmployees(response.data.employees);
       if (response.data.installEmployees)
         setInstallEmployees(response.data.installEmployees);
+      if (response.data.generalArea) setGeneralArea(response.data.generalArea);
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }
@@ -100,6 +108,12 @@ export default function SpecificInfo() {
               installEmployees={installEmployees}
               onChangeEmployees={setEmployees}
               onChangeInstallEmployees={setInstallEmployees}
+              editable={editable}
+            />
+
+            <GeneralArea
+              generalArea={generalArea}
+              onChangeGeneralArea={setGeneralArea}
               editable={editable}
             />
           </>

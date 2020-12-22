@@ -33,7 +33,7 @@ class SpecificInfoController {
         {
           model: File,
           as: 'image',
-          attributes: ['id', 'path'],
+          attributes: ['id', 'url', 'path'],
         },
       ],
     });
