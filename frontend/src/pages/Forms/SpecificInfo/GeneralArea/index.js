@@ -68,6 +68,12 @@ export default function GeneralArea({
   return (
     <FormBlock>
       <p className="block-title">Área do empreendimento</p>
+      <p className="block-description">
+        Informe o valor total da área em m² do empreendimento, onde serão
+        desenvolvidas as atividades no presente requerimento. E em seguida,
+        anexar imagem panorâmica da referida área demarcada por poligonal,
+        informando as coordenadas geográficas e o datum utilizado.
+      </p>
 
       <div className="input-line">
         <div className="input-group">
@@ -92,6 +98,7 @@ export default function GeneralArea({
               id="image"
               type="file"
               accept="image/*"
+              disabled={!editable}
               data-file={image}
               onChange={handleChangeImage}
             />
@@ -100,12 +107,18 @@ export default function GeneralArea({
                 <img
                   src={image}
                   onError={() => setImage(null)}
-                  className="area-image"
+                  className={editable ? 'area-image' : 'area-image-disabled'}
                   alt=""
                 />
               </div>
             ) : (
-              <div className="image-icon-container">
+              <div
+                className={
+                  editable
+                    ? 'image-icon-container'
+                    : 'image-icon-container-disabled'
+                }
+              >
                 <div className="add-image-icon">
                   <FaImage size={40} />
                   Adicionar foto
