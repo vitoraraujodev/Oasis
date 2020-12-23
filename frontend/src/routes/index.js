@@ -11,6 +11,7 @@ import Menu from '~/pages/Menu';
 import GeneralInfo from '~/pages/Forms/GeneralInfo';
 import FollowUp from '~/pages/Forms/FollowUp';
 import SpecificInfo from '~/pages/Forms/SpecificInfo';
+import ProductiveProcess from '~/pages/Forms/ProductiveProcess';
 
 import history from '~/services/history';
 
@@ -25,6 +26,10 @@ export default function Routes() {
         <Route path="/form/informacoes-gerais" component={GeneralInfo} />
         <Route path="/form/acompanhamento" component={FollowUp} />
         <Route path="/form/informacoes-especificas" component={SpecificInfo} />
+        <Route
+          path="/form/processos-produtivos"
+          component={ProductiveProcess}
+        />
 
         <Redirect from="*" to="/" />
       </Switch>

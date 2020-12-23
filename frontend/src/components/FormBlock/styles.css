@@ -17,7 +17,7 @@
 
 #form-block .block-description {
   color: #888888;
-  font-size: 16px;
+  font-size: 17px;
   margin-bottom: 24px;
 }
 
@@ -32,6 +32,7 @@
 #form-block .block-subdescription {
   color: #888888;
   font-size: 16px;
+  margin-bottom: 8px;
 }
 
 #form-block .block-form {
@@ -66,6 +67,7 @@
 }
 
 #form-block .b{
+  font-size: 19px;
   font-weight: 500;
 }
 

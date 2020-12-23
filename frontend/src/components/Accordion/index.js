@@ -8,6 +8,7 @@ export default function Accordion({
   title = '',
   loading = false,
   children,
+  length,
   editable,
 }) {
   const [active, setActive] = useState(false);
@@ -17,7 +18,7 @@ export default function Accordion({
     contentRef.current.style.maxHeight = active
       ? `${contentRef.current.scrollHeight}px`
       : '0px';
-  }, [contentRef, active, editable]);
+  }, [contentRef, active, length, editable]);
 
   function toogleActive() {
     if (!loading) {

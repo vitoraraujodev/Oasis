@@ -105,11 +105,11 @@ export default function SpecificAreas({
           </div>
 
           <div className="input-group">
-            <p className="input-label medium">Área em m²</p>
+            <p className="input-label small">Área em m²</p>
             <input
               value={area}
               type="number"
-              className="input medium"
+              className="input small"
               disabled={!editable}
               onChange={(e) => handleArea(e.target.value)}
               placeholder="01"

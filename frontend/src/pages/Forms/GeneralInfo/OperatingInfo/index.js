@@ -29,25 +29,13 @@ export default function OperatingInfo({
       ? operatingInfo.shifts
       : [
           {
+            id: Date.now(),
             start_at: '',
             end_at: '',
             week: '0000000',
           },
         ]
   );
-
-  useEffect(() => {
-    if (
-      date !== formatDate(operatingInfo.date) ||
-      rural !== operatingInfo.rural ||
-      registration !== operatingInfo.registration ||
-      observation !== operatingInfo.observation
-    ) {
-      setSaveButton(true);
-    } else if (saveButton) {
-      setSaveButton(false);
-    }
-  }, [date, rural, registration, observation]); // eslint-disable-line
 
   async function handleSubmit() {
     if (loading) return;
@@ -59,7 +47,11 @@ export default function OperatingInfo({
       rural,
       registration: registration || false,
       observation: Capitalize(observation),
-      shifts,
+      shifts: shifts.map((shift) => ({
+        start_at: shift.start_at,
+        end_at: shift.end_at,
+        week: shift.week,
+      })),
     };
 
     try {
@@ -72,24 +64,25 @@ export default function OperatingInfo({
     setLoading(false);
   }
 
-  function handleUpdateShifts(shift, index) {
-    if (loading) return;
-
-    const newShifts = shifts.map((s, i) => (i === index ? shift : s));
-    setShifts(newShifts);
-
-    setSaveButton(true);
-  }
-
   function handleAddShift() {
     if (loading) return;
 
     const shift = {
+      id: Date.now(),
       start_at: '',
       end_at: '',
       week: '0000000',
     };
     setShifts([...shifts, shift]);
+
+    setSaveButton(true);
+  }
+
+  function handleUpdateShifts(shift, index) {
+    if (loading) return;
+
+    const newShifts = shifts.map((s, i) => (i === index ? shift : s));
+    setShifts(newShifts);
 
     setSaveButton(true);
   }
@@ -103,6 +96,19 @@ export default function OperatingInfo({
 
     setSaveButton(true);
   }
+
+  useEffect(() => {
+    if (
+      date !== formatDate(operatingInfo.date) ||
+      rural !== operatingInfo.rural ||
+      registration !== operatingInfo.registration ||
+      observation !== operatingInfo.observation
+    ) {
+      setSaveButton(true);
+    } else if (saveButton) {
+      setSaveButton(false);
+    }
+  }, [date, rural, registration, observation]); // eslint-disable-line
 
   return (
     <FormBlock>
@@ -189,6 +195,7 @@ export default function OperatingInfo({
           <p className="input-label b">Turnos de funcionamento</p>
           {shifts.map((shift, index) => (
             <Shift
+              key={shift.id}
               shift={shift}
               onChangeShift={(s) => {
                 handleUpdateShifts(s, index);
