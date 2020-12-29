@@ -10,15 +10,25 @@ class EquipmentController {
       identification: Yup.string().required(),
       amount: Yup.number().required(),
       date: Yup.date().required(),
-      capacity: Yup.number(),
       capacity_unit: Yup.string(),
       fuel: Yup.string().required(),
       consumption: Yup.number().required(),
+      consumption_unit: Yup.string().required(),
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Falha na validação dos dados.' });
+      return res.status(400).json({
+        error:
+          'Falha na validação dos dados. Por favor, verifique e tente novamente.',
+      });
     }
+
+    if (
+      req.body.kind !== 'productive' &&
+      req.body.kind !== 'auxiliary' &&
+      req.body.kind !== 'control'
+    )
+      return res.status(400).json({ error: 'Tipo de equipamento inválido.' });
 
     const { date } = req.body;
 
@@ -28,6 +38,9 @@ class EquipmentController {
         return res.status(400).json({ error: 'Data inválida.' });
       }
     }
+
+    if (req.body.capacity_unit === '') req.body.capacity_unit = null;
+    if (req.body.capacity === '') req.body.capacity = null;
 
     const equipment = await Equipment.findByPk(req.body.id);
 

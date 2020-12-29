@@ -13,7 +13,7 @@ class EmissionController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Falha na validação dos dados.' });
+      return res.status(400).json({ error: 'Falha na validação dos dados. Por favor, verifique e tente novamente.' });
     }
 
     const emission = await Emission.findByPk(req.body.id);
