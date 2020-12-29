@@ -19,6 +19,8 @@ export default function PendingProcessForm({
   const [objective, setObjective] = useState(pendingProcess.objective);
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {

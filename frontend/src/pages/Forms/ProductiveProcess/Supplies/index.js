@@ -88,6 +88,8 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
   }
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {
@@ -140,8 +142,8 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
     <FormBlock>
       <p className="block-title">Insumos</p>
       <p className="block-description">
-        Preencher os campos abaixo identificando cada um dos insumos e as
-        respectivas especificidades, formas de recebimento e armazenamento.
+        Identifique cada um dos insumos e as respectivas especificidades, formas
+        de recebimento e armazenamento.
       </p>
 
       {supplies.length > 0 &&
@@ -208,7 +210,7 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
               className="input medium"
               disabled={!editable}
               onChange={(e) => setUnit(e.target.value)}
-              placeholder="Kg, L, g..."
+              placeholder="Kg, L, m³..."
             />
           </div>
         </div>

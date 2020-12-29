@@ -17,7 +17,7 @@ export default function Employees({
     <FormBlock>
       <p className="block-title">Funcionários</p>
       <p className="block-description">
-        Preencher os campos abaixo com dados que forneçam o número e tipo de
+        Preencha os campos abaixo com dados que forneçam o número e tipo de
         funcionários que trabalham atualmente na empresa.
       </p>
 

@@ -36,6 +36,8 @@ export default function SpecificAreas({
   }
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {
@@ -55,7 +57,7 @@ export default function SpecificAreas({
   }
 
   function handleArea(value) {
-    setArea(value ? parseInt(value, 10) : '');
+    setArea(value ? parseFloat(value) : '');
   }
 
   useEffect(() => {
@@ -70,8 +72,8 @@ export default function SpecificAreas({
     <FormBlock>
       <p className="block-title">Áreas específicas </p>
       <p className="block-description">
-        Preencher os campos abaixo identificando todas as áreas do
-        empreendimento e os respectivos valores em m².
+        Identifique todas as áreas do empreendimento e os respectivos valores em
+        m².
       </p>
 
       {specificAreas.length > 0 &&

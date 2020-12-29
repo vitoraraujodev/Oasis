@@ -21,6 +21,8 @@ export default function Specific({ specific, onChangeSpecific, editable }) {
   }, [cnpj]); // eslint-disable-line
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {

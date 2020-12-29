@@ -24,6 +24,8 @@ export default function ConcludedProcessForm({
   );
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {

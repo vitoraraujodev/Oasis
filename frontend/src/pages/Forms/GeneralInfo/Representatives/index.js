@@ -39,6 +39,8 @@ export default function Representatives({
   }
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {

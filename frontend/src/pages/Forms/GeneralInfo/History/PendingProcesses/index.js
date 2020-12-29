@@ -36,6 +36,8 @@ export default function PendingProcess({
   }
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {

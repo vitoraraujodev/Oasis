@@ -71,6 +71,8 @@ export default function Address({ address, onChangeAddress, editable }) {
   }, [cep]); // eslint-disable-line
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {
@@ -96,7 +98,7 @@ export default function Address({ address, onChangeAddress, editable }) {
     <FormBlock>
       <p className="block-title">Endereço</p>
       <p className="block-description">
-        Preencher os campos abaixo com os dados referentes ao local onde
+        Preencha os campos abaixo com os dados referentes ao local onde
         serão/são desenvolvidas as atividades contempladas no presente
         requerimento.
       </p>

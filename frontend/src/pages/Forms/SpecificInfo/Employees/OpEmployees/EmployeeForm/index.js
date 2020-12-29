@@ -18,12 +18,14 @@ export default function EmployeeForm({
   const [amount, setAmount] = useState(employee.amount);
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {
       id: employee.id,
       kind: Capitalize(kind),
-      amount: amount ? parseInt(amount, 10) : '',
+      amount,
     };
 
     try {

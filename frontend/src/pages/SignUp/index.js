@@ -20,7 +20,10 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
+
     const data = {
       name,
       email,
@@ -28,6 +31,7 @@ export default function SignUp() {
       password,
       confirmPassword,
     };
+
     try {
       await api.post('company', data);
       dispatch(signInRequest(email, password));

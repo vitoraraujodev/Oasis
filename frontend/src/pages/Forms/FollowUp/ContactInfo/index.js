@@ -31,6 +31,8 @@ export default function ContactInfo({
   }, [startAt, endAt, phoneNumber]); // eslint-disable-line
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {

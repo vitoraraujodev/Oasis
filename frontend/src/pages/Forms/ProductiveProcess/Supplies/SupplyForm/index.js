@@ -26,6 +26,8 @@ export default function SupplyForm({
   const [storages, setStorages] = useState(supply.storages);
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {
@@ -169,7 +171,7 @@ export default function SupplyForm({
             className="input medium"
             disabled={!editable}
             onChange={(e) => setUnit(e.target.value)}
-            placeholder="Kg, L, g..."
+            placeholder="Kg, L, m³..."
           />
         </div>
       </div>

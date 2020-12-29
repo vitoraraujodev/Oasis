@@ -18,6 +18,8 @@ export default function AreaForm({
   const [area, setArea] = useState(specificArea.area);
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {
@@ -50,7 +52,7 @@ export default function AreaForm({
   }
 
   function handleArea(value) {
-    setArea(value ? parseInt(value, 10) : '');
+    setArea(value ? parseFloat(value) : '');
   }
 
   useEffect(() => {

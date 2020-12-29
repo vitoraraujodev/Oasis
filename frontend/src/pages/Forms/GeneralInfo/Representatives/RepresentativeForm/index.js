@@ -21,6 +21,8 @@ export default function RepresentativeForm({
   const [phoneNumber, setPhoneNumber] = useState(representative.phone_number);
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {

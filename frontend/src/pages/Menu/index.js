@@ -16,6 +16,8 @@ export default function Menu() {
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     try {

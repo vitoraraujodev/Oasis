@@ -34,11 +34,13 @@ export default function OpEmployees({
   }
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {
       kind: Capitalize(kind),
-      amount: amount ? parseInt(amount, 10) : '',
+      amount,
     };
 
     try {

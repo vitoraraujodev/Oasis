@@ -114,7 +114,7 @@ export default function OperatingInfo({
     <FormBlock>
       <p className="block-title">Informações de funcionamento</p>
       <p className="block-description">
-        Preencher os campos abaixo com os dados referentes aos turnos e
+        Preencha os campos abaixo com os dados referentes aos turnos e
         respectivos horários de atividades que apresentam possibilidade de
         geração de impacto ambiental significativo.
       </p>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 
 import Supplies from './Supplies';
+import Equipments from './Equipments';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -18,14 +19,34 @@ export default function ProductiveProcess() {
   const [loading, setLoading] = useState(false);
 
   const [supplies, setSupplies] = useState([]);
+  const [productiveEquipments, setProductiveEquipments] = useState([]);
+  const [auxiliaryEquipments, setAuxiliaryEquipments] = useState([]);
+  const [controlEquipments, setControlEquipments] = useState([]);
 
   async function loadProductiveProcess() {
     setLoading(true);
 
     try {
       const response = await api.get('productive-process');
-      console.tron.log(response.data.supplies);
+
       if (response.data.supplies) setSupplies(response.data.supplies);
+      if (response.data.equipments) {
+        setProductiveEquipments(
+          response.data.equipments.filter(
+            (equipment) => equipment.kind === 'productive'
+          )
+        );
+        setAuxiliaryEquipments(
+          response.data.equipments.filter(
+            (equipment) => equipment.kind === 'auxiliary'
+          )
+        );
+        setControlEquipments(
+          response.data.equipments.filter(
+            (equipment) => equipment.kind === 'control'
+          )
+        );
+      }
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }
@@ -81,6 +102,16 @@ export default function ProductiveProcess() {
             <Supplies
               supplies={supplies}
               onChangeSupplies={setSupplies}
+              editable={editable}
+            />
+
+            <Equipments
+              productiveEquipments={productiveEquipments}
+              onChangeProductiveEquipments={setProductiveEquipments}
+              auxiliaryEquipments={auxiliaryEquipments}
+              onChangeAuxiliaryEquipments={setAuxiliaryEquipments}
+              controlEquipments={controlEquipments}
+              onChangeControlEquipments={setControlEquipments}
               editable={editable}
             />
           </>

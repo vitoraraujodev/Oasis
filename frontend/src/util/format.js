@@ -8,7 +8,7 @@ export function Capitalize(string) {
 }
 
 export function formatDate(date) {
-  if (date.length > 10) {
+  if (date.includes('-')) {
     return `${date.substr(8, 2)}/${date.substr(5, 2)}/${date.substr(0, 4)}`;
   }
   return `${date.substr(6)}-${date.substr(3, 2)}-${date.substr(0, 2)}`;

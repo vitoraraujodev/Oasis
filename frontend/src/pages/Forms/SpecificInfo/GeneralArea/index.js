@@ -32,6 +32,8 @@ export default function GeneralArea({
   }, [area, image]); // eslint-disable-line
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = new FormData();
@@ -56,7 +58,7 @@ export default function GeneralArea({
   }
 
   function handleArea(value) {
-    setArea(value ? parseInt(value, 10) : '');
+    setArea(value ? parseFloat(value) : '');
   }
 
   async function handleChangeImage(e) {

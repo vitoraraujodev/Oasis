@@ -12,7 +12,7 @@ export default function Storage({
   }
 
   function handleCapacity(value) {
-    onChangeStorage({ ...storage, capacity: value ? parseInt(value, 10) : '' });
+    onChangeStorage({ ...storage, capacity: value ? parseFloat(value) : '' });
   }
 
   return (
@@ -75,7 +75,7 @@ export default function Storage({
                 onChange={(e) =>
                   onChangeStorage({ ...storage, unit: e.target.value })
                 }
-                placeholder="Kg, L, g..."
+                placeholder="Kg, L, m³..."
               />
             </div>
 

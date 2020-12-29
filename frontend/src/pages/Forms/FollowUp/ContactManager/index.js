@@ -22,6 +22,8 @@ export default function ContactManager({
   const [phoneNumber, setPhoneNumber] = useState(contactManager.phone_number);
 
   async function handleSubmit() {
+    if (loading) return;
+
     setLoading(true);
 
     const data = {
@@ -63,7 +65,7 @@ export default function ContactManager({
     <FormBlock>
       <p className="block-title">Pessoa de contato</p>
       <p className="block-description">
-        Preencher os campos abaixo com dados que permitam direcionar a
+        Preencha os campos abaixo com dados que permitam direcionar a
         comunicação entre algum colaborador ou prestador de serviço da empresa e
         o órgão ambiental.
       </p>

@@ -18,6 +18,8 @@ export default function SignIn() {
   const [password, setPassword] = useState('');
 
   function handleSubmit() {
+    if (loading) return;
+
     dispatch(signInRequest(email, password));
   }
 

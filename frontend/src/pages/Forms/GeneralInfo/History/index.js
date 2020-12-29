@@ -16,9 +16,8 @@ export default function History({
     <FormBlock>
       <p className="block-title">Histórico da empresa no INEA</p>
       <p className="block-description">
-        Preencher os campos abaixo fornecendo um breve histórico dos processos
-        administrativos concluídos e em andamento, da empresa, junto ao órgão
-        ambiental.
+        Forneça um breve histórico dos processos administrativos concluídos e em
+        andamento, da empresa, junto ao órgão ambiental.
       </p>
 
       <ConcludedProcesses
