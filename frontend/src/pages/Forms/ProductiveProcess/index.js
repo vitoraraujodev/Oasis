@@ -3,6 +3,7 @@ import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 
 import Supplies from './Supplies';
 import Equipments from './Equipments';
+import Products from './Products';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -22,6 +23,7 @@ export default function ProductiveProcess() {
   const [productiveEquipments, setProductiveEquipments] = useState([]);
   const [auxiliaryEquipments, setAuxiliaryEquipments] = useState([]);
   const [controlEquipments, setControlEquipments] = useState([]);
+  const [products, setProducts] = useState([]);
 
   async function loadProductiveProcess() {
     setLoading(true);
@@ -47,6 +49,7 @@ export default function ProductiveProcess() {
           )
         );
       }
+      if (response.data.products) setProducts(response.data.products);
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }
@@ -112,6 +115,12 @@ export default function ProductiveProcess() {
               onChangeAuxiliaryEquipments={setAuxiliaryEquipments}
               controlEquipments={controlEquipments}
               onChangeControlEquipments={setControlEquipments}
+              editable={editable}
+            />
+
+            <Products
+              products={products}
+              onChangeProducts={setProducts}
               editable={editable}
             />
           </>

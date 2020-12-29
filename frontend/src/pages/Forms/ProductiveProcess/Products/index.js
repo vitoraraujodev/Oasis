@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaPlus } from 'react-icons/fa';
 
-import SupplyForm from './SupplyForm';
+import ProductForm from './ProductForm';
 import Storage from './Storage';
 
 import FormBlock from '~/components/FormBlock';
@@ -11,13 +11,14 @@ import api from '~/services/api';
 
 import { Capitalize } from '~/util/format';
 
-export default function Supplies({ supplies, onChangeSupplies, editable }) {
+export default function Products({ products, onChangeProducts, editable }) {
   const [loading, setLoading] = useState(false);
   const [saveButton, setSaveButton] = useState(false);
 
   const [identification, setIdentification] = useState('');
   const [physicalState, setPhysicalState] = useState('');
   const [quantity, setQuantity] = useState('');
+  const [capacity, setCapacity] = useState('');
   const [unit, setUnit] = useState('');
   const [transport, setTransport] = useState('');
   const [packaging, setPackaging] = useState('');
@@ -33,15 +34,15 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
   ]);
 
   function handleUpdate(s) {
-    const newSupplies = supplies.map((supply) =>
-      supply.id === s.id ? s : supply
+    const newProducts = products.map((product) =>
+      product.id === s.id ? s : product
     );
 
-    onChangeSupplies(newSupplies);
+    onChangeProducts(newProducts);
   }
 
   function handleDelete(id) {
-    onChangeSupplies(supplies.filter((supply) => supply.id !== id));
+    onChangeProducts(products.filter((product) => product.id !== id));
   }
 
   function handleAddStorage() {
@@ -80,11 +81,11 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
   }
 
   // When adding new element, "saves" it to change Accordeon height
-  function handleSupplyFormStorages(s, id) {
-    const newSupplies = supplies.map((supply) =>
-      supply.id === id ? { ...supply, storages: s } : supply
+  function handleProductFormStorages(s, id) {
+    const newProducts = products.map((product) =>
+      product.id === id ? { ...product, storages: s } : product
     );
-    onChangeSupplies(newSupplies);
+    onChangeProducts(newProducts);
   }
 
   async function handleSubmit() {
@@ -96,6 +97,7 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
       identification: Capitalize(identification),
       physical_state: Capitalize(physicalState),
       quantity,
+      capacity,
       unit,
       transport: Capitalize(transport),
       packaging: Capitalize(packaging),
@@ -108,9 +110,11 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
       })),
     };
 
+    console.tron.log(data);
+
     try {
-      const response = await api.post('supply', data);
-      onChangeSupplies([...supplies, response.data]);
+      const response = await api.post('product', data);
+      onChangeProducts([...products, response.data]);
       setIdentification('');
       setPhysicalState('');
       setQuantity('');
@@ -128,11 +132,16 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
     setQuantity(value ? parseInt(value, 10) : '');
   }
 
+  function handleCapacity(value) {
+    setCapacity(value ? parseInt(value, 10) : '');
+  }
+
   useEffect(() => {
     if (
       identification ||
       physicalState ||
       quantity ||
+      capacity ||
       unit ||
       transport ||
       packaging ||
@@ -142,30 +151,30 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
     } else {
       setSaveButton(false);
     }
-  }, [identification, physicalState, quantity, unit, transport, packaging, storages]); // eslint-disable-line
+  }, [identification, physicalState, quantity, capacity, unit, transport, packaging, storages]); // eslint-disable-line
 
   return (
     <FormBlock>
-      <p className="block-title">Insumos</p>
+      <p className="block-title">Produtos</p>
       <p className="block-description">
-        Identifique cada um dos insumos e as respectivas especificidades, formas
-        de recebimento e armazenamento.
+        Preencha os campos abaixo identificando cada um dos produtos e as
+        respectivas especificidades, formas de armazenamento e expedição.
       </p>
 
-      {supplies.length > 0 &&
-        supplies.map((supply, index) => (
+      {products.length > 0 &&
+        products.map((product, index) => (
           <Accordion
-            key={supply.id}
+            key={product.id}
             number={index + 1}
-            title={supply.identification}
-            length={supply.storages.length}
+            title={product.identification}
+            length={product.storages.length}
             editable={editable}
           >
-            <SupplyForm
-              supply={supply}
-              onChangeSupply={(s) => handleUpdate(s)}
-              onDeleteSupply={(id) => handleDelete(id)}
-              onChangeStorages={(s) => handleSupplyFormStorages(s, supply.id)}
+            <ProductForm
+              product={product}
+              onChangeProduct={(s) => handleUpdate(s)}
+              onDeleteProduct={(id) => handleDelete(id)}
+              onChangeStorages={(s) => handleProductFormStorages(s, product.id)}
               editable={editable}
             />
           </Accordion>
@@ -174,7 +183,7 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
       <div className="block-form">
         <div className="input-line">
           <div className="input-group">
-            <p className="input-label b">Identificação do insumo</p>
+            <p className="input-label b">Identificação do produto</p>
             <input
               value={identification}
               className="input"
@@ -197,6 +206,31 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
         </div>
 
         <div className="input-line">
+          <div className="input-group">
+            <p className="input-label b">Capacidade produtiva média/ano</p>
+            <input
+              value={capacity}
+              type="number"
+              className="input"
+              disabled={!editable}
+              onChange={(e) => handleCapacity(e.target.value)}
+              placeholder="01"
+            />
+          </div>
+
+          <div className="input-group">
+            <p className="input-label b">Unidade de medida</p>
+            <input
+              value={unit}
+              className="input"
+              disabled={!editable}
+              onChange={(e) => setUnit(e.target.value)}
+              placeholder="Kg, L, m³..."
+            />
+          </div>
+        </div>
+
+        <div className="input-line">
           <div className="input-group medium">
             <p className="input-label b">Quantidade média/ano</p>
             <input
@@ -208,25 +242,47 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
               placeholder="01"
             />
           </div>
+        </div>
 
-          <div className="input-group medium">
-            <p className="input-label b">Unidade de medida</p>
-            <input
-              value={unit}
-              className="input medium"
-              disabled={!editable}
-              onChange={(e) => setUnit(e.target.value)}
-              placeholder="Kg, L, m³..."
-            />
+        <div className="input-line">
+          <div className="input-group">
+            <p className="input-label b">Armazenamento</p>
+            <p className="block-subdescription">
+              Informações sobre cada forma específica de armazenamento deste
+              produto.
+            </p>
+
+            {storages.map((storage, index) => (
+              <Storage
+                key={storage.id}
+                storage={storage}
+                onChangeStorage={(s) => {
+                  handleUpdateStorages(s, index);
+                }}
+                onDeleteStorage={() => handleDeleteStorage(index)}
+                editable={editable}
+              />
+            ))}
+
+            {editable && (
+              <button
+                type="button"
+                className="add-subform-button"
+                onClick={handleAddStorage}
+              >
+                <FaPlus size={16} color="#3366BB" style={{ marginRight: 8 }} />
+                Adicionar um armazenamento
+              </button>
+            )}
           </div>
         </div>
 
         <div className="input-line">
           <div className="input-group">
-            <p className="input-label b">Recebimento</p>
+            <p className="input-label b">Expedição</p>
             <p className="block-subdescription">
               Informações sobre o meio de transporte para o recebimento deste
-              insumo, antes do armazenamento.
+              produto.
             </p>
 
             <div className="input-line">
@@ -255,38 +311,6 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
           </div>
         </div>
 
-        <div className="input-line">
-          <div className="input-group">
-            <p className="input-label b">Armazenamento</p>
-            <p className="block-subdescription">
-              Informações sobre cada forma específica de armazenamento deste
-              insumo.
-            </p>
-
-            {storages.map((storage, index) => (
-              <Storage
-                key={storage.id}
-                storage={storage}
-                onChangeStorage={(s) => {
-                  handleUpdateStorages(s, index);
-                }}
-                onDeleteStorage={() => handleDeleteStorage(index)}
-                editable={editable}
-              />
-            ))}
-            {editable && (
-              <button
-                type="button"
-                className="add-subform-button"
-                onClick={handleAddStorage}
-              >
-                <FaPlus size={16} color="#3366BB" style={{ marginRight: 8 }} />
-                Adicionar um armazenamento
-              </button>
-            )}
-          </div>
-        </div>
-
         {saveButton && (
           <button
             type="button"
@@ -298,7 +322,7 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
             ) : (
               <>
                 <FaPlus size={16} color="#fff" style={{ marginRight: 8 }} />
-                Salvar insumo
+                Salvar produto
               </>
             )}
           </button>

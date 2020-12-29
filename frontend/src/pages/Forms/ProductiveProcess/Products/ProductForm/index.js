@@ -7,23 +7,24 @@ import api from '~/services/api';
 
 import { Capitalize } from '~/util/format';
 
-export default function SupplyForm({
-  supply,
-  onChangeSupply,
-  onDeleteSupply,
+export default function ProductForm({
+  product,
+  onChangeProduct,
+  onDeleteProduct,
   onChangeStorages,
   editable,
 }) {
   const [loading, setLoading] = useState(false);
   const [saveButton, setSaveButton] = useState(false);
 
-  const [identification, setIdentification] = useState(supply.identification);
-  const [physicalState, setPhysicalState] = useState(supply.physical_state);
-  const [quantity, setQuantity] = useState(supply.quantity);
-  const [unit, setUnit] = useState(supply.unit);
-  const [transport, setTransport] = useState(supply.transport);
-  const [packaging, setPackaging] = useState(supply.packaging);
-  const [storages, setStorages] = useState(supply.storages);
+  const [identification, setIdentification] = useState(product.identification);
+  const [physicalState, setPhysicalState] = useState(product.physical_state);
+  const [quantity, setQuantity] = useState(product.quantity);
+  const [capacity, setCapacity] = useState(product.capacity);
+  const [unit, setUnit] = useState(product.unit);
+  const [transport, setTransport] = useState(product.transport);
+  const [packaging, setPackaging] = useState(product.packaging);
+  const [storages, setStorages] = useState(product.storages);
 
   async function handleSubmit() {
     if (loading) return;
@@ -31,10 +32,11 @@ export default function SupplyForm({
     setLoading(true);
 
     const data = {
-      id: supply.id,
+      id: product.id,
       identification: Capitalize(identification),
       physical_state: Capitalize(physicalState),
       quantity,
+      capacity,
       unit,
       transport: Capitalize(transport),
       packaging: Capitalize(packaging),
@@ -48,8 +50,8 @@ export default function SupplyForm({
     };
 
     try {
-      const response = await api.post('supply', data);
-      onChangeSupply(response.data);
+      const response = await api.post('product', data);
+      onChangeProduct(response.data);
       setSaveButton(false);
     } catch (err) {
       if (err.response) alert(err.response.data.error);
@@ -61,9 +63,9 @@ export default function SupplyForm({
     setLoading(true);
 
     try {
-      const response = await api.delete(`supply/${supply.id}`);
+      const response = await api.delete(`product/${product.id}`);
       setLoading(false);
-      if (response.data.okay) onDeleteSupply(supply.id);
+      if (response.data.okay) onDeleteProduct(product.id);
     } catch (err) {
       if (err.response) alert(err.response.data.error);
       setLoading(false);
@@ -110,26 +112,31 @@ export default function SupplyForm({
     setQuantity(value ? parseInt(value, 10) : '');
   }
 
+  function handleCapacity(value) {
+    setCapacity(value ? parseInt(value, 10) : '');
+  }
+
   useEffect(() => {
     if (
-      identification !== supply.identification ||
-      physicalState !== supply.physical_state ||
-      quantity !== supply.quantity ||
-      unit !== supply.unit ||
-      transport !== supply.transport ||
-      packaging !== supply.packaging
+      identification !== product.identification ||
+      physicalState !== product.physical_state ||
+      quantity !== product.quantity ||
+      capacity !== product.capacity ||
+      unit !== product.unit ||
+      transport !== product.transport ||
+      packaging !== product.packaging
     ) {
       if (!saveButton) setSaveButton(true);
     } else {
       setSaveButton(false);
     }
-  }, [identification, physicalState, quantity, unit, transport, packaging]); // eslint-disable-line
+  }, [identification, physicalState, quantity, capacity, unit, transport, packaging]); // eslint-disable-line
 
   return (
     <div className="accordion-form">
       <div className="input-line">
         <div className="input-group">
-          <p className="input-label b">Identificação do insumo</p>
+          <p className="input-label b">Identificação do produto</p>
           <input
             value={identification}
             className="input"
@@ -152,6 +159,31 @@ export default function SupplyForm({
       </div>
 
       <div className="input-line">
+        <div className="input-group">
+          <p className="input-label b">Capacidade produtiva média/ano</p>
+          <input
+            value={capacity}
+            type="number"
+            className="input"
+            disabled={!editable}
+            onChange={(e) => handleCapacity(e.target.value)}
+            placeholder="01"
+          />
+        </div>
+
+        <div className="input-group">
+          <p className="input-label b">Unidade de medida</p>
+          <input
+            value={unit}
+            className="input"
+            disabled={!editable}
+            onChange={(e) => setUnit(e.target.value)}
+            placeholder="Kg, L, m³..."
+          />
+        </div>
+      </div>
+
+      <div className="input-line">
         <div className="input-group medium">
           <p className="input-label b">Quantidade média/ano</p>
           <input
@@ -163,25 +195,46 @@ export default function SupplyForm({
             placeholder="01"
           />
         </div>
+      </div>
 
-        <div className="input-group medium">
-          <p className="input-label b">Unidade de medida</p>
-          <input
-            value={unit}
-            className="input medium"
-            disabled={!editable}
-            onChange={(e) => setUnit(e.target.value)}
-            placeholder="Kg, L, m³..."
-          />
+      <div className="input-line">
+        <div className="input-group">
+          <p className="input-label b">Armazenamento</p>
+          <p className="block-subdescription">
+            Informações sobre cada forma específica de armazenamento deste
+            produto.
+          </p>
+
+          {storages.map((storage, index) => (
+            <Storage
+              key={storage.id}
+              storage={storage}
+              onChangeStorage={(s) => {
+                handleUpdateStorages(s, index);
+              }}
+              onDeleteStorage={() => handleDeleteStorage(index)}
+              editable={editable}
+            />
+          ))}
+          {editable && (
+            <button
+              type="button"
+              className="add-subform-button"
+              onClick={handleAddStorage}
+            >
+              <FaPlus size={16} color="#3366BB" style={{ marginRight: 8 }} />
+              Adicionar um armazenamento
+            </button>
+          )}
         </div>
       </div>
 
       <div className="input-line">
         <div className="input-group">
-          <p className="input-label b">Recebimento</p>
+          <p className="input-label b">Expedição</p>
           <p className="block-subdescription">
             Informações sobre o meio de transporte para o recebimento deste
-            insumo, antes do armazenamento.
+            produto.
           </p>
 
           <div className="input-line">
@@ -207,38 +260,6 @@ export default function SupplyForm({
               />
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="input-line">
-        <div className="input-group">
-          <p className="input-label b">Armazenamento</p>
-          <p className="block-subdescription">
-            Informações sobre cada forma específica de armazenamento deste
-            insumo.
-          </p>
-
-          {storages.map((storage, index) => (
-            <Storage
-              key={storage.id}
-              storage={storage}
-              onChangeStorage={(s) => {
-                handleUpdateStorages(s, index);
-              }}
-              onDeleteStorage={() => handleDeleteStorage(index)}
-              editable={editable}
-            />
-          ))}
-          {editable && (
-            <button
-              type="button"
-              className="add-subform-button"
-              onClick={handleAddStorage}
-            >
-              <FaPlus size={16} color="#3366BB" style={{ marginRight: 8 }} />
-              Adicionar um armazenamento
-            </button>
-          )}
         </div>
       </div>
 
