@@ -12,6 +12,7 @@ import GeneralInfo from '~/pages/Forms/GeneralInfo';
 import FollowUp from '~/pages/Forms/FollowUp';
 import SpecificInfo from '~/pages/Forms/SpecificInfo';
 import ProductiveProcess from '~/pages/Forms/ProductiveProcess';
+import EnvironAspects from '~/pages/Forms/EnvironAspects';
 
 import history from '~/services/history';
 
@@ -30,6 +31,7 @@ export default function Routes() {
           path="/form/processos-produtivos"
           component={ProductiveProcess}
         />
+        <Route path="/form/aspectos-ambientais" component={EnvironAspects} />
 
         <Redirect from="*" to="/" />
       </Switch>

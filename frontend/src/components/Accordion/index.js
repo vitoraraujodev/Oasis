@@ -6,9 +6,9 @@ import './styles.css';
 export default function Accordion({
   number = 0,
   title = '',
-  loading = false,
   children,
   length,
+  refreshAccordion,
   editable,
 }) {
   const [active, setActive] = useState(false);
@@ -18,15 +18,11 @@ export default function Accordion({
     contentRef.current.style.maxHeight = active
       ? `${contentRef.current.scrollHeight}px`
       : '0px';
-  }, [contentRef, active, length, editable]);
+  }, [contentRef, active, length, editable, refreshAccordion]);
 
   function toogleActive() {
-    if (!loading) {
-      setActive(!active);
-    }
+    setActive(!active);
   }
-
-  useEffect(() => {}, [number]);
 
   return (
     <div id="accordion">

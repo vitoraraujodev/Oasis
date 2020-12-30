@@ -26,7 +26,9 @@ class WaterSupplyController {
 
     const supply = await WaterSupply.findByPk(req.body.id);
 
-    const { uses } = req.body;
+    const { uses } = req.body || [];
+
+    if (req.body.license === '') req.body.license = null;
 
     if (uses.length === 0) {
       return res.status(400).json({

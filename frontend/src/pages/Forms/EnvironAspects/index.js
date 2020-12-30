@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 
-import Supplies from './Supplies';
-import Equipments from './Equipments';
-import Products from './Products';
+import WaterSupplies from './WaterSupplies';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -13,43 +11,23 @@ import history from '~/services/history';
 
 import '../styles.css';
 
-export default function ProductiveProcess() {
+export default function EnvironAspects() {
   const ENV = process.env.NODE_ENV;
 
   const [editable, setEditable] = useState(ENV !== 'production');
   const [loading, setLoading] = useState(false);
 
-  const [supplies, setSupplies] = useState([]);
-  const [productiveEquipments, setProductiveEquipments] = useState([]);
-  const [auxiliaryEquipments, setAuxiliaryEquipments] = useState([]);
-  const [controlEquipments, setControlEquipments] = useState([]);
-  const [products, setProducts] = useState([]);
+  const [waterSupplies, setWaterSupplies] = useState([]);
 
-  async function loadProductiveProcess() {
+  async function loadEnvironAspects() {
     setLoading(true);
 
     try {
-      const response = await api.get('productive-process');
-
-      if (response.data.supplies) setSupplies(response.data.supplies);
-      if (response.data.equipments) {
-        setProductiveEquipments(
-          response.data.equipments.filter(
-            (equipment) => equipment.kind === 'productive'
-          )
-        );
-        setAuxiliaryEquipments(
-          response.data.equipments.filter(
-            (equipment) => equipment.kind === 'auxiliary'
-          )
-        );
-        setControlEquipments(
-          response.data.equipments.filter(
-            (equipment) => equipment.kind === 'control'
-          )
-        );
+      const response = await api.get('environ-aspect');
+      if (response.data.waterSupplies) {
+        console.tron.log(response.data.waterSupplies);
+        setWaterSupplies(response.data.waterSupplies);
       }
-      if (response.data.products) setProducts(response.data.products);
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }
@@ -58,7 +36,7 @@ export default function ProductiveProcess() {
   }
 
   useEffect(() => {
-    loadProductiveProcess();
+    loadEnvironAspects();
   }, []);
 
   return (
@@ -91,8 +69,8 @@ export default function ProductiveProcess() {
         </div>
 
         <TitleBlock
-          title="Processos Produtivos"
-          description="Descrição detalhada dos insumos, equipamentos e produtos que compõem toda a cadeia produtiva da empresa."
+          title="Aspectos Ambientais"
+          description="Descrição detalhada do abastecimento hídrico e dos efluentes e resíduos gerados pelas atividades desenvolvidas pela empresa."
         />
 
         {loading ? (
@@ -102,25 +80,9 @@ export default function ProductiveProcess() {
           </div>
         ) : (
           <>
-            <Supplies
-              supplies={supplies}
-              onChangeSupplies={setSupplies}
-              editable={editable}
-            />
-
-            <Equipments
-              productiveEquipments={productiveEquipments}
-              onChangeProductiveEquipments={setProductiveEquipments}
-              auxiliaryEquipments={auxiliaryEquipments}
-              onChangeAuxiliaryEquipments={setAuxiliaryEquipments}
-              controlEquipments={controlEquipments}
-              onChangeControlEquipments={setControlEquipments}
-              editable={editable}
-            />
-
-            <Products
-              products={products}
-              onChangeProducts={setProducts}
+            <WaterSupplies
+              waterSupplies={waterSupplies}
+              onChangeWaterSupplies={setWaterSupplies}
               editable={editable}
             />
           </>
@@ -140,7 +102,7 @@ export default function ProductiveProcess() {
             <button
               type="button"
               className="page-button"
-              onClick={() => history.push('/form/aspectos-ambientais')}
+              onClick={() => history.push('/form/aspectos-complementares')}
             >
               <strong style={{ marginRight: 12 }}>Avançar</strong>
               <FaArrowRight size={21} color="#fff" />
