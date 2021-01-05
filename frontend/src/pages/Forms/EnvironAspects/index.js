@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 
 import WaterSupplies from './WaterSupplies';
+import Effluents from './Effluents';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -18,6 +19,8 @@ export default function EnvironAspects() {
   const [loading, setLoading] = useState(false);
 
   const [waterSupplies, setWaterSupplies] = useState([]);
+  const [sanitary, setSanitary] = useState([]);
+  const [sanitaryEffluents, setSanitaryEffluents] = useState([]);
 
   async function loadEnvironAspects() {
     setLoading(true);
@@ -25,8 +28,15 @@ export default function EnvironAspects() {
     try {
       const response = await api.get('environ-aspect');
       if (response.data.waterSupplies) {
-        console.tron.log(response.data.waterSupplies);
         setWaterSupplies(response.data.waterSupplies);
+      }
+      if (response.data.sanitary) {
+        setSanitary(response.data.sanitary);
+        console.tron.log(response.data.sanitary);
+      }
+      if (response.data.sanitaryEffluents) {
+        console.tron.log(response.data.sanitaryEffluents);
+        setSanitaryEffluents(response.data.sanitaryEffluents);
       }
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
@@ -83,6 +93,14 @@ export default function EnvironAspects() {
             <WaterSupplies
               waterSupplies={waterSupplies}
               onChangeWaterSupplies={setWaterSupplies}
+              editable={editable}
+            />
+
+            <Effluents
+              sanitary={sanitary}
+              onChangeSanitary={setSanitary}
+              sanitaryEffluents={sanitaryEffluents}
+              onChangeSanitaryEffluents={setSanitaryEffluents}
               editable={editable}
             />
           </>

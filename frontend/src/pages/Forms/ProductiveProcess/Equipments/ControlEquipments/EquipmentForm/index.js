@@ -46,8 +46,6 @@ export default function EquipmentForm({
       consumption_unit: consumptionUnit,
     };
 
-    console.tron.log(data);
-
     try {
       const response = await api.post('equipment', data);
       setSaveButton(false);

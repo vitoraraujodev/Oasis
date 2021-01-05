@@ -60,7 +60,6 @@ export default function ProductiveEquipments({
       consumption_unit: consumptionUnit,
     };
 
-    console.tron.log(data);
     try {
       const response = await api.post('equipment', data);
       onChangeProductiveEquipments([...productiveEquipments, response.data]);

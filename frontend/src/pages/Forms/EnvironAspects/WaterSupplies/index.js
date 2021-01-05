@@ -93,8 +93,6 @@ export default function WaterSupplies({
       })),
     };
 
-    console.tron.log(data);
-
     try {
       const response = await api.post('water-supply', data);
       onChangeWaterSupplies([...waterSupplies, response.data]);

@@ -40,8 +40,6 @@ export default function WaterSupplyForm({
       })),
     };
 
-    console.tron.log(data);
-
     try {
       const response = await api.post('water-supply', data);
       onChangeWaterSupply(response.data);
@@ -157,6 +155,7 @@ export default function WaterSupplyForm({
           />
         </div>
       </div>
+
       {hasLicense && (
         <div className="input-line">
           <div className="input-group">

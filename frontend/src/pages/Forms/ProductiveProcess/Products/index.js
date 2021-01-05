@@ -110,8 +110,6 @@ export default function Products({ products, onChangeProducts, editable }) {
       })),
     };
 
-    console.tron.log(data);
-
     try {
       const response = await api.post('product', data);
       onChangeProducts([...products, response.data]);
