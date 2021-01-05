@@ -9,7 +9,6 @@ class EffluentController {
       source: Yup.string().required(),
       flow: Yup.string().required(),
       treatment: Yup.string().required(),
-      quantity: Yup.string(),
       license: Yup.string(),
       water_body: Yup.string(),
     });
@@ -22,6 +21,27 @@ class EffluentController {
     }
 
     const { kind, water_body } = req.body;
+
+    if (
+      req.body.kind !== 'sanitary' &&
+      req.body.kind !== 'industrial' &&
+      req.body.kind !== 'oily'
+    ) {
+      return res.status(400).json({ error: 'Tipo de efluente inválido.' });
+    }
+
+    if (
+      (req.body.kind === 'industrial' || req.body.kind === 'oily') &&
+      req.body.water_body === ''
+    ) {
+      return res
+        .status(400)
+        .json({ error: 'Por favor, informe o corpo receptor desse efluente.' });
+    }
+
+    if (req.body.license === '') req.body.license = null;
+    if (req.body.water_body === '') req.body.water_body = null;
+    if (req.body.quantity === '') req.body.quantity = null;
 
     const effluent = await Effluent.findByPk(req.body.id);
 
