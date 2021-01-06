@@ -46,11 +46,17 @@ export default function FollowUp() {
 
     try {
       const response = await api.get('follow-up');
-      if (response.data.contactInfo) setContactInfo(response.data.contactInfo);
-      if (response.data.contactManager)
-        setContactManager(response.data.contactManager);
-      if (response.data.technicalManager)
-        setTechnicalManager(response.data.technicalManager);
+
+      if (!response.data) {
+        setEditable(true);
+      } else {
+        if (response.data.contactInfo)
+          setContactInfo(response.data.contactInfo);
+        if (response.data.contactManager)
+          setContactManager(response.data.contactManager);
+        if (response.data.technicalManager)
+          setTechnicalManager(response.data.technicalManager);
+      }
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }

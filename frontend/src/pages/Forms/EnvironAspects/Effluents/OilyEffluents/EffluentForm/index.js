@@ -23,9 +23,6 @@ export default function EffluentForm({
   const [quantity, setQuantity] = useState(effluent.quantity);
   const [waterBody, setWaterBody] = useState(effluent.water_body);
   const [license, setLicense] = useState(effluent.license);
-  const [hasCollecting, setHasCollecting] = useState(
-    !effluent.license && !effluent.water_body
-  );
   const [hasWaterBody, setHasWaterBody] = useState(!!effluent.license);
 
   async function handleSubmit() {
@@ -35,13 +32,13 @@ export default function EffluentForm({
 
     const data = {
       id: effluent.id,
-      kind: 'sanitary',
+      kind: 'oily',
       source: Capitalize(source),
       flow,
       treatment: Capitalize(treatment),
       quantity,
-      water_body: hasCollecting === false ? waterBody : '',
-      license: hasCollecting === false && hasWaterBody ? license : '',
+      water_body: waterBody,
+      license: hasWaterBody ? license : '',
     };
 
     try {
@@ -100,7 +97,7 @@ export default function EffluentForm({
             className="input"
             disabled={!editable}
             onChange={(e) => setSource(e.target.value)}
-            placeholder="Cozinha industrial, banheiros..."
+            placeholder="Processos, lavagem..."
           />
         </div>
 
@@ -155,41 +152,21 @@ export default function EffluentForm({
       <div className="input-line">
         <div className="input-group">
           <p className="input-label b">
-            A saída do sistema de tratamento se encontra interligada à rede
-            coletora?
+            O efluente tratado em questão é enviado para algum corpo receptor?
           </p>
           <CheckInput
             editable={editable}
-            value={hasCollecting}
+            value={hasWaterBody}
             onChange={(value) => {
               setSaveButton(true);
               onRefreshAccordionSize();
-              setHasCollecting(value);
+              setHasWaterBody(value);
             }}
           />
         </div>
       </div>
 
-      {hasCollecting === false && (
-        <div className="input-line">
-          <div className="input-group">
-            <p className="input-label b">
-              O efluente tratado em questão é enviado para algum corpo receptor?
-            </p>
-            <CheckInput
-              editable={editable}
-              value={hasWaterBody}
-              onChange={(value) => {
-                setSaveButton(true);
-                onRefreshAccordionSize();
-                setHasWaterBody(value);
-              }}
-            />
-          </div>
-        </div>
-      )}
-
-      {hasCollecting === false && hasWaterBody === true && (
+      {hasWaterBody === true && (
         <div className="input-line">
           <div className="input-group">
             <p className="input-label b">Nome do corpo receptor</p>
@@ -218,11 +195,11 @@ export default function EffluentForm({
         </div>
       )}
 
-      {hasCollecting === false && hasWaterBody === false && (
+      {hasWaterBody === false && (
         <div className="input-line">
           <div className="input-group">
             <p className="input-label b">
-              Onde está sendo lançado o efluente sanitário tratado?
+              Onde está sendo lançado o efluente industrial tratado?
             </p>
             <input
               value={waterBody}

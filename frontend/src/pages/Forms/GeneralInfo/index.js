@@ -48,13 +48,18 @@ export default function GeneralInfo() {
 
     try {
       const response = await api.get('general-info');
-      if (response.data.address) setAddress(response.data.address);
-      if (response.data.representatives)
-        setRepresentatives(response.data.representatives);
-      if (response.data.history) setConcludedProcesses(response.data.history);
-      if (response.data.pending) setPendingProcesses(response.data.pending);
-      if (response.data.operatingInfo)
-        setOperatingInfo(response.data.operatingInfo);
+
+      if (!response.data) {
+        setEditable(true);
+      } else {
+        if (response.data.address) setAddress(response.data.address);
+        if (response.data.representatives)
+          setRepresentatives(response.data.representatives);
+        if (response.data.history) setConcludedProcesses(response.data.history);
+        if (response.data.pending) setPendingProcesses(response.data.pending);
+        if (response.data.operatingInfo)
+          setOperatingInfo(response.data.operatingInfo);
+      }
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }

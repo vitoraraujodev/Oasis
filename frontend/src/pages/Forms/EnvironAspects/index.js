@@ -21,22 +21,33 @@ export default function EnvironAspects() {
   const [waterSupplies, setWaterSupplies] = useState([]);
   const [sanitary, setSanitary] = useState([]);
   const [sanitaryEffluents, setSanitaryEffluents] = useState([]);
+  const [industrialEffluents, setIndustrialEffluents] = useState([]);
+  const [oilyEffluents, setOilyEffluents] = useState([]);
 
   async function loadEnvironAspects() {
     setLoading(true);
 
     try {
       const response = await api.get('environ-aspect');
-      if (response.data.waterSupplies) {
-        setWaterSupplies(response.data.waterSupplies);
-      }
-      if (response.data.sanitary) {
-        setSanitary(response.data.sanitary);
-        console.tron.log(response.data.sanitary);
-      }
-      if (response.data.sanitaryEffluents) {
-        console.tron.log(response.data.sanitaryEffluents);
-        setSanitaryEffluents(response.data.sanitaryEffluents);
+
+      if (!response.data) {
+        setEditable(true);
+      } else {
+        if (response.data.waterSupplies) {
+          setWaterSupplies(response.data.waterSupplies);
+        }
+        if (response.data.sanitary) {
+          setSanitary(response.data.sanitary);
+        }
+        if (response.data.sanitaryEffluents) {
+          setSanitaryEffluents(response.data.sanitaryEffluents);
+        }
+        if (response.data.industrialEffluents) {
+          setIndustrialEffluents(response.data.industrialEffluents);
+        }
+        if (response.data.oilyEffluents) {
+          setOilyEffluents(response.data.oilyEffluents);
+        }
       }
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
@@ -101,6 +112,10 @@ export default function EnvironAspects() {
               onChangeSanitary={setSanitary}
               sanitaryEffluents={sanitaryEffluents}
               onChangeSanitaryEffluents={setSanitaryEffluents}
+              industrialEffluents={industrialEffluents}
+              onChangeIndustrialEffluents={setIndustrialEffluents}
+              oilyEffluents={oilyEffluents}
+              onChangeOilyEffluents={setOilyEffluents}
               editable={editable}
             />
           </>

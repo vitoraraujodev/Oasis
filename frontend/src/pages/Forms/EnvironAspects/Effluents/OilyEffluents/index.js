@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { FaPlus } from 'react-icons/fa';
 
 import EffluentForm from './EffluentForm';
-import SanitaryBlock from './SanitaryBlock';
 
 import Accordion from '~/components/Accordion';
 import CheckInput from '~/components/CheckInput';
@@ -11,11 +10,9 @@ import api from '~/services/api';
 
 import { Capitalize } from '~/util/format';
 
-export default function SanitaryEffluents({
-  sanitary,
-  onChangeSanitary,
-  sanitaryEffluents,
-  onChangeSanitaryEffluents,
+export default function OilyEffluents({
+  oilyEffluents,
+  onChangeOilyEffluents,
   editable,
 }) {
   const [loading, setLoading] = useState(false);
@@ -28,30 +25,24 @@ export default function SanitaryEffluents({
   const [quantity, setQuantity] = useState('');
   const [waterBody, setWaterBody] = useState('');
   const [license, setLicense] = useState('');
-  const [hasCollecting, setHasCollecting] = useState();
   const [hasWaterBody, setHasWaterBody] = useState();
 
   function handleUpdate(e) {
-    const effluents = sanitaryEffluents.map((effluent) =>
+    const effluents = oilyEffluents.map((effluent) =>
       effluent.id === e.id ? e : effluent
     );
 
-    onChangeSanitaryEffluents(effluents);
+    onChangeOilyEffluents(effluents);
   }
 
   function handleDelete(id) {
-    onChangeSanitaryEffluents(
-      sanitaryEffluents.filter((sanitaryEffluent) => sanitaryEffluent.id !== id)
+    onChangeOilyEffluents(
+      oilyEffluents.filter((oilyEffluent) => oilyEffluent.id !== id)
     );
   }
 
   async function handleSubmit() {
     if (loading) return;
-
-    if (hasCollecting === false && !waterBody) {
-      alert('Por favor, informe onde está sendo lançado o efluente.');
-      return;
-    }
 
     if (hasWaterBody && !license) {
       alert('Por favor, informe o requerimento/N° de Outorga.');
@@ -61,25 +52,24 @@ export default function SanitaryEffluents({
     setLoading(true);
 
     const data = {
-      kind: 'sanitary',
+      kind: 'oily',
       source: Capitalize(source),
       flow,
       treatment: Capitalize(treatment),
       quantity,
-      water_body: hasCollecting === false ? waterBody : '',
-      license: hasCollecting === false && hasWaterBody ? license : '',
+      water_body: waterBody,
+      license: hasWaterBody ? license : '',
     };
 
     try {
       const response = await api.post('effluent', data);
-      onChangeSanitaryEffluents([...sanitaryEffluents, response.data]);
+      onChangeOilyEffluents([...oilyEffluents, response.data]);
       setSource('');
       setFlow('');
       setTreatment('');
       setQuantity('');
       setWaterBody('');
       setLicense('');
-      setHasCollecting();
       setHasWaterBody();
     } catch (err) {
       if (err.response) alert(err.response.data.error);
@@ -105,21 +95,15 @@ export default function SanitaryEffluents({
 
   return (
     <>
-      <p className="block-subtitle">Efluente sanitário</p>
+      <p className="block-subtitle">Efluente oleoso</p>
       <p className="block-subdescription">
-        Identifique cada uma das fontes de efluente sanitário, com suas
-        respectivas vazões totais em m³/dia, os sistemas de tratamento
-        empregados, e outras especificidades.
+        Identifique cada uma das fontes de efluente oleoso, com suas respectivas
+        vazões totais em m³/dia, os sistemas de tratamento empregados, e outras
+        especificidades.
       </p>
 
-      <SanitaryBlock
-        sanitary={sanitary}
-        onChangeSanitary={onChangeSanitary}
-        editable={editable}
-      />
-
-      {sanitaryEffluents.length > 0 &&
-        sanitaryEffluents.map((effluent, index) => (
+      {oilyEffluents.length > 0 &&
+        oilyEffluents.map((effluent, index) => (
           <Accordion
             key={effluent.id}
             number={index + 1}
@@ -148,7 +132,7 @@ export default function SanitaryEffluents({
               className="input"
               disabled={!editable}
               onChange={(e) => setSource(e.target.value)}
-              placeholder="Cozinha industrial, banheiros..."
+              placeholder="Processos, lavagem..."
             />
           </div>
 
@@ -203,34 +187,17 @@ export default function SanitaryEffluents({
         <div className="input-line">
           <div className="input-group">
             <p className="input-label b">
-              A saída do sistema de tratamento se encontra interligada à rede
-              coletora?
+              O efluente tratado em questão é enviado para algum corpo receptor?
             </p>
             <CheckInput
               editable={editable}
-              value={hasCollecting}
-              onChange={setHasCollecting}
+              value={hasWaterBody}
+              onChange={setHasWaterBody}
             />
           </div>
         </div>
 
-        {hasCollecting === false && (
-          <div className="input-line">
-            <div className="input-group">
-              <p className="input-label b">
-                O efluente tratado em questão é enviado para algum corpo
-                receptor?
-              </p>
-              <CheckInput
-                editable={editable}
-                value={hasWaterBody}
-                onChange={setHasWaterBody}
-              />
-            </div>
-          </div>
-        )}
-
-        {hasCollecting === false && hasWaterBody === true && (
+        {hasWaterBody === true && (
           <div className="input-line">
             <div className="input-group">
               <p className="input-label b">Nome do corpo receptor</p>
@@ -259,11 +226,11 @@ export default function SanitaryEffluents({
           </div>
         )}
 
-        {hasCollecting === false && hasWaterBody === false && (
+        {hasWaterBody === false && (
           <div className="input-line">
             <div className="input-group">
               <p className="input-label b">
-                Onde está sendo lançado o efluente sanitário tratado?
+                Onde está sendo lançado o efluente oleoso tratado?
               </p>
               <input
                 value={waterBody}

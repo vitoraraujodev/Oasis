@@ -26,8 +26,6 @@ export default function SanitaryBlock({
       declaration,
     };
 
-    console.tron.log(data);
-
     try {
       const response = await api.post('sanitary', data);
       setSaveButton(false);

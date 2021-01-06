@@ -31,25 +31,29 @@ export default function ProductiveProcess() {
     try {
       const response = await api.get('productive-process');
 
-      if (response.data.supplies) setSupplies(response.data.supplies);
-      if (response.data.equipments) {
-        setProductiveEquipments(
-          response.data.equipments.filter(
-            (equipment) => equipment.kind === 'productive'
-          )
-        );
-        setAuxiliaryEquipments(
-          response.data.equipments.filter(
-            (equipment) => equipment.kind === 'auxiliary'
-          )
-        );
-        setControlEquipments(
-          response.data.equipments.filter(
-            (equipment) => equipment.kind === 'control'
-          )
-        );
+      if (!response.data) {
+        setEditable(true);
+      } else {
+        if (response.data.supplies) setSupplies(response.data.supplies);
+        if (response.data.equipments) {
+          setProductiveEquipments(
+            response.data.equipments.filter(
+              (equipment) => equipment.kind === 'productive'
+            )
+          );
+          setAuxiliaryEquipments(
+            response.data.equipments.filter(
+              (equipment) => equipment.kind === 'auxiliary'
+            )
+          );
+          setControlEquipments(
+            response.data.equipments.filter(
+              (equipment) => equipment.kind === 'control'
+            )
+          );
+        }
+        if (response.data.products) setProducts(response.data.products);
       }
-      if (response.data.products) setProducts(response.data.products);
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }

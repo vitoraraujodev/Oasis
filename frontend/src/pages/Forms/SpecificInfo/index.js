@@ -41,13 +41,19 @@ export default function SpecificInfo() {
       setDocumentType(result.data.document_type);
 
       const response = await api.get('specific-info');
-      if (response.data.specific) setSpecific(response.data.specific);
-      if (response.data.employees) setEmployees(response.data.employees);
-      if (response.data.installEmployees)
-        setInstallEmployees(response.data.installEmployees);
-      if (response.data.generalArea) setGeneralArea(response.data.generalArea);
-      if (response.data.specificAreas)
-        setSpecificAreas(response.data.specificAreas);
+
+      if (!response.data) {
+        setEditable(true);
+      } else {
+        if (response.data.specific) setSpecific(response.data.specific);
+        if (response.data.employees) setEmployees(response.data.employees);
+        if (response.data.installEmployees)
+          setInstallEmployees(response.data.installEmployees);
+        if (response.data.generalArea)
+          setGeneralArea(response.data.generalArea);
+        if (response.data.specificAreas)
+          setSpecificAreas(response.data.specificAreas);
+      }
     } catch (err) {
       if (err.respose) alert(err.respose.data.error);
     }
