@@ -5,16 +5,17 @@ import CheckInput from '~/components/CheckInput';
 
 import api from '~/services/api';
 
-export default function ResidueInfoBlock({
-  residueInfo,
-  onChangeResidueInfo,
+export default function EmissionInfoBlock({
+  emissionInfo,
+  onChangeEmissionInfo,
   editable,
 }) {
   const [loading, setLoading] = useState(false);
   const [saveButton, setSaveButton] = useState(false);
 
-  const [manifest, setManifest] = useState(residueInfo.manifest);
-  const [inventory, setInventory] = useState(residueInfo.inventory);
+  const [promonAir, setPromonAir] = useState(emissionInfo.promonAir);
+  const [fleet, setFleet] = useState(emissionInfo.fleet);
+  const [procon, setProcon] = useState(emissionInfo.procon);
 
   async function handleSubmit() {
     if (loading) return;
@@ -22,14 +23,15 @@ export default function ResidueInfoBlock({
     setLoading(true);
 
     const data = {
-      manifest,
-      inventory,
+      promonAir,
+      fleet,
+      procon: fleet === true ? procon : false,
     };
 
     try {
-      const response = await api.post('residue-info', data);
+      const response = await api.post('emission-info', data);
       setSaveButton(false);
-      onChangeResidueInfo(response.data);
+      onChangeEmissionInfo(response.data);
     } catch (err) {
       if (err.response) alert(err.response.data.error);
     }
@@ -38,28 +40,27 @@ export default function ResidueInfoBlock({
 
   useEffect(() => {
     if (
-      manifest !== residueInfo.manifest ||
-      inventory !== residueInfo.inventory
+      promonAir !== emissionInfo.promonAir ||
+      fleet !== emissionInfo.fleet ||
+      procon !== emissionInfo.procon
     ) {
       if (!saveButton) setSaveButton(true);
     } else {
       setSaveButton(false);
     }
-  }, [manifest, inventory ]); // eslint-disable-line
-
+  }, [promonAir, fleet, procon]); // eslint-disable-line
 
   return (
     <div className="block-form">
       <div className="input-line">
         <div className="input-group">
           <p className="input-label b">
-            A empresa se encontra cadastrada no sistema online de Manifesto de
-            Resíduos, conforme preconizado na NOP-35?
+            A empresa está cadastrada no PROMON-AR?
           </p>
           <CheckInput
             editable={editable}
-            value={manifest}
-            onChange={setManifest}
+            value={promonAir}
+            onChange={setPromonAir}
           />
         </div>
       </div>
@@ -67,15 +68,30 @@ export default function ResidueInfoBlock({
       <div className="input-line">
         <div className="input-group">
           <p className="input-label b">
-            A empresa está reportando o Inventário de Resíduos?
+            A empresa possui frota própria veicular do ciclo diesel?
+            <span className="hint" style={{ marginLeft: 4 }}>
+              (Ex: caminhões)
+            </span>
           </p>
-          <CheckInput
-            editable={editable}
-            value={inventory}
-            onChange={setInventory}
-          />
+          <CheckInput editable={editable} value={fleet} onChange={setFleet} />
         </div>
       </div>
+
+      {fleet && (
+        <div className="input-line">
+          <div className="input-group">
+            <p className="input-label b">
+              A referida frota se encontra cadastrada no PROCON Fumaça-Preta,
+              conforme preconizado na NOP-14?
+            </p>
+            <CheckInput
+              editable={editable}
+              value={procon}
+              onChange={setProcon}
+            />
+          </div>
+        </div>
+      )}
 
       {saveButton && (
         <button

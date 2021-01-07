@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaPlus } from 'react-icons/fa';
 
 import EmissionForm from './EmissionForm';
-// import EmissionInfoBlock from './EmissionInfoBlock';
+import EmissionInfoBlock from './EmissionInfoBlock';
 
 import FormBlock from '~/components/FormBlock';
 import Accordion from '~/components/Accordion';
@@ -14,8 +14,8 @@ import { Capitalize } from '~/util/format';
 export default function Emissions({
   emissions,
   onChangeEmissions,
-  // emissionInfo,
-  // onChangeEmissionInfo,
+  emissionInfo,
+  onChangeEmissionInfo,
   editable,
 }) {
   const [loading, setLoading] = useState(false);
@@ -86,11 +86,11 @@ export default function Emissions({
         poluentes gerados, e outras especificidades.
       </p>
 
-      {/* <EmissionInfoBlock
-        EmissionInfo={EmissionInfo}
+      <EmissionInfoBlock
+        emissionInfo={emissionInfo}
         onChangeEmissionInfo={onChangeEmissionInfo}
         editable={editable}
-      /> */}
+      />
 
       {emissions.length > 0 &&
         emissions.map((emission, index) => (
