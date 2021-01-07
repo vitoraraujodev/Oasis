@@ -35,6 +35,7 @@ export default function Address({ address, onChangeAddress, editable }) {
         const result = await axios.get(
           `https://servicodados.ibge.gov.br/api/v1/localidades/municipios/${ibge}`
         );
+        console.tron.log(result.data);
 
         setValidCep(true);
         setCity(response.data.localidade);

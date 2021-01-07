@@ -162,7 +162,7 @@ export default function IndustrialEffluents({
                   className="input"
                   disabled={!editable}
                   onChange={(e) => setTreatment(e.target.value)}
-                  placeholder="Tratamento"
+                  placeholder="Estação de Tratamento de Efluente..."
                 />
               </div>
 

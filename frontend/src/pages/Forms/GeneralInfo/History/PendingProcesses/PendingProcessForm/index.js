@@ -31,7 +31,7 @@ export default function PendingProcessForm({
     };
 
     try {
-      const response = await api.post('history', data);
+      const response = await api.post('pending', data);
       setSaveButton(false);
       onChangePendingProcess({
         id: response.data.id,

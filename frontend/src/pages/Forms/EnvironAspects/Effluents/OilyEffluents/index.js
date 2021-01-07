@@ -160,7 +160,7 @@ export default function OilyEffluents({
                   className="input"
                   disabled={!editable}
                   onChange={(e) => setTreatment(e.target.value)}
-                  placeholder="Tratamento"
+                  placeholder="Caixa Separadora de Água e Óleo (CSAO)..."
                 />
               </div>
 

@@ -21,7 +21,24 @@ export default function Menu() {
     setLoading(true);
 
     try {
-      await api.get('document');
+      const config = {
+        responseType: 'arraybuffer',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/pdf',
+        },
+      };
+
+      const response = await api.get('document', config);
+
+      const url = window.URL.createObjectURL(
+        new Blob([response.data], { type: 'application/pdf' })
+      );
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'Cadastro-Ambiental.pdf');
+      document.body.appendChild(link);
+      link.click();
     } catch (err) {
       if (err.response) {
         window.alert(err.response.data.error);
@@ -172,7 +189,7 @@ export default function Menu() {
               className="submit-button"
               onClick={handleSubmit}
             >
-              {loading ? 'Carregando...' : 'Enviar para análise'}
+              {loading ? 'Carregando...' : 'Baixar Cadastro Ambiental'}
             </button>
           </div>
         </div>

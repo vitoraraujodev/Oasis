@@ -125,7 +125,7 @@ export default function EffluentForm({
                 className="input"
                 disabled={!editable}
                 onChange={(e) => setTreatment(e.target.value)}
-                placeholder="Tratamento"
+                placeholder="Estação de Tratamento de Efluente..."
               />
             </div>
 

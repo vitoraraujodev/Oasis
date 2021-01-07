@@ -34,6 +34,10 @@
   font-size: 16px;
 }
 
+#form-block .block-subdescription + .input-line {
+  margin-top: 8px;
+}
+
 #form-block .block-form {
   margin-top: 16px;
   padding: 24px;

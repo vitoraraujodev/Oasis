@@ -36,20 +36,28 @@ export default function GeneralArea({
 
     setLoading(true);
 
-    const data = new FormData();
-
-    data.append('file', file);
-
     try {
-      const result = await api.post('file', data);
+      if (file) {
+        const data = new FormData();
+        data.append('file', file);
 
-      const { id, url } = result.data;
-      setImage(url);
+        const result = await api.post('file', data);
+        const { id, url } = result.data;
 
-      const response = await api.post('general-area', { area, image_id: id });
+        const response = await api.post('general-area', { area, image_id: id });
 
-      setSaveButton(false);
-      onChangeGeneralArea(response.data);
+        setImage(url);
+        setSaveButton(false);
+        onChangeGeneralArea(response.data);
+      } else {
+        const response = await api.post('general-area', {
+          area,
+          image_id: generalArea.image.id,
+        });
+
+        setSaveButton(false);
+        onChangeGeneralArea(response.data);
+      }
     } catch (err) {
       if (err.response) alert(err.response.data.error);
     }

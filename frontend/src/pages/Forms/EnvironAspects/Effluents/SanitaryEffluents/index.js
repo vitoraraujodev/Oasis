@@ -176,7 +176,7 @@ export default function SanitaryEffluents({
                   className="input"
                   disabled={!editable}
                   onChange={(e) => setTreatment(e.target.value)}
-                  placeholder="Tratamento"
+                  placeholder="Fossa séptica, filtro anaeróbio..."
                 />
               </div>
 

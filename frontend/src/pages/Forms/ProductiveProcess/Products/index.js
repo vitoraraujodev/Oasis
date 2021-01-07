@@ -33,9 +33,9 @@ export default function Products({ products, onChangeProducts, editable }) {
     },
   ]);
 
-  function handleUpdate(s) {
+  function handleUpdate(p) {
     const newProducts = products.map((product) =>
-      product.id === s.id ? s : product
+      product.id === p.id ? p : product
     );
 
     onChangeProducts(newProducts);
@@ -170,7 +170,7 @@ export default function Products({ products, onChangeProducts, editable }) {
           >
             <ProductForm
               product={product}
-              onChangeProduct={(s) => handleUpdate(s)}
+              onChangeProduct={(p) => handleUpdate(p)}
               onDeleteProduct={(id) => handleDelete(id)}
               onChangeStorages={(s) => handleProductFormStorages(s, product.id)}
               editable={editable}

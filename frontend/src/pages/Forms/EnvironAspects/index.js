@@ -3,6 +3,7 @@ import { FaArrowLeft, FaArrowRight, FaLock, FaLockOpen } from 'react-icons/fa';
 
 import WaterSupplies from './WaterSupplies';
 import Effluents from './Effluents';
+import Residues from './Residues';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -19,10 +20,12 @@ export default function EnvironAspects() {
   const [loading, setLoading] = useState(false);
 
   const [waterSupplies, setWaterSupplies] = useState([]);
-  const [sanitary, setSanitary] = useState([]);
+  const [sanitary, setSanitary] = useState({});
   const [sanitaryEffluents, setSanitaryEffluents] = useState([]);
   const [industrialEffluents, setIndustrialEffluents] = useState([]);
   const [oilyEffluents, setOilyEffluents] = useState([]);
+  const [residueInfo, setResidueInfo] = useState({});
+  const [residues, setResidues] = useState([]);
 
   async function loadEnvironAspects() {
     setLoading(true);
@@ -47,6 +50,12 @@ export default function EnvironAspects() {
         }
         if (response.data.oilyEffluents) {
           setOilyEffluents(response.data.oilyEffluents);
+        }
+        if (response.data.residueInfo) {
+          setResidueInfo(response.data.residueInfo);
+        }
+        if (response.data.residues) {
+          setResidues(response.data.residues);
         }
       }
     } catch (err) {
@@ -116,6 +125,14 @@ export default function EnvironAspects() {
               onChangeIndustrialEffluents={setIndustrialEffluents}
               oilyEffluents={oilyEffluents}
               onChangeOilyEffluents={setOilyEffluents}
+              editable={editable}
+            />
+
+            <Residues
+              residueInfo={residueInfo}
+              onChangeResidueInfo={setResidueInfo}
+              residues={residues}
+              onChangeResidues={setResidues}
               editable={editable}
             />
           </>

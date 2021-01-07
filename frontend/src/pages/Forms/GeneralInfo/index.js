@@ -102,7 +102,7 @@ export default function GeneralInfo() {
 
         <TitleBlock
           title="Informações Gerais"
-          description="Explicação breve sobre o tópico do formulário, lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque finibus commodo ornare."
+          description="Descrição de informações referentes à localização, representação legal, histórico ambiental e funcionamento, as quais são necessárias para auxiliar na análise do processo administrativo a ser requerido junto ao órgão ambiental."
         />
 
         {loading ? (
