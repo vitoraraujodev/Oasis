@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import Company from '../../models/Company';
 import Risk from '../../models/CompAspect/Risk';
 import RiskStorage from '../../models/CompAspect/RiskStorage';
 
@@ -20,7 +19,10 @@ class RiskController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Falha na validação dos dados. Por favor, verifique e tente novamente.' });
+      return res.status(400).json({
+        error:
+          'Falha na validação dos dados. Por favor, verifique e tente novamente.',
+      });
     }
 
     const risk = await Risk.findByPk(req.body.id);
@@ -116,7 +118,7 @@ class RiskController {
           // Find Risk with all it's Storages
           Risk.findByPk(result.id, {
             order: [['substance', 'DESC']],
-            attributes: ['id', 'substance'],
+            attributes: ['id', 'substance', 'physical_state'],
             include: [
               {
                 model: RiskStorage,
@@ -138,12 +140,6 @@ class RiskController {
   }
 
   async delete(req, res) {
-    const company = await Company.findByPk(req.companyId);
-
-    if (!company) {
-      return res.status(400).json('Empresa não encontrada.');
-    }
-
     const risk = await Risk.findByPk(req.params.id);
 
     if (!risk)
@@ -155,7 +151,7 @@ class RiskController {
         .json('Você não tem autorização para deletar esse risco ambiental.');
     }
 
-    await Risk.destroy();
+    await risk.destroy();
 
     return res.json({ okay: true });
   }

@@ -29,6 +29,7 @@ class CompAspectController {
     });
 
     const risks = await Risk.findAll({
+      where: { company_id: req.companyId },
       order: [['substance', 'ASC']],
       attributes: ['id', 'substance', 'physical_state'],
       include: [

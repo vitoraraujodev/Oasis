@@ -11,7 +11,10 @@ class NoiseController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Falha na validação dos dados. Por favor, verifique e tente novamente.' });
+      return res.status(400).json({
+        error:
+          'Falha na validação dos dados. Por favor, verifique e tente novamente.',
+      });
     }
 
     const { report_date } = req.body;
