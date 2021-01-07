@@ -3,6 +3,7 @@ import { FaArrowLeft, FaCheck, FaLock, FaLockOpen } from 'react-icons/fa';
 
 import Emissions from './Emissions';
 import Risks from './Risks';
+import Noises from './Noises';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -21,6 +22,10 @@ export default function CompAspects() {
   const [emissionInfo, setEmissionInfo] = useState({});
   const [emissions, setEmissions] = useState([]);
   const [risks, setRisks] = useState([]);
+  const [noiseInfo, setNoiseInfo] = useState({
+    report_date: '',
+  });
+  const [noises, setNoises] = useState([]);
 
   async function loadCompAspects() {
     setLoading(true);
@@ -39,6 +44,12 @@ export default function CompAspects() {
         }
         if (response.data.risks) {
           setRisks(response.data.risks);
+        }
+        if (response.data.noiseInfo) {
+          setNoiseInfo(response.data.noiseInfo);
+        }
+        if (response.data.noises) {
+          setNoises(response.data.noises);
         }
       }
     } catch (err) {
@@ -102,6 +113,14 @@ export default function CompAspects() {
             />
 
             <Risks risks={risks} onChangeRisks={setRisks} editable={editable} />
+
+            <Noises
+              noiseInfo={noiseInfo}
+              onChangeNoiseInfo={setNoiseInfo}
+              noises={noises}
+              onChangeNoises={setNoises}
+              editable={editable}
+            />
           </>
         )}
 
