@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import Company from '../../models/Company';
 import Emission from '../../models/CompAspect/Emission';
 
 class EmissionController {
@@ -13,7 +12,10 @@ class EmissionController {
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Falha na validação dos dados. Por favor, verifique e tente novamente.' });
+      return res.status(400).json({
+        error:
+          'Falha na validação dos dados. Por favor, verifique e tente novamente.',
+      });
     }
 
     const emission = await Emission.findByPk(req.body.id);
@@ -63,12 +65,6 @@ class EmissionController {
   }
 
   async delete(req, res) {
-    const company = await Company.findByPk(req.companyId);
-
-    if (!company) {
-      return res.status(400).json('Empresa não encontrada.');
-    }
-
     const emission = await Emission.findByPk(req.params.id);
 
     if (!emission)

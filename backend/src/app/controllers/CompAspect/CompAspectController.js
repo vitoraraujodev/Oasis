@@ -14,6 +14,7 @@ class CompAspectController {
         ['pollutant', 'ASC'],
       ],
       attributes: [
+        'id',
         'source',
         'pollutant',
         'unit',
