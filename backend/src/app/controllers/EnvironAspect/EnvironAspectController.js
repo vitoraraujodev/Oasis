@@ -85,6 +85,7 @@ class EnvironAspectController {
       where: { company_id: req.companyId },
       order: [['identification', 'ASC']],
       attributes: [
+        'id',
         'identification',
         'physical_state',
         'constituent',

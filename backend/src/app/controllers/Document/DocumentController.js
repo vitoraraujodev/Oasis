@@ -705,10 +705,10 @@ class DocumentController {
       industrialEffluents,
       industrialTotalFlow,
       residuesClass1: residues.filter(
-        (residue) => residue.classification === '1'
+        (residue) => residue.classification === 'Classe I' || 'Classe 1' || '1'
       ),
       residuesClass2: residues.filter(
-        (residue) => residue.classification === '2'
+        (residue) => residue.classification === 'Classe II' || 'Classe 2' || '2'
       ),
       residueInfo,
       noises,
@@ -750,8 +750,9 @@ class DocumentController {
           'Content-Disposition',
           'attachment; filename=Cadastro-Ambiental.pdf'
         );
+        res.setHeader('Content-Type', 'application/pdf');
 
-        res.send(Buffer.from(buffer, 'base64'));
+        res.send(buffer);
       });
   }
 }

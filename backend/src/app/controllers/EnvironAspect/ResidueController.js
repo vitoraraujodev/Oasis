@@ -10,7 +10,7 @@ class ResidueController {
       constituent: Yup.string().required(),
       source: Yup.string().required(),
       treatment: Yup.string().required(),
-      classification: Yup.string(),
+      classification: Yup.string().required(),
       quantity: Yup.number().required(),
       quantity_unit: Yup.string().required(),
       storage_form: Yup.string().required(),

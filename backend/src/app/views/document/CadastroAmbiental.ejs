@@ -375,7 +375,7 @@
         </tr>
         <tr>
           <th>Horário de atendimento</th>
-          <td><%= ("0" + (contactInfo.start_at)).slice(-2) %>h ás <%= ("0" + (contactInfo.end_at)).slice(-2) %>h</td>
+          <td><%= ("0" + (contactInfo.start_at)).slice(-2) %>h às <%= ("0" + (contactInfo.end_at)).slice(-2) %>h</td>
         </tr>
       </table>
     </div>
@@ -400,7 +400,7 @@
         <% operatingInfo.shifts.forEach(function(shift) { %>
           <tr>
             <td style="text-align: center;"><%= shift.week %></td>
-            <td><%= ("0" + (shift.start_at)).slice(-2) %>h %> ás <%= ("0" + (shift.end_at)).slice(-2) %>h %></td>
+            <td><%= ("0" + (shift.start_at)).slice(-2) %>h %> às <%= ("0" + (shift.end_at)).slice(-2) %>h %></td>
           </tr>
         <% }); %>
       </table>
@@ -893,7 +893,7 @@
         <tr>
           <th>Teórico</th>
           <td style="text-align: center;">
-            <%= sanitary.theoric_flow*0.8 %> - <%= sanitary.theoric_flow*1.2 %>
+            <%= (sanitary.theoric_flow*0.8).toFixed(2) %> - <%= (sanitary.theoric_flow*1.2).toFixed(2) %>
           </td>
         </tr>
       </table>
@@ -1255,7 +1255,7 @@
     </p>
     <% if (pendencies.length > 0) { %>
       <div class="table-container">
-        <strong class="table-label">Tabela 22. Processos em andamento junto ao INEA</strong>
+        <strong class="table-label">Processos em andamento junto ao INEA</strong>
         <table>
           <caption>Processos</caption>
           <tr>

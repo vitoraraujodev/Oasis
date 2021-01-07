@@ -20,7 +20,7 @@ class PendingController {
     const pending = await Pending.findByPk(req.body.id);
 
     if (pending) {
-      const { id, instrument, process, objective } = await Pending.update({
+      const { id, instrument, process, objective } = await pending.update({
         ...req.body,
       });
 
