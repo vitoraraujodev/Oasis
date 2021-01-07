@@ -50,7 +50,6 @@ export default function ResidueForm({
       capacity_unit: capacityUnit,
     };
 
-    console.tron.log(data);
     try {
       const response = await api.post('residue', data);
       onChangeResidue(response.data);

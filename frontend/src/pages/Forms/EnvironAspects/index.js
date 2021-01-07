@@ -152,7 +152,9 @@ export default function EnvironAspects() {
             <button
               type="button"
               className="page-button"
-              onClick={() => history.push('/form/aspectos-complementares')}
+              onClick={() =>
+                history.push('/form/aspectos-ambientais-complementares')
+              }
             >
               <strong style={{ marginRight: 12 }}>Avançar</strong>
               <FaArrowRight size={21} color="#fff" />
