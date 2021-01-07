@@ -5,7 +5,7 @@ import NoiseInfo from '../../models/CompAspect/NoiseInfo';
 class NoiseInfoController {
   async store(req, res) {
     const schema = Yup.object().shape({
-      report_date: Yup.date().required(),
+      report_date: Yup.string(),
     });
 
     if (!(await schema.isValid(req.body))) {
@@ -14,6 +14,8 @@ class NoiseInfoController {
           'Falha na validação dos dados. Por favor, verifique e tente novamente.',
       });
     }
+
+    if (req.body.report_date === '') req.body.report_date = null;
 
     const { report_date } = req.body;
 

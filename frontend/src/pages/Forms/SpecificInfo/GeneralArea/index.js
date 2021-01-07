@@ -47,7 +47,6 @@ export default function GeneralArea({
         const response = await api.post('general-area', { area, image_id: id });
 
         setImage(url);
-        setSaveButton(false);
         onChangeGeneralArea(response.data);
       } else {
         const response = await api.post('general-area', {
@@ -55,9 +54,9 @@ export default function GeneralArea({
           image_id: generalArea.image.id,
         });
 
-        setSaveButton(false);
         onChangeGeneralArea(response.data);
       }
+      setSaveButton(false);
     } catch (err) {
       if (err.response) alert(err.response.data.error);
     }
