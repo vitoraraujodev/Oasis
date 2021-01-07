@@ -118,7 +118,7 @@ export default function Emissions({
               className="input"
               disabled={!editable}
               onChange={(e) => setSource(e.target.value)}
-              placeholder="Equipamento, processo..."
+              placeholder="Chaminés, exaustores..."
             />
           </div>
 
@@ -166,7 +166,7 @@ export default function Emissions({
               className="input medium"
               disabled={!editable}
               onChange={(e) => setControlSystem(e.target.value)}
-              placeholder="... "
+              placeholder="Lavador de gases, filtro manga..."
             />
           </div>
         </div>

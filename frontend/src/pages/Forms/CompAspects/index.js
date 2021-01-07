@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowLeft, FaCheck, FaLock, FaLockOpen } from 'react-icons/fa';
 
 import Emissions from './Emissions';
+import Risks from './Risks';
 
 import TitleBlock from '~/components/TitleBlock';
 import Header from '~/components/Header';
@@ -19,6 +20,7 @@ export default function CompAspects() {
 
   const [emissionInfo, setEmissionInfo] = useState({});
   const [emissions, setEmissions] = useState([]);
+  const [risks, setRisks] = useState([]);
 
   async function loadCompAspects() {
     setLoading(true);
@@ -34,6 +36,9 @@ export default function CompAspects() {
         }
         if (response.data.emissions) {
           setEmissions(response.data.emissions);
+        }
+        if (response.data.risks) {
+          setRisks(response.data.risks);
         }
       }
     } catch (err) {
@@ -95,6 +100,8 @@ export default function CompAspects() {
               onChangeEmissions={setEmissions}
               editable={editable}
             />
+
+            <Risks risks={risks} onChangeRisks={setRisks} editable={editable} />
           </>
         )}
 
