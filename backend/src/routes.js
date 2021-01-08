@@ -54,7 +54,7 @@ const routes = new Router();
 const upload = multer(multerConfig);
 
 routes.get('/', (req, res) => {
-  res.send('Server running now');
+  res.send('Server running...');
 });
 
 routes.post('/sessions', SessionController.store);
