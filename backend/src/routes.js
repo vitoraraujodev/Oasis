@@ -53,6 +53,10 @@ import DocumentController from './app/controllers/Document/DocumentController';
 const routes = new Router();
 const upload = multer(multerConfig);
 
+routes.get('/', (req, res) => {
+  res.send('Server running');
+});
+
 routes.post('/sessions', SessionController.store);
 
 routes.post(
