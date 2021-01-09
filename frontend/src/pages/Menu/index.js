@@ -31,17 +31,23 @@ export default function Menu() {
 
       const response = await api.get('document', config);
 
-      const url = window.URL.createObjectURL(
-        new Blob([response.data], { type: 'application/pdf' })
-      );
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'Cadastro-Ambiental.pdf');
-      document.body.appendChild(link);
-      link.click();
+      if (response.data) {
+        const url = window.URL.createObjectURL(
+          new Blob([response.data], { type: 'application/pdf' })
+        );
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'Cadastro-Ambiental.pdf');
+        document.body.appendChild(link);
+        link.click();
+      }
     } catch (err) {
       if (err.response) {
         window.alert(err.response.data.error);
+      } else {
+        window.alert(
+          'Houve um erro ao gerar o arquivo. Por favor, tente novamente.'
+        );
       }
     }
 

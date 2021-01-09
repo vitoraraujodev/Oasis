@@ -154,7 +154,8 @@ export default function OperatingInfo({
         </div>
       ) : (
         <>
-          {parseInt(date.substr(6, 4), 10) >= 1000 &&
+          {date &&
+            parseInt(date.substr(6, 4), 10) >= 1000 &&
             parseInt(date.substr(6, 4), 10) <= 1989 &&
             rural === false && (
               <>

@@ -53,7 +53,7 @@ export default function Address({ address, onChangeAddress, editable }) {
   useEffect(() => {
     if (
       cep !== address.cep ||
-      parseInt(number, 10) !== address.number ||
+      (number && parseInt(number, 10) !== address.number) ||
       complement !== address.complement
     ) {
       setSaveButton(true);
