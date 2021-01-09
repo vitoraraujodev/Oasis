@@ -20,11 +20,8 @@ export default function Menu() {
 
     setLoading(true);
 
-    let document = {};
-
     try {
       const config = {
-        responseType: 'arraybuffer',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/pdf',
@@ -32,33 +29,24 @@ export default function Menu() {
       };
 
       const response = await api.get('document', config);
-      document = response.data;
-    } catch (err) {
-      if (err.response) {
-        window.alert(err.response.data.error);
-      }
-    }
 
-    if (document) {
-      try {
+      if (response.data) {
         const url = window.URL.createObjectURL(
-          new Blob([document], { type: 'application/pdf' })
+          new Blob([response.data], { type: 'application/pdf' })
         );
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', 'Cadastro-Ambiental.pdf');
         document.body.appendChild(link);
         link.click();
-      } catch (err) {
-        if (err.response) {
-          if (err.response.data.error) {
-            window.alert(err.response.data.error);
-          } else {
-            window.alert(
-              'Houve um erro ao gerar o arquivo. Por favor, tente novamente.'
-            );
-          }
-        }
+      }
+    } catch (err) {
+      if (err.response.data) {
+        window.alert(err.response.data.error);
+      } else {
+        window.alert(
+          'Houve um erro ao gerar o arquivo. Por favor, tente novamente mais tarde.'
+        );
       }
     }
 

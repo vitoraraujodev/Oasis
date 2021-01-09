@@ -626,13 +626,6 @@ class DocumentController {
       ],
     });
 
-    if (risks.length === 0) {
-      return res.status(400).json({
-        error:
-          'Por favor, preencha os riscos ambientais da sua empresa e tente novamente.',
-      });
-    }
-
     const history = await History.findAll({
       where: { company_id: req.companyId },
       order: [['expiration_date', 'ASC']],
