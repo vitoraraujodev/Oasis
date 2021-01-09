@@ -110,9 +110,9 @@ export default function ControlEquipments({
     <>
       <p className="block-subtitle">Equipamentos de controle</p>
       <p className="block-subdescription">
-        Identifique cada um dos equipamentos de controle, que são utilizados de
-        modo a reduzir os possíveis impactos ambientais decorrentes das
-        atividades desenvolvidas pela empresa.
+        Identifique se tiver cada um dos equipamentos de controle, que são
+        utilizados de modo a reduzir os possíveis impactos ambientais
+        decorrentes das atividades desenvolvidas pela empresa.
       </p>
 
       {controlEquipments.length > 0 &&
@@ -160,7 +160,12 @@ export default function ControlEquipments({
 
         <div className="input-line">
           <div className="input-group ">
-            <p className="input-label b">Capacidade</p>
+            <p className="input-label b">
+              Capacidade
+              <span className="hint" style={{ marginLeft: 4 }}>
+                (Opcional)
+              </span>
+            </p>
             <input
               value={capacity}
               type="number"

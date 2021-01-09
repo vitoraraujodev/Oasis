@@ -119,7 +119,16 @@ export default function Products({ products, onChangeProducts, editable }) {
       setUnit('');
       setTransport('');
       setPackaging('');
-      setStorages([]);
+      setStorages([
+        {
+          id: Date.now(),
+          location: '',
+          identification: '',
+          amount: '',
+          capacity: '',
+          unit: '',
+        },
+      ]);
     } catch (err) {
       if (err.response) alert(err.response.data.error);
     }

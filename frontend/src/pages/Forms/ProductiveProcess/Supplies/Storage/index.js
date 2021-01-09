@@ -55,7 +55,7 @@ export default function Storage({
 
           <div className="input-line">
             <div className="input-group">
-              <p className="input-label">Capacidade</p>
+              <p className="input-label">Capacidade unitária</p>
               <input
                 value={storage.capacity}
                 type="number"

@@ -142,7 +142,7 @@ export default function TechnicalManager({
             className="input"
             disabled={!editable}
             onChange={(e) => setQualification(e.target.value)}
-            placeholder="Sua formação"
+            placeholder="Formação"
           />
         </div>
 

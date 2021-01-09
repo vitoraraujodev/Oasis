@@ -110,7 +110,7 @@ export default function ProductiveEquipments({
     <>
       <p className="block-subtitle">Equipamentos Produtivos</p>
       <p className="block-subdescription">
-        Identifique cada um dos equipamentos produtivos, assim como, as
+        Identifique se tiver cada um dos equipamentos produtivos, assim como, as
         respectivas especificidades.
       </p>
 
@@ -159,7 +159,12 @@ export default function ProductiveEquipments({
 
         <div className="input-line">
           <div className="input-group ">
-            <p className="input-label b">Capacidade</p>
+            <p className="input-label b">
+              Capacidade
+              <span className="hint" style={{ marginLeft: 4 }}>
+                (Opcional)
+              </span>
+            </p>
             <input
               value={capacity}
               type="number"

@@ -110,9 +110,9 @@ export default function AuxiliaryEquipments({
     <>
       <p className="block-subtitle">Equipamentos auxiliares</p>
       <p className="block-subdescription">
-        Identifique cada um dos equipamentos auxiliares. Estes são utilizados de
-        modo a auxiliar nas atividades desenvolvidas pela empresa (Ex.
-        Geradores, Transformadores, Compressores, entre outros).
+        Identifique se tiver cada um dos equipamentos auxiliares. Estes são
+        utilizados de modo a auxiliar nas atividades desenvolvidas pela empresa
+        (Ex. Geradores, Transformadores, Compressores, entre outros).
       </p>
 
       {auxiliaryEquipments.length > 0 &&
@@ -160,7 +160,12 @@ export default function AuxiliaryEquipments({
 
         <div className="input-line">
           <div className="input-group ">
-            <p className="input-label b">Capacidade</p>
+            <p className="input-label b">
+              Capacidade
+              <span className="hint" style={{ marginLeft: 4 }}>
+                (Opcional)
+              </span>
+            </p>
             <input
               value={capacity}
               type="number"

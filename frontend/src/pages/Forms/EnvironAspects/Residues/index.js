@@ -268,7 +268,7 @@ export default function Residues({
 
             <div className="input-line">
               <div className="input-group medium">
-                <p className="input-label">Capacidade</p>
+                <p className="input-label">Capacidade total</p>
                 <input
                   value={capacity}
                   type="number"

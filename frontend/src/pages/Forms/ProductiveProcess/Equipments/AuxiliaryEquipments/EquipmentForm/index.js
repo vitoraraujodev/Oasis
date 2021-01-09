@@ -127,7 +127,12 @@ export default function EquipmentForm({
 
       <div className="input-line">
         <div className="input-group ">
-          <p className="input-label b">Capacidade</p>
+          <p className="input-label b">
+            Capacidade
+            <span className="hint" style={{ marginLeft: 4 }}>
+              (Opcional)
+            </span>
+          </p>
           <input
             value={capacity}
             type="number"
