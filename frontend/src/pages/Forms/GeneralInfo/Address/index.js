@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import InputMask from 'react-input-mask';
 import { FaCheck, FaCheckCircle } from 'react-icons/fa';
 
-import Cep from 'react-simple-cep-mask';
 import axios from 'axios';
 
 import FormBlock from '~/components/FormBlock';
@@ -35,7 +35,6 @@ export default function Address({ address, onChangeAddress, editable }) {
         const result = await axios.get(
           `https://servicodados.ibge.gov.br/api/v1/localidades/municipios/${ibge}`
         );
-        console.tron.log(result.data);
 
         setValidCep(true);
         setCity(response.data.localidade);
@@ -44,6 +43,7 @@ export default function Address({ address, onChangeAddress, editable }) {
         setStreet(response.data.logradouro);
       }
     } catch (err) {
+      console.tron.log(err);
       alert(
         'Houve um erro ao verificar o CEP. Por favor, tente novamente mais tarde.'
       );
@@ -105,19 +105,21 @@ export default function Address({ address, onChangeAddress, editable }) {
       </p>
       <p className="input-label">Informe seu CEP</p>
       <div className="input-line">
-        <Cep
-          type="number"
-          inputMode="numeric"
+        <InputMask
           value={cep}
+          type="custom"
+          inputMode="numeric"
+          mask="99999-999"
+          maskChar={null}
           className="input medium"
-          maxLength={9}
+          disabled={!editable}
           style={
             invalidCep
               ? { background: '#fde8e8', border: '2px solid #ff4d4d' }
               : null
           }
           onFocus={() => {
-            if (cep.length !== 9 && invalidCep) {
+            if (cep.length < 9 && invalidCep) {
               setInvalidCep(false);
             }
           }}
@@ -126,9 +128,8 @@ export default function Address({ address, onChangeAddress, editable }) {
               setInvalidCep(true);
             }
           }}
-          onChange={(c) => setCep(c)}
-          disabled={!editable}
-          placeholder="00000-000"
+          onChange={(e) => setCep(e.target.value)}
+          placeholder="22222-222"
         />
 
         {cep && validCep && (
