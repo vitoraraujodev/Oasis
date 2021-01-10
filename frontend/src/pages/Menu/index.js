@@ -20,6 +20,7 @@ export default function Menu() {
 
     setLoading(true);
 
+    window.alert('document api');
     try {
       const config = {
         headers: {
@@ -29,6 +30,8 @@ export default function Menu() {
       };
 
       const response = await api.get('document', config);
+
+      window.alert('document api completed');
 
       if (response.data) {
         const url = window.URL.createObjectURL(
