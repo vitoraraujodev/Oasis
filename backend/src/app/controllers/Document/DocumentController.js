@@ -650,6 +650,9 @@ class DocumentController {
         __dirname,
         '..',
         '..',
+        '..',
+        '..',
+        'assets',
         'views',
         'document',
         'CadastroAmbiental.ejs'
@@ -733,7 +736,7 @@ class DocumentController {
       })
       .toBuffer((err, buffer) => {
         if (err) {
-          return res.status(500).json({
+          return res.status(400).json({
             error:
               'Houve um erro na geração do documento. Por favor, tente novamente mais tarde.',
           });
