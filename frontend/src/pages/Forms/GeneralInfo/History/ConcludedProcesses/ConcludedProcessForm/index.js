@@ -55,16 +55,18 @@ export default function ConcludedProcessForm({
   }
 
   async function handleDelete() {
-    setLoading(true);
+    if (window.confirm('Deseja excluir permanentemente esse item?')) {
+      setLoading(true);
 
-    try {
-      const response = await api.delete(`history/${concludedProcess.id}`);
-      if (response.data.okay) onDeleteConcludedProcess(concludedProcess.id);
-    } catch (err) {
-      if (err.response) alert(err.response.data.error);
+      try {
+        const response = await api.delete(`history/${concludedProcess.id}`);
+        if (response.data.okay) onDeleteConcludedProcess(concludedProcess.id);
+      } catch (err) {
+        if (err.response) alert(err.response.data.error);
+      }
+
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   useEffect(() => {

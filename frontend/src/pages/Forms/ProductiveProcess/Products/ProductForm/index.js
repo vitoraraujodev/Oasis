@@ -60,15 +60,17 @@ export default function ProductForm({
   }
 
   async function handleDelete() {
-    setLoading(true);
+    if (window.confirm('Deseja excluir permanentemente esse item?')) {
+      setLoading(true);
 
-    try {
-      const response = await api.delete(`product/${product.id}`);
-      setLoading(false);
-      if (response.data.okay) onDeleteProduct(product.id);
-    } catch (err) {
-      if (err.response) alert(err.response.data.error);
-      setLoading(false);
+      try {
+        const response = await api.delete(`product/${product.id}`);
+        setLoading(false);
+        if (response.data.okay) onDeleteProduct(product.id);
+      } catch (err) {
+        if (err.response) alert(err.response.data.error);
+        setLoading(false);
+      }
     }
   }
 

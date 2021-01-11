@@ -61,7 +61,7 @@ export default function GeneralInfo() {
           setOperatingInfo(response.data.operatingInfo);
       }
     } catch (err) {
-      if (err.respose) alert(err.respose.data.error);
+      if (err.response) alert(err.response.data.error);
     }
 
     setLoading(false);

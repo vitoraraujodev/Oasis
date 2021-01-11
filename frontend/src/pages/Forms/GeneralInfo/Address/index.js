@@ -43,7 +43,6 @@ export default function Address({ address, onChangeAddress, editable }) {
         setStreet(response.data.logradouro);
       }
     } catch (err) {
-      console.tron.log(err);
       alert(
         'Houve um erro ao verificar o CEP. Por favor, tente novamente mais tarde.'
       );

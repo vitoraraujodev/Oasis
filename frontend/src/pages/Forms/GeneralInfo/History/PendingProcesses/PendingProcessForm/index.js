@@ -46,16 +46,18 @@ export default function PendingProcessForm({
   }
 
   async function handleDelete() {
-    setLoading(true);
+    if (window.confirm('Deseja excluir permanentemente esse item?')) {
+      setLoading(true);
 
-    try {
-      const response = await api.delete(`pending/${pendingProcess.id}`);
-      if (response.data.okay) onDeletePendingProcess(pendingProcess.id);
-    } catch (err) {
-      if (err.response) alert(err.response.data.error);
+      try {
+        const response = await api.delete(`pending/${pendingProcess.id}`);
+        if (response.data.okay) onDeletePendingProcess(pendingProcess.id);
+      } catch (err) {
+        if (err.response) alert(err.response.data.error);
+      }
+
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   useEffect(() => {

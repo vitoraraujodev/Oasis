@@ -39,16 +39,18 @@ export default function EmployeeForm({
   }
 
   async function handleDelete() {
-    setLoading(true);
+    if (window.confirm('Deseja excluir permanentemente esse item?')) {
+      setLoading(true);
 
-    try {
-      const response = await api.delete(`employee/${employee.id}`);
-      if (response.data.okay) onDeleteEmployee(employee.id);
-    } catch (err) {
-      if (err.response) alert(err.response.data.error);
+      try {
+        const response = await api.delete(`employee/${employee.id}`);
+        if (response.data.okay) onDeleteEmployee(employee.id);
+      } catch (err) {
+        if (err.response) alert(err.response.data.error);
+      }
+
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   function handleAmount(value) {

@@ -15,35 +15,46 @@ export default function Menu() {
 
   const [loading, setLoading] = useState(false);
 
+  // Function checks first if document generation has any errors
+  // This function was made because you can't show json error messages
+  // when responseType = 'arraybuffer'
+  async function handleCheckDocument() {
+    try {
+      const response = await api.get('document');
+      if (response.data) return true;
+    } catch (err) {
+      window.alert(err.response.data.error);
+    }
+    return false;
+  }
+
   async function handleSubmit() {
     if (loading) return;
 
     setLoading(true);
+    const result = await handleCheckDocument();
 
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/pdf',
-        },
-      };
+    if (result) {
+      try {
+        const config = {
+          responseType: 'arraybuffer',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/pdf',
+          },
+        };
 
-      const response = await api.get('document', config);
+        const response = await api.get('document', config);
 
-      if (response.data) {
         const url = window.URL.createObjectURL(
-          new Blob([response.data], { type: 'application/pdf' })
+          new Blob([response.data], { type: 'aplication/pdf' })
         );
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', 'Cadastro-Ambiental.pdf');
         document.body.appendChild(link);
         link.click();
-      }
-    } catch (err) {
-      if (err.response.data) {
-        window.alert(err.response.data.error);
-      } else {
+      } catch (err) {
         window.alert(
           'Houve um erro ao gerar o arquivo. Por favor, tente novamente mais tarde.'
         );
@@ -78,7 +89,7 @@ export default function Menu() {
         setDocumentType(response.data.document_type);
       }
     } catch (err) {
-      if (err.respose) alert(err.respose.data.error);
+      if (err.response) alert(err.response.data.error);
     }
   }
 

@@ -55,7 +55,7 @@ export default function SpecificInfo() {
           setSpecificAreas(response.data.specificAreas);
       }
     } catch (err) {
-      if (err.respose) alert(err.respose.data.error);
+      if (err.response) alert(err.response.data.error);
     }
 
     setLoading(false);

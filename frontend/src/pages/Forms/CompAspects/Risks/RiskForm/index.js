@@ -38,8 +38,6 @@ export default function RiskForm({
       })),
     };
 
-    console.tron.log(data);
-
     try {
       const response = await api.post('risk', data);
       onChangeRisk(response.data);
@@ -51,15 +49,17 @@ export default function RiskForm({
   }
 
   async function handleDelete() {
-    setLoading(true);
+    if (window.confirm('Deseja excluir permanentemente esse item?')) {
+      setLoading(true);
 
-    try {
-      const response = await api.delete(`risk/${risk.id}`);
-      setLoading(false);
-      if (response.data.okay) onDeleteRisk(risk.id);
-    } catch (err) {
-      if (err.response) alert(err.response.data.error);
-      setLoading(false);
+      try {
+        const response = await api.delete(`risk/${risk.id}`);
+        setLoading(false);
+        if (response.data.okay) onDeleteRisk(risk.id);
+      } catch (err) {
+        if (err.response) alert(err.response.data.error);
+        setLoading(false);
+      }
     }
   }
 

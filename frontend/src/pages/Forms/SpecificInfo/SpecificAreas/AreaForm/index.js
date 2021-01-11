@@ -39,16 +39,18 @@ export default function AreaForm({
   }
 
   async function handleDelete() {
-    setLoading(true);
+    if (window.confirm('Deseja excluir permanentemente esse item?')) {
+      setLoading(true);
 
-    try {
-      const response = await api.delete(`specific-area/${specificArea.id}`);
-      if (response.data.okay) onDeleteArea(specificArea.id);
-    } catch (err) {
-      if (err.response) alert(err.response.data.error);
+      try {
+        const response = await api.delete(`specific-area/${specificArea.id}`);
+        if (response.data.okay) onDeleteArea(specificArea.id);
+      } catch (err) {
+        if (err.response) alert(err.response.data.error);
+      }
+
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   function handleArea(value) {

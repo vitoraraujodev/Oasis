@@ -53,7 +53,7 @@ export default function CompAspects() {
         }
       }
     } catch (err) {
-      if (err.respose) alert(err.respose.data.error);
+      if (err.response) alert(err.response.data.error);
     }
 
     setLoading(false);

@@ -46,15 +46,17 @@ export default function EmissionForm({
   }
 
   async function handleDelete() {
-    setLoading(true);
+    if (window.confirm('Deseja excluir permanentemente esse item?')) {
+      setLoading(true);
 
-    try {
-      const response = await api.delete(`emission/${emission.id}`);
-      setLoading(false);
-      if (response.data.okay) onDeleteEmission(emission.id);
-    } catch (err) {
-      if (err.response) alert(err.response.data.error);
-      setLoading(false);
+      try {
+        const response = await api.delete(`emission/${emission.id}`);
+        setLoading(false);
+        if (response.data.okay) onDeleteEmission(emission.id);
+      } catch (err) {
+        if (err.response) alert(err.response.data.error);
+        setLoading(false);
+      }
     }
   }
 
