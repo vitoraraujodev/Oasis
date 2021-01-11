@@ -748,7 +748,7 @@ class DocumentController {
         );
         res.setHeader('Content-Type', 'application/pdf');
 
-        res.send(buffer);
+        res.send(Buffer.from(buffer, 'utf-8'));
       });
   }
 }
