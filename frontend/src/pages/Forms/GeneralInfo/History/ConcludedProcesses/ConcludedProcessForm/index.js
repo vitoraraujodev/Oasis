@@ -93,7 +93,7 @@ export default function ConcludedProcessForm({
             className="input"
             disabled={!editable}
             onChange={(e) => setInstrument(Capitalize(e.target.value))}
-            placeholder="Licença Ambiental"
+            placeholder="LP, LI, LO..."
           />
         </div>
 
@@ -126,7 +126,7 @@ export default function ConcludedProcessForm({
         </div>
 
         <div className="input-group">
-          <p className="input-label">Data de válidade</p>
+          <p className="input-label">Data de validade</p>
           <InputMask
             value={expirationDate}
             type="tel"

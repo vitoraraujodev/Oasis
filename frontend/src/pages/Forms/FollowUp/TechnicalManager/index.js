@@ -73,7 +73,7 @@ export default function TechnicalManager({
 
   return (
     <FormBlock>
-      <p className="block-title">Representante técnico</p>
+      <p className="block-title">Responsável técnico</p>
 
       <div className="input-line">
         <div className="input-group">

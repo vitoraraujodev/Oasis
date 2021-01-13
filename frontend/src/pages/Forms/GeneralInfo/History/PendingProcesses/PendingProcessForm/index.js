@@ -82,7 +82,7 @@ export default function PendingProcessForm({
             className="input"
             disabled={!editable}
             onChange={(e) => setInstrument(Capitalize(e.target.value))}
-            placeholder="Licença Ambiental"
+            placeholder="LP, LI, LO..."
           />
         </div>
 

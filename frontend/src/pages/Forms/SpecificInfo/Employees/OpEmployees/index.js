@@ -68,9 +68,9 @@ export default function OpEmployees({
 
   return (
     <>
-      {(documentType === 'Licença Ambiental Integrada' ||
-        documentType === 'Licença Ambiental de Instalação' ||
-        documentType === 'Licença Ambiental Unificada') && (
+      {(documentType === 'LAI' ||
+        documentType === 'LI' ||
+        documentType === 'LAU') && (
         <p className="block-subtitle">Funcionários na fase de operação</p>
       )}
 

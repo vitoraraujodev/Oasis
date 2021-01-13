@@ -28,9 +28,9 @@ export default function Employees({
         editable={editable}
       />
 
-      {(documentType === 'Licença Ambiental Integrada' ||
-        documentType === 'Licença Ambiental de Instalação' ||
-        documentType === 'Licença Ambiental Unificada') && (
+      {(documentType === 'LAI' ||
+        documentType === 'LI' ||
+        documentType === 'LAU') && (
         <InstallEmployees
           employees={installEmployees}
           onChangeEmployees={onChangeInstallEmployees}

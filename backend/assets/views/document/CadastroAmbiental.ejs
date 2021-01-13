@@ -424,9 +424,9 @@
       distribuidos conforme apresentado abaixo:
     </p>
     <div class="table-container">
-      <% if (documentType.document_type === 'Licença Ambiental Integrada' ||
-          documentType.document_type === 'Licença Ambiental Unificada' ||
-          documentType.document_type === 'Licença Ambiental de Instalação') { %>
+      <% if (documentType.document_type === 'LAI' ||
+          documentType.document_type === 'LAU' ||
+          documentType.document_type === 'LI') { %>
         <strong class="table-label">Tabela de Distribuição dos funcionários na fase de operação</strong>
       <% } else { %>
         <strong class="table-label">Tabela de Distribuição dos funcionários</strong>
@@ -449,9 +449,9 @@
       </table>
     </div>
 
-    <% if (documentType.document_type === 'Licença Ambiental Integrada' ||
-          documentType.document_type === 'Licença Ambiental Unificada' ||
-          documentType.document_type === 'Licença Ambiental de Instalação') { %>
+    <% if (documentType.document_type === 'LAI' ||
+        documentType.document_type === 'LAU' ||
+        documentType.document_type === 'LI') { %>
       <div class="table-container">
         <strong class="table-label">Tabela de Distribuição dos funcionários na fase de instalação</strong>
         <table>

@@ -246,9 +246,9 @@ class DocumentController {
     });
 
     if (
-      (documentType.document_type === 'Licença Ambiental Integrada' ||
-        documentType.document_type === 'Licença Ambiental Unificada' ||
-        documentType.document_type === 'Licença Ambiental de Instalação') &&
+      (documentType.document_type === 'LAI' ||
+        documentType.document_type === 'LAU' ||
+        documentType.document_type === 'LI') &&
       installEmployees.length === 0
     ) {
       return res.status(400).json({
