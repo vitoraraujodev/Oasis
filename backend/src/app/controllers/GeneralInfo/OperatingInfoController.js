@@ -58,22 +58,6 @@ class OperatingInfoController {
     if (req.body.rural === false) req.body.registration = false;
 
     const { shifts } = req.body;
-    // Checks if there are errors in shifts before creating everything
-    if (shifts && shifts.length > 0) {
-      let hourError = false;
-      shifts.forEach((shift) => {
-        if (shift.start_at >= shift.end_at) {
-          hourError = true;
-        }
-      });
-
-      if (hourError) {
-        return res.status(400).json({
-          error:
-            'A hora de início do turno não pode vir depois da hora do fim.',
-        });
-      }
-    }
 
     const operatingInfo = await OperatingInfo.findOne({
       where: { company_id: req.companyId },

@@ -45,7 +45,7 @@ export default function Shifts({
                 e.preventDefault();
             }}
             onChange={(e) => handleStartHour(e.target.value)}
-            placeholder="00h"
+            placeholder="00"
           />
         </div>
 
@@ -62,7 +62,7 @@ export default function Shifts({
                 e.preventDefault();
             }}
             onChange={(e) => handleEndHour(e.target.value)}
-            placeholder="23h"
+            placeholder="23"
           />
         </div>
 
