@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaCheck, FaImage } from 'react-icons/fa';
+import NumberFormat from 'react-number-format';
 
 import FormBlock from '~/components/FormBlock';
 
@@ -87,12 +88,12 @@ export default function GeneralArea({
       <div className="input-line">
         <div className="input-group">
           <p className="input-label">Área total em m²</p>
-          <input
+          <NumberFormat
             value={area}
-            type="number"
+            thousandSeparator="."
+            decimalSeparator=","
             className="input medium"
-            disabled={!editable}
-            onChange={(e) => handleArea(e.target.value)}
+            onValueChange={(values) => handleArea(values.value)}
             placeholder="01"
           />
         </div>
