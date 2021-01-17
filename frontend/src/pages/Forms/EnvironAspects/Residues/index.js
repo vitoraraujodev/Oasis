@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FaPlus } from 'react-icons/fa';
+import NumberFormat from 'react-number-format';
 
 import ResidueForm from './ResidueForm';
 import ResidueInfoBlock from './ResidueInfoBlock';
@@ -213,12 +214,12 @@ export default function Residues({
         <div className="input-line">
           <div className="input-group medium">
             <p className="input-label b">Quantidade média/ano</p>
-            <input
+            <NumberFormat
               value={quantity}
-              type="number"
+              thousandSeparator="."
+              decimalSeparator=","
               className="input medium"
-              disabled={!editable}
-              onChange={(e) => handleQuantity(e.target.value)}
+              onValueChange={(values) => handleQuantity(values.value)}
               placeholder="01"
             />
           </div>
