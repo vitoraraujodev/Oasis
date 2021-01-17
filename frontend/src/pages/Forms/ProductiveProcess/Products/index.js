@@ -116,8 +116,9 @@ export default function Products({ products, onChangeProducts, editable }) {
       onChangeProducts([...products, response.data]);
       setIdentification('');
       setPhysicalState('');
-      setQuantity('');
+      setCapacity('');
       setUnit('');
+      setQuantity('');
       setTransport('');
       setPackaging('');
       setStorages([
@@ -197,7 +198,7 @@ export default function Products({ products, onChangeProducts, editable }) {
               className="input"
               disabled={!editable}
               onChange={(e) => setIdentification(e.target.value)}
-              placeholder="Insumo"
+              placeholder="Produto"
             />
           </div>
 

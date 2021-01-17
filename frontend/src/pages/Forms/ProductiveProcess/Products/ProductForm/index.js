@@ -145,7 +145,7 @@ export default function ProductForm({
             className="input"
             disabled={!editable}
             onChange={(e) => setIdentification(e.target.value)}
-            placeholder="Insumo"
+            placeholder="Produto"
           />
         </div>
 
