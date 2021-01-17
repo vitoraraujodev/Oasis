@@ -162,6 +162,7 @@ export default function SupplyForm({
             thousandSeparator="."
             decimalSeparator=","
             className="input medium"
+            disabled={!editable}
             onValueChange={(values) => handleQuantity(values.value)}
             placeholder="01"
           />

@@ -214,6 +214,7 @@ export default function Supplies({ supplies, onChangeSupplies, editable }) {
               thousandSeparator="."
               decimalSeparator=","
               className="input medium"
+              disabled={!editable}
               onValueChange={(values) => handleQuantity(values.value)}
               placeholder="01"
             />

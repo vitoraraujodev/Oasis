@@ -93,6 +93,7 @@ export default function GeneralArea({
             thousandSeparator="."
             decimalSeparator=","
             className="input medium"
+            disabled={!editable}
             onValueChange={(values) => handleArea(values.value)}
             placeholder="01"
           />
