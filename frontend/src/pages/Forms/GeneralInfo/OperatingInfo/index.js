@@ -227,7 +227,7 @@ export default function OperatingInfo({
           </p>
           <textarea
             value={observation}
-            length="192"
+            maxLength="255"
             className="input"
             style={{ padding: '8px 16px', height: 64 }}
             disabled={!editable}

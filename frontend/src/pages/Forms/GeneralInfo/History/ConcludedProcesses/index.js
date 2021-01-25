@@ -159,7 +159,7 @@ export default function ConcludedProcess({
             <p className="input-label">Objeto</p>
             <textarea
               value={objective}
-              length="192"
+              maxLength="255"
               className="input"
               style={{ padding: '8px 16px', height: 64 }}
               disabled={!editable}
