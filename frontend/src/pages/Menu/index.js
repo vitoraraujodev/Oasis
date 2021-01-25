@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { FaCheck } from 'react-icons/fa';
 
 import Header from '~/components/Header';
@@ -10,9 +11,10 @@ import api from '~/services/api';
 import './styles.css';
 
 export default function Menu() {
+  const company = useSelector((state) => state.company.company);
+
   const [documentType, setDocumentType] = useState('');
   const [saveButton, setSaveButton] = useState(false);
-
   const [loading, setLoading] = useState(false);
 
   // Function checks first if document generation has any errors
@@ -28,7 +30,7 @@ export default function Menu() {
     return false;
   }
 
-  async function handleSubmit() {
+  async function handleDocumentDownload() {
     if (loading) return;
 
     setLoading(true);
@@ -51,7 +53,7 @@ export default function Menu() {
         );
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'Cadastro-Ambiental.pdf');
+        link.setAttribute('download', `Cadastro-Ambiental-${company.name}.pdf`);
         document.body.appendChild(link);
         link.click();
       } catch (err) {
@@ -203,7 +205,7 @@ export default function Menu() {
             <button
               type="button"
               className="submit-button"
-              onClick={handleSubmit}
+              onClick={handleDocumentDownload}
             >
               {loading ? 'Carregando...' : 'Baixar Cadastro Ambiental'}
             </button>
