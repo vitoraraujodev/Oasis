@@ -95,7 +95,7 @@ export default function InstallEmployees({
               className="input"
               disabled={!editable}
               onChange={(e) => setKind(Capitalize(e.target.value))}
-              placeholder="Tipo"
+              placeholder="Fixo, flutuante e terceirizado..."
             />
           </div>
 
