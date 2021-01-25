@@ -73,8 +73,8 @@ export default function Risks({ risks, onChangeRisks, editable }) {
 
   // When adding new element, "saves" it to change Accordeon height
   function handleRiskFormStorages(s, id) {
-    const newRisks = Risks.map((Risk) =>
-      Risk.id === id ? { ...Risk, storages: s } : Risk
+    const newRisks = risks.map((risk) =>
+      risk.id === id ? { ...risk, storages: s } : risk
     );
     onChangeRisks(newRisks);
   }
