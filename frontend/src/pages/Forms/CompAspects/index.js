@@ -22,9 +22,7 @@ export default function CompAspects() {
   const [emissionInfo, setEmissionInfo] = useState({});
   const [emissions, setEmissions] = useState([]);
   const [risks, setRisks] = useState([]);
-  const [noiseInfo, setNoiseInfo] = useState({
-    report_date: '',
-  });
+  const [noiseInfo, setNoiseInfo] = useState({});
   const [noises, setNoises] = useState([]);
 
   async function loadCompAspects() {

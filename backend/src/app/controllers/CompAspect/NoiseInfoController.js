@@ -26,6 +26,8 @@ class NoiseInfoController {
       }
     }
 
+    if (report_date === '') req.body.report_date = null;
+
     const noiseInfo = await NoiseInfo.findOne({
       where: { company_id: req.companyId },
     });

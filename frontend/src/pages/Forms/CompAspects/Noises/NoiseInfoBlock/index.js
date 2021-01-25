@@ -15,7 +15,9 @@ export default function NoiseInfoBlock({
   const [loading, setLoading] = useState(false);
   const [saveButton, setSaveButton] = useState(false);
 
-  const [isReporting, setIsReporting] = useState(!!noiseInfo.report_date);
+  const [isReporting, setIsReporting] = useState(
+    Object.values(noiseInfo).length === 0 ? null : !!noiseInfo.report_date
+  );
   const [reportDate, setReportDate] = useState(
     formatDate(noiseInfo.report_date || '')
   );
@@ -39,10 +41,13 @@ export default function NoiseInfoBlock({
     setLoading(false);
   }
 
+  console.tron.log(noiseInfo);
   useEffect(() => {
     if (
-      reportDate !== formatDate(noiseInfo.report_date) ||
-      isReporting !== !!noiseInfo.report_date
+      (reportDate !== formatDate(noiseInfo.report_date) &&
+        reportDate !== '' &&
+        reportDate !== '__/__/____') ||
+      (Object.values(noiseInfo).length === 0 && isReporting === false)
     ) {
       if (!saveButton) setSaveButton(true);
     } else {
