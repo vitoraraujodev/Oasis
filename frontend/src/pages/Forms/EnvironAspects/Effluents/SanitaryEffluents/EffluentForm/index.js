@@ -214,7 +214,7 @@ export default function EffluentForm({
                 if (e.key === ' ') e.preventDefault();
               }}
               onChange={(e) => setLicense(e.target.value)}
-              placeholder="PD-00/000.000/0000"
+              placeholder="OUT N°/PD"
             />
           </div>
         </div>
