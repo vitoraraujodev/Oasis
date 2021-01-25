@@ -169,7 +169,12 @@ export default function WaterSupplies({
 
           <div className="input-group">
             <p className="input-label b">Vazão total em m³/dia</p>
-            <input value={supplyFlow} className="input medium" disabled />
+            <input
+              value={supplyFlow}
+              className="input medium"
+              disabled
+              placeholder="Automático"
+            />
           </div>
         </div>
 
@@ -199,7 +204,7 @@ export default function WaterSupplies({
                   if (e.key === ' ') e.preventDefault();
                 }}
                 onChange={(e) => setLicense(e.target.value)}
-                placeholder="PD-00/000.000/0000"
+                placeholder="OUT N°/PD"
               />
             </div>
           </div>
