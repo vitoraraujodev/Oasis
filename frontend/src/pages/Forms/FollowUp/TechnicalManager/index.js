@@ -152,6 +152,7 @@ export default function TechnicalManager({
             value={licensureCode}
             className="input medium"
             disabled={!editable}
+            maxLength={19}
             onChange={(e) => setLicensureCode(e.target.value)}
             placeholder="CREA/UF-00000000000"
           />
