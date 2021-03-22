@@ -614,6 +614,7 @@ class DocumentController {
 
     const risks = await Risk.findAll({
       order: [['substance', 'ASC']],
+      where: { company_id: req.companyId },
       attributes: ['id', 'substance', 'physical_state'],
       include: [
         {
