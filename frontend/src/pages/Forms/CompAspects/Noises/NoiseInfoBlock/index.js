@@ -41,7 +41,6 @@ export default function NoiseInfoBlock({
     setLoading(false);
   }
 
-  console.tron.log(noiseInfo);
   useEffect(() => {
     if (
       (reportDate !== formatDate(noiseInfo.report_date) &&
